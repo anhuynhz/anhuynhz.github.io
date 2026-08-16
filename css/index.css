@@ -1,13 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Quicksand:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 
-/* =========================================================
+/* =========================================
    ROOT
-========================================================= */
+========================================= */
 
 :root {
-    --glass: rgba(20, 20, 20, 0.82);
-    --glass-border: rgba(255, 255, 255, 0.2);
-
     --rainbow: linear-gradient(
         90deg,
         #a8edea,
@@ -30,43 +27,48 @@
         #ff00c8,
         #ff0000
     );
+
+    --glass-border: rgba(255,255,255,0.2);
 }
 
 
-/* =========================================================
+/* =========================================
    BODY
-========================================================= */
+========================================= */
+
+html {
+    min-height: 100%;
+}
 
 body {
     margin: 0;
     padding: 0;
 
+    min-height: 100vh;
+
     background: #000;
 
-    font-family: 'Quicksand', sans-serif;
-
     color: #fff;
+
+    font-family: 'Quicksand', sans-serif;
 
     overflow-x: hidden;
 
     -webkit-font-smoothing: antialiased;
 
     -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
 }
 
 
-/* =========================================================
-   BACKGROUND
-========================================================= */
+/* =========================================
+   FLYING FISH
+========================================= */
 
 #jsi-flying-fish-container {
     position: fixed;
 
-    top: 0;
-    left: 0;
+    inset: 0;
 
     width: 100%;
     height: 100%;
@@ -76,19 +78,23 @@ body {
     background: #050505;
 
     overflow: hidden;
+
+    pointer-events: auto;
 }
 
 
-/* =========================================================
-   MAIN WRAPPER
-========================================================= */
+/* =========================================
+   MAIN
+========================================= */
 
 .main-wrapper {
+    width: calc(100% - 40px);
+
     max-width: 900px;
 
     margin: 40px auto;
 
-    padding: 20px;
+    padding: 0;
 
     position: relative;
 
@@ -96,21 +102,19 @@ body {
 }
 
 
-/* =========================================================
+/* =========================================
    GLASS CARD
-========================================================= */
+========================================= */
 
 .glass-card {
     position: relative;
 
-    isolation: isolate;
-
-    background: rgba(20, 20, 20, 0.82);
+    background: rgba(20,20,20,0.82);
 
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
 
-    border: 2px solid transparent;
+    border: 2px solid rgba(255,255,255,0.12);
 
     border-radius: 25px;
 
@@ -119,83 +123,15 @@ body {
     margin-bottom: 25px;
 
     box-shadow:
-        0 15px 35px rgba(0, 0, 0, 0.6);
+        0 15px 35px rgba(0,0,0,0.6);
+
+    overflow: visible;
 }
 
 
-/* =========================================================
-   RGB CARD BORDER
-========================================================= */
-
-.glass-card::before {
-    content: "";
-
-    position: absolute;
-
-    inset: -2px;
-
-    border-radius: 27px;
-
-    background: linear-gradient(
-        90deg,
-        #00ff66,
-        #00ffff,
-        #0088ff,
-        #7a00ff,
-        #ff00cc,
-        #ff0055,
-        #ff8800,
-        #ffff00,
-        #00ff66
-    );
-
-    background-size: 400% 100%;
-
-    animation: rgb-border 5s linear infinite;
-
-    padding: 2px;
-
-    -webkit-mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-
-    -webkit-mask-composite: xor;
-
-    mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-
-    mask-composite: exclude;
-
-    filter:
-        drop-shadow(0 0 4px rgba(0, 255, 150, 0.8))
-        drop-shadow(0 0 8px rgba(0, 200, 255, 0.55))
-        drop-shadow(0 0 14px rgba(150, 0, 255, 0.35));
-
-    pointer-events: none;
-
-    z-index: -1;
-}
-
-
-@keyframes rgb-border {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 200% 50%;
-    }
-}
-
-
-/* =========================================================
+/* =========================================
    RAINBOW TEXT
-========================================================= */
+========================================= */
 
 .rainbow-text {
     background: var(--rainbow);
@@ -212,7 +148,6 @@ body {
     font-weight: 800;
 }
 
-
 @keyframes rainbow_move {
     0% {
         background-position: 0% center;
@@ -224,9 +159,9 @@ body {
 }
 
 
-/* =========================================================
+/* =========================================
    PROFILE
-========================================================= */
+========================================= */
 
 .profile-header {
     display: flex;
@@ -260,6 +195,8 @@ body {
     width: 110px;
     height: 110px;
 
+    object-fit: cover;
+
     border-radius: 50%;
 
     border: 3px solid #fff;
@@ -272,7 +209,7 @@ body {
     z-index: 2;
 
     box-shadow:
-        0 0 20px rgba(255, 255, 255, 0.2);
+        0 0 20px rgba(255,255,255,0.2);
 }
 
 
@@ -281,6 +218,8 @@ body {
 
     width: 170px;
     height: 170px;
+
+    object-fit: contain;
 
     top: -10px;
     left: -10px;
@@ -294,89 +233,60 @@ body {
 .henry-gaming {
     margin-top: 10px;
 
-    font-family: 'Quicksand', sans-serif;
-
     font-size: 0.9rem;
 
     letter-spacing: 1px;
 
     text-shadow:
-        0 0 8px rgba(255, 255, 255, 0.5);
+        0 0 8px rgba(255,255,255,0.5);
+
+    text-align: center;
+
+    white-space: nowrap;
 
     min-height: 24px;
 }
 
 
-/* =========================================================
+/* =========================================
    PROFILE NAME
-   FIX CHỮ G / P / Y / J KHÔNG BỊ CẮT
-========================================================= */
+   FIX CHỮ "g"
+========================================= */
 
 .profile-name {
-    display: flex;
-
-    align-items: center;
-
-    flex-wrap: nowrap;
-
-    font-family: 'Quicksand', sans-serif;
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
 
     font-size: 3rem;
 
     font-weight: 800;
 
-    line-height: 1.25;
+    line-height: 1.3;
 
     margin: 0;
 
-    padding-top: 2px;
-    padding-bottom: 10px;
+    padding: 0 0 6px 0;
+
+    display: block;
 
     overflow: visible;
 
     white-space: nowrap;
-
-    background: var(--rainbow);
-
-    background-size: 200% auto;
-
-    -webkit-background-clip: text;
-    background-clip: text;
-
-    -webkit-text-fill-color: transparent;
-
-    animation: rainbow_move 4s linear infinite;
 }
 
 
-/* =========================================================
-   VERIFIED BADGE
-========================================================= */
+.name-highlight {
+    color: #ff416c;
 
-.verified-badge {
-    display: inline-block;
-
-    margin-left: 7px;
-
-    font-size: 0.75em;
-
-    color: #1d9bf0;
-
-    -webkit-text-fill-color: #1d9bf0;
-
-    flex-shrink: 0;
-
-    vertical-align: middle;
-
-    filter:
-        drop-shadow(0 0 3px rgba(29, 155, 240, 0.7))
-        drop-shadow(0 0 6px rgba(29, 155, 240, 0.3));
+    -webkit-text-fill-color: #ff416c;
 }
 
 
-/* =========================================================
+/* =========================================
    PROFILE SUBTITLE
-========================================================= */
+========================================= */
 
 .profile-subtitle {
     font-size: 1.1rem;
@@ -393,12 +303,14 @@ body {
     opacity: 0.8;
 
     letter-spacing: 1px;
+
+    margin-bottom: 0;
 }
 
 
-/* =========================================================
-   SOCIAL LINKS
-========================================================= */
+/* =========================================
+   SOCIAL
+========================================= */
 
 .social-links {
     display: flex;
@@ -413,12 +325,11 @@ body {
     width: 44px;
     height: 44px;
 
-    background: rgba(255, 255, 255, 0.12);
+    background: rgba(255,255,255,0.12);
 
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
     border-radius: 12px;
@@ -427,7 +338,7 @@ body {
 
     border: 1px solid var(--glass-border);
 
-    transition: 0.4s;
+    transition: 0.3s;
 
     text-decoration: none;
 
@@ -437,7 +348,7 @@ body {
 
 
 .social-item:hover {
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(255,255,255,0.25);
 
     transform: translateY(-5px);
 
@@ -445,29 +356,31 @@ body {
 }
 
 
-/* =========================================================
-   CONTRIBUTION / MUSIC VISUALIZER
-========================================================= */
+/* =========================================
+   CONTRIBUTION
+========================================= */
 
 .jd-music-container {
-    margin: 30px 0 10px 0;
+    margin: 30px 0 10px;
 
     padding: 20px;
 
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0,0,0,0.3);
 
     border-radius: 20px;
 
     border: 1px solid var(--glass-border);
+
+    overflow: hidden;
 }
 
 
 #contribution-grid {
     display: grid;
 
-    grid-template-columns: repeat(52, 1fr);
+    grid-template-columns: repeat(52,1fr);
 
-    grid-template-rows: repeat(7, 1fr);
+    grid-template-rows: repeat(7,1fr);
 
     gap: 3px;
 }
@@ -478,7 +391,7 @@ body {
 
     border-radius: 2px;
 
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255,255,255,0.05);
 }
 
 
@@ -506,9 +419,9 @@ body {
 }
 
 
-/* =========================================================
+/* =========================================
    ABOUT
-========================================================= */
+========================================= */
 
 .section-title {
     margin-bottom: 24px;
@@ -518,7 +431,7 @@ body {
 .info-grid {
     display: grid;
 
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2,1fr);
 
     gap: 15px;
 }
@@ -542,9 +455,9 @@ body {
 }
 
 
-/* =========================================================
+/* =========================================
    SKILLS
-========================================================= */
+========================================= */
 
 .skill-list {
     display: grid;
@@ -558,7 +471,7 @@ body {
 .progress-box {
     height: 10px;
 
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255,255,255,0.1);
 
     border-radius: 10px;
 
@@ -566,7 +479,7 @@ body {
 
     margin-top: 8px;
 
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255,255,255,0.05);
 }
 
 
@@ -581,9 +494,9 @@ body {
 }
 
 
-/* =========================================================
-   CONTACT MY JOBS
-========================================================= */
+/* =========================================
+   CONTACT JOBS
+========================================= */
 
 .job-image {
     text-align: center;
@@ -597,31 +510,29 @@ body {
 
     height: auto;
 
-    border-radius: 15px;
-
     display: block;
 
     margin: 0 auto;
 
+    border-radius: 15px;
+
     border: 1px solid var(--glass-border);
 
     box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.4);
+        0 10px 30px rgba(0,0,0,0.4);
 
     -webkit-user-drag: none;
-
-    user-drag: none;
 }
 
 
-/* =========================================================
+/* =========================================
    CONTACT METHODS
-========================================================= */
+========================================= */
 
 .contact-methods {
     display: grid;
 
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4,1fr);
 
     gap: 12px;
 
@@ -629,7 +540,7 @@ body {
 
     padding: 15px;
 
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255,255,255,0.05);
 
     border: 1px solid var(--glass-border);
 
@@ -641,14 +552,13 @@ body {
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
     gap: 8px;
 
     padding: 12px 8px;
 
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(255,255,255,0.08);
 
     border-radius: 10px;
 
@@ -668,7 +578,7 @@ body {
 
 
 .contact-method:hover {
-    background: rgba(255, 255, 255, 0.18);
+    background: rgba(255,255,255,0.18);
 
     transform: translateY(-3px);
 
@@ -676,51 +586,24 @@ body {
 }
 
 
-/* =========================================================
+/* =========================================
    MUSIC BUTTON
-========================================================= */
+========================================= */
 
 .music-btn {
     position: fixed;
 
     right: 20px;
-
     bottom: 20px;
 
     width: 55px;
-
     height: 55px;
 
-    border: 3px solid transparent;
+    border: 2px solid rgba(255,255,255,0.3);
 
     border-radius: 50%;
 
-    background:
-        linear-gradient(
-            rgba(20, 20, 20, 0.88),
-            rgba(20, 20, 20, 0.88)
-        ) padding-box,
-
-        linear-gradient(
-            90deg,
-            #ff0000,
-            #ff7300,
-            #fffb00,
-            #48ff00,
-            #00ffd5,
-            #008cff,
-            #7a00ff,
-            #ff00c8,
-            #ff0000
-        ) border-box;
-
-    background-size:
-        100% 100%,
-        400% 100%;
-
-    background-position:
-        center,
-        0% 50%;
+    background: rgba(20,20,20,0.9);
 
     color: #fff;
 
@@ -729,7 +612,6 @@ body {
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
     cursor: pointer;
@@ -737,54 +619,23 @@ body {
     z-index: 9999;
 
     box-shadow:
-        0 0 6px rgba(0, 255, 255, 0.6),
-        0 0 12px rgba(255, 0, 255, 0.4),
-        0 8px 25px rgba(0, 0, 0, 0.5);
+        0 8px 25px rgba(0,0,0,0.5);
 
     transition:
         transform 0.3s ease,
-        box-shadow 0.3s ease;
-
-    animation: rgb-button-border 4s linear infinite;
-}
-
-
-@keyframes rgb-button-border {
-    0% {
-        background-position:
-            center,
-            0% 50%;
-    }
-
-    50% {
-        background-position:
-            center,
-            100% 50%;
-    }
-
-    100% {
-        background-position:
-            center,
-            0% 50%;
-    }
+        background 0.3s ease;
 }
 
 
 .music-btn:hover {
     transform: scale(1.1);
 
-    box-shadow:
-        0 0 10px rgba(0, 255, 255, 0.9),
-        0 0 20px rgba(255, 0, 255, 0.7),
-        0 0 35px rgba(0, 140, 255, 0.4),
-        0 8px 25px rgba(0, 0, 0, 0.5);
+    background: rgba(255,255,255,0.18);
 }
 
 
 .music-btn.playing {
-    animation:
-        rgb-button-border 4s linear infinite,
-        musicRotate 2s linear infinite;
+    animation: musicRotate 2s linear infinite;
 }
 
 
@@ -799,33 +650,9 @@ body {
 }
 
 
-/* =========================================================
-   IMAGE
-========================================================= */
-
-img {
-    -webkit-user-drag: none;
-
-    user-drag: none;
-}
-
-
-/* =========================================================
-   SELECTABLE
-========================================================= */
-
-input,
-textarea,
-.selectable {
-    user-select: text;
-
-    -webkit-user-select: text;
-}
-
-
-/* =========================================================
-   TYPING EFFECT
-========================================================= */
+/* =========================================
+   TYPING
+========================================= */
 
 .typing-cursor {
     display: inline-block;
@@ -849,41 +676,30 @@ textarea,
 
 
 @keyframes cursor-blink {
-    0%,
-    45% {
+    0%,45% {
         opacity: 1;
     }
 
-    46%,
-    100% {
+    46%,100% {
         opacity: 0;
     }
 }
 
 
-/* =========================================================
-   TYPING STYLES 1 - 6
-========================================================= */
-
 .typing-style-1 {
-    font-family: 'Quicksand', sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 
 .typing-style-2 {
-    font-family: 'Outfit', sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
+
+    font-weight: 600;
 }
 
 
 .typing-style-3 {
-    font-family: 'Orbitron', sans-serif;
-
-    letter-spacing: 1px;
-}
-
-
-.typing-style-4 {
-    font-family: 'Montserrat', sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
 
     font-weight: 700;
 
@@ -891,27 +707,56 @@ textarea,
 }
 
 
-.typing-style-5 {
-    font-family: 'Quicksand', sans-serif;
+.typing-style-4 {
+    font-family: Arial, Helvetica, sans-serif;
 
-    font-weight: 500;
-
-    letter-spacing: 2px;
+    font-weight: 700;
 }
 
 
-.typing-style-6 {
-    font-family: 'Outfit', sans-serif;
+.typing-style-5 {
+    font-family: Arial, Helvetica, sans-serif;
 
-    font-weight: 800;
+    font-weight: 500;
 
     letter-spacing: 1px;
 }
 
 
-/* =========================================================
+.typing-style-6 {
+    font-family: Arial, Helvetica, sans-serif;
+
+    font-weight: 800;
+}
+
+
+/* =========================================
+   IMAGE
+========================================= */
+
+img {
+    -webkit-user-drag: none;
+
+    user-select: none;
+}
+
+
+/* =========================================
+   SELECTABLE
+========================================= */
+
+input,
+textarea,
+.selectable {
+    user-select: text;
+
+    -webkit-user-select: text;
+}
+
+
+/* =========================================
    FOOTER
-========================================================= */
+========================================= */
 
 footer {
     text-align: center;
@@ -920,14 +765,23 @@ footer {
 }
 
 
-/* =========================================================
-   TABLET / MOBILE
-========================================================= */
+/* =========================================
+   TABLET
+========================================= */
 
-@media (max-width: 768px) {
+@media (max-width:768px) {
 
     .main-wrapper {
-        padding: 15px;
+        width: calc(100% - 30px);
+
+        margin: 25px auto;
+    }
+
+
+    .glass-card {
+        padding: 25px;
+
+        border-radius: 22px;
     }
 
 
@@ -945,6 +799,24 @@ footer {
     }
 
 
+    .profile-name {
+        font-size: 2.2rem;
+
+        line-height: 1.3;
+
+        padding-bottom: 5px;
+
+        white-space: normal;
+    }
+
+
+    .social-links {
+        justify-content: center;
+
+        flex-wrap: wrap;
+    }
+
+
     .info-grid,
     .skill-list {
         grid-template-columns: 1fr;
@@ -952,88 +824,77 @@ footer {
 
 
     #contribution-grid {
-        grid-template-columns: repeat(26, 1fr);
+        grid-template-columns: repeat(26,1fr);
+
+        gap: 2px;
     }
 
 
     .avatar-wrap {
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
 
 
     .contact-methods {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-
-    .profile-name {
-        justify-content: center;
-
-        font-size: 2.2rem;
-
-        line-height: 1.25;
-
-        padding-top: 2px;
-
-        padding-bottom: 8px;
-    }
-
-
-    .verified-badge {
-        margin-left: 5px;
-
-        font-size: 0.75em;
-    }
-
-
-    .glass-card {
-        border-radius: 22px;
-    }
-
-
-    .glass-card::before {
-        border-radius: 24px;
+        grid-template-columns: repeat(2,1fr);
     }
 
 
     .music-btn {
         width: 50px;
-
         height: 50px;
 
         right: 15px;
-
         bottom: 15px;
-
-        border-width: 3px;
 
         font-size: 18px;
     }
 }
 
 
-/* =========================================================
+/* =========================================
    SMALL MOBILE
-========================================================= */
+========================================= */
 
-@media (max-width: 480px) {
+@media (max-width:480px) {
 
     .main-wrapper {
-        padding: 10px;
+        width: calc(100% - 20px);
 
         margin: 20px auto;
     }
 
 
     .glass-card {
-        padding: 22px;
+        padding: 20px;
 
         border-radius: 20px;
+
+        margin-bottom: 18px;
     }
 
 
-    .glass-card::before {
-        border-radius: 22px;
+    .profile-name {
+        font-size: 1.9rem;
+
+        line-height: 1.35;
+
+        padding-bottom: 5px;
+    }
+
+
+    .profile-subtitle {
+        font-size: 1rem;
+    }
+
+
+    .profile-tag {
+        font-size: 0.75rem;
+    }
+
+
+    .jd-music-container {
+        padding: 12px;
     }
 
 
@@ -1046,32 +907,21 @@ footer {
 
     .contact-method {
         font-size: 0.8rem;
+
+        padding: 10px 5px;
     }
 
 
-    .profile-name {
-        font-size: 2rem;
-
-        line-height: 1.3;
-
-        padding-bottom: 8px;
-    }
-
-
-    .verified-badge {
-        margin-left: 5px;
-
-        font-size: 0.75em;
+    .contact-method i {
+        font-size: 17px;
     }
 
 
     .music-btn {
         width: 50px;
-
         height: 50px;
 
         right: 15px;
-
         bottom: 15px;
     }
 }
