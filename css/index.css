@@ -237,27 +237,33 @@ body {
 ========================================================= */
 
 .profile-name {
+    font-family: 'Quicksand', sans-serif;
+
     font-size: 3rem;
+    font-weight: 800;
 
     margin: 0;
 
-    /*
-        Tăng line-height để không cắt
-        phần chân chữ như "g"
-    */
-    line-height: 1.2;
+    /* Quan trọng: tăng khoảng chứa chữ */
+    line-height: 1.25;
 
-    /*
-        Chừa thêm khoảng phía dưới
-    */
-    padding-bottom: 5px;
+    /* Cho phép phần chân chữ không bị cắt */
+    padding-bottom: 8px;
 
-    /*
-        Đảm bảo chữ không bị cắt
-    */
+    /* Không cắt glyph */
     overflow: visible;
-}
 
+    /* Gradient */
+    background: var(--rainbow);
+    background-size: 200% auto;
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+
+    animation: rainbow_move 4s linear infinite;
+}
 
 .profile-name span {
     color: #ff416c;
