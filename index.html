@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
 
@@ -28,82 +29,251 @@
 
 <body>
 
-<div id="jsi-flying-fish-container"></div>
+    <!-- Flying Fish Background -->
+    <div id="jsi-flying-fish-container"></div>
 
-<div class="main-wrapper">
 
-    <!-- PROFILE -->
-    <div class="glass-card">
+    <div class="main-wrapper">
 
-        <div class="profile-header">
+        <!-- =====================================================
+             PROFILE
+        ====================================================== -->
 
-            <div class="avatar-section">
+        <div class="glass-card">
 
-                <div class="avatar-wrap">
+            <div class="profile-header">
 
-                    <img
-                        src="https://files.catbox.moe/7phatb.jpg"
-                        class="avatar-img"
-                        alt="Pham Bao Long">
+                <!-- AVATAR -->
+                <div class="avatar-section">
 
-                    <img
-                        src="https://raw.githubusercontent.com/WusThanhDieu/Profile-ThanhDieu.Com-V5-Tester/refs/heads/main/res/v5/img/crown/mong-vuot-rong.png"
-                        class="avatar-frame"
-                        alt="">
+                    <div class="avatar-wrap">
+
+                        <img
+                            src="https://files.catbox.moe/7phatb.jpg"
+                            class="avatar-img"
+                            alt="Pham Bao Long"
+                            draggable="false">
+
+                        <img
+                            src="https://raw.githubusercontent.com/WusThanhDieu/Profile-ThanhDieu.Com-V5-Tester/refs/heads/main/res/v5/img/crown/mong-vuot-rong.png"
+                            class="avatar-frame"
+                            alt=""
+                            draggable="false">
+
+                    </div>
+
+
+                    <!-- TYPING TEXT -->
+                    <div class="henry-gaming rainbow-text">
+
+                        <span id="typing-text"></span>
+
+                        <span class="typing-cursor">|</span>
+
+                    </div>
+
                 </div>
 
-                <div class="henry-gaming rainbow-text">
-                    <span id="typing-text"></span>
-                    <span class="typing-cursor">|</span>
+
+                <!-- USER INFO -->
+                <div class="user-info">
+
+                    <!-- PROFILE NAME -->
+                    <h1 class="rainbow-text profile-name">
+                        Pham Bao<span style="color:#ff416c"> Long</span>
+                    </h1>
+
+
+                    <!-- SUBTITLE -->
+                    <div class="rainbow-text profile-subtitle">
+                        Thằng bé đầy tham vọng
+                    </div>
+
+
+                    <!-- TAG -->
+                    <p class="rainbow-text profile-tag">
+                        #PBL
+                    </p>
+
+
+                    <!-- SOCIAL -->
+                    <div class="social-links">
+
+                        <!-- Facebook -->
+                        <a
+                            href="https://www.facebook.com/PhamBaoLongzz/"
+                            class="social-item"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Facebook">
+
+                            <i class="fab fa-facebook-f"></i>
+
+                        </a>
+
+
+                        <!-- GitHub -->
+                        <a
+                            href="https://github.com/phambaolng"
+                            class="social-item"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="GitHub">
+
+                            <i class="fab fa-github"></i>
+
+                        </a>
+
+
+                        <!-- Telegram -->
+                        <a
+                            href="https://t.me/pbl_96"
+                            class="social-item"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Telegram">
+
+                            <i class="fab fa-telegram-plane"></i>
+
+                        </a>
+
+
+                        <!-- TikTok -->
+                        <a
+                            href="https://www.tiktok.com/@ph.baolong14"
+                            class="social-item"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="TikTok">
+
+                            <i class="fab fa-tiktok"></i>
+
+                        </a>
+
+
+                        <!-- Instagram -->
+                        <a
+                            href="https://www.instagram.com/phambaolng/"
+                            class="social-item"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Instagram">
+
+                            <i class="fa-brands fa-instagram"></i>
+
+                        </a>
+
+                    </div>
+
                 </div>
 
             </div>
 
-            <div class="user-info">
 
-                <h1 class="rainbow-text profile-name">
-                    Pham Bao<span style="color:#ff416c"> Long</span>
-                </h1>
+            <!-- MUSIC VISUALIZER -->
+            <div class="jd-music-container">
 
-                <div class="rainbow-text profile-subtitle">
-                    Thằng bé đầy tham vọng
+                <div id="contribution-grid"></div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             ABOUT ME
+        ====================================================== -->
+
+        <div class="glass-card">
+
+            <h5 class="rainbow-text section-title">
+
+                <i class="fa fa-user-circle"></i>
+
+                ABOUT ME.
+
+            </h5>
+
+
+            <div class="info-grid">
+
+                <!-- Birthday -->
+                <div class="info-item rainbow-text">
+
+                    <i class="fa fa-calendar"></i>
+
+                    9/6
+
                 </div>
 
-                <p class="rainbow-text profile-tag">
-                    #PBL
-                </p>
 
-                <div class="social-links">
+                <!-- Job -->
+                <div class="info-item rainbow-text">
 
-                    <a href="https://www.facebook.com/PhamBaoLongzz/"
-                       class="social-item"
-                       target="_blank">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
+                    <i class="fa fa-briefcase"></i>
 
-                    <a href="https://github.com/phambaolng"
-                       class="social-item"
-                       target="_blank">
-                        <i class="fab fa-github"></i>
-                    </a>
+                    I'm a Student:((
 
-                    <a href="https://t.me/pbl_96"
-                       class="social-item"
-                       target="_blank">
-                        <i class="fab fa-telegram-plane"></i>
-                    </a>
+                </div>
 
-                    <a href="https://www.tiktok.com/@ph.baolong14"
-                       class="social-item"
-                       target="_blank">
-                        <i class="fab fa-tiktok"></i>
-                    </a>
 
-                    <a href="https://www.instagram.com/phambaolng/"
-                       class="social-item"
-                       target="_blank">
-                        <i class="fa-brands fa-instagram"></i>
-                    </a>
+                <!-- Relationship -->
+                <div class="info-item rainbow-text">
+
+                    <i class="fa fa-heart"></i>
+
+                    Kyen
+
+                </div>
+
+
+                <!-- Location -->
+                <div class="info-item rainbow-text">
+
+                    <i class="fa-solid fa-location-dot"></i>
+
+                    Hưng Yên, Việt Nam
+
+                </div>
+
+
+                <!-- Email -->
+                <div class="info-item rainbow-text">
+
+                    <i class="fa fa-envelope"></i>
+
+                    phambaolng@gmail.com
+
+                </div>
+
+
+                <!-- Telegram -->
+                <div class="info-item rainbow-text">
+
+                    <i class="fa fa-paper-plane"></i>
+
+                    t.me/pbl_96
+
+                </div>
+
+
+                <!-- Source -->
+                <div class="info-item rainbow-text">
+
+                    <i class="fa fa-terminal"></i>
+
+                    HTML SOURCE
+
+                </div>
+
+
+                <!-- Security -->
+                <div class="info-item rainbow-text">
+
+                    <i class="fa fa-shield-halved"></i>
+
+                    Đang phát triển Anti-DDoS
 
                 </div>
 
@@ -111,214 +281,301 @@
 
         </div>
 
-        <div class="jd-music-container">
-            <div id="contribution-grid"></div>
-        </div>
-
-    </div>
 
 
-    <!-- ABOUT ME -->
-    <div class="glass-card">
+        <!-- =====================================================
+             SKILLS
+        ====================================================== -->
 
-        <h5 class="rainbow-text section-title">
-            <i class="fa fa-user-circle"></i>
-            ABOUT ME.
-        </h5>
+        <div class="glass-card">
 
-        <div class="info-grid">
+            <h5 class="rainbow-text section-title">
 
-            <div class="info-item rainbow-text">
-                <i class="fa fa-calendar"></i>
-                9/6
+                <i class="fa fa-code"></i>
+
+                SKILL LANGUAGE.
+
+            </h5>
+
+
+            <div class="skill-list">
+
+
+                <!-- HTML CSS JS -->
+                <div class="skill-item">
+
+                    <div class="d-flex justify-content-between rainbow-text">
+
+                        <span>
+                            HTML | CSS | JS
+                        </span>
+
+                        <span>
+                            70%
+                        </span>
+
+                    </div>
+
+
+                    <div class="progress-box">
+
+                        <div
+                            class="progress-bar"
+                            style="width:70%">
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- PYTHON -->
+                <div class="skill-item">
+
+                    <div class="d-flex justify-content-between rainbow-text">
+
+                        <span>
+                            PYTHON (Security)
+                        </span>
+
+                        <span>
+                            10%
+                        </span>
+
+                    </div>
+
+
+                    <div class="progress-box">
+
+                        <div
+                            class="progress-bar"
+                            style="width:10%">
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- NODE JS -->
+                <div class="skill-item">
+
+                    <div class="d-flex justify-content-between rainbow-text">
+
+                        <span>
+                            NODE.JS / TS
+                        </span>
+
+                        <span>
+                            20%
+                        </span>
+
+                    </div>
+
+
+                    <div class="progress-box">
+
+                        <div
+                            class="progress-bar"
+                            style="width:20%">
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- SQL -->
+                <div class="skill-item">
+
+                    <div class="d-flex justify-content-between rainbow-text">
+
+                        <span>
+                            DATABASE (SQL)
+                        </span>
+
+                        <span>
+                            0%
+                        </span>
+
+                    </div>
+
+
+                    <div class="progress-box">
+
+                        <div
+                            class="progress-bar"
+                            style="width:0%">
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div>
 
-            <div class="info-item rainbow-text">
+        </div>
+
+
+
+        <!-- =====================================================
+             CONTACT MY JOBS
+        ====================================================== -->
+
+        <div class="glass-card">
+
+            <h5 class="rainbow-text section-title">
+
                 <i class="fa fa-briefcase"></i>
-                I'm a Student:((
+
+                CONTACT MY JOBS.
+
+            </h5>
+
+
+            <!-- JOB IMAGE -->
+            <div class="job-image">
+
+                <img
+                    src="https://files.catbox.moe/5hlvhv.jpg"
+                    alt="Locket Gold"
+                    draggable="false">
+
             </div>
 
-            <div class="info-item rainbow-text">
-                <i class="fa fa-heart"></i>
-                Kyen
-            </div>
 
-            <div class="info-item rainbow-text">
-                <i class="fa-solid fa-location-dot"></i>
-                Hưng Yên, Việt Nam
-            </div>
 
-            <div class="info-item rainbow-text">
-                <i class="fa fa-envelope"></i>
-                phambaolng@gmail.com
-            </div>
+            <!-- CONTACT METHODS -->
+            <div class="contact-methods">
 
-            <div class="info-item rainbow-text">
-                <i class="fa fa-paper-plane"></i>
-                t.me/pbl_96
-            </div>
 
-            <div class="info-item rainbow-text">
-                <i class="fa fa-terminal"></i>
-                HTML SOURCE
-            </div>
+                <!-- Facebook -->
+                <a
+                    href="https://www.facebook.com/PhamBaoLongzz/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="contact-method">
 
-            <div class="info-item rainbow-text">
-                <i class="fa fa-shield-halved"></i>
-                Đang phát triển Anti-DDoS
+                    <i class="fa-brands fa-facebook"></i>
+
+                    <span>
+                        Facebook
+                    </span>
+
+                </a>
+
+
+
+                <!-- Zalo -->
+                <a
+                    href="https://zalo.me/0989632054"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="contact-method">
+
+                    <i class="fa-brands fa-whatsapp"></i>
+
+                    <span>
+                        Zalo
+                    </span>
+
+                </a>
+
+
+
+                <!-- TikTok -->
+                <a
+                    href="https://www.tiktok.com/@ph.baolong14"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="contact-method">
+
+                    <i class="fa-brands fa-tiktok"></i>
+
+                    <span>
+                        TikTok
+                    </span>
+
+                </a>
+
+
+
+                <!-- Telegram -->
+                <a
+                    href="https://t.me/pbl_96"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="contact-method">
+
+                    <i class="fa-brands fa-telegram"></i>
+
+                    <span>
+                        Telegram
+                    </span>
+
+                </a>
+
             </div>
 
         </div>
+
+
+
+        <!-- =====================================================
+             FOOTER
+        ====================================================== -->
+
+        <footer class="rainbow-text">
+
+            COPYRIGHT © 2026 PBL - ALL RIGHTS RESERVED
+
+        </footer>
 
     </div>
 
 
-    <!-- SKILLS -->
-    <div class="glass-card">
 
-        <h5 class="rainbow-text section-title">
-            <i class="fa fa-code"></i>
-            SKILL LANGUAGE.
-        </h5>
+    <!-- =====================================================
+         JQUERY
+    ====================================================== -->
 
-        <div class="skill-list">
-
-            <div class="skill-item">
-
-                <div class="d-flex justify-content-between rainbow-text">
-                    <span>HTML | CSS | JS</span>
-                    <span>70%</span>
-                </div>
-
-                <div class="progress-box">
-                    <div class="progress-bar" style="width:70%"></div>
-                </div>
-
-            </div>
-
-            <div class="skill-item">
-
-                <div class="d-flex justify-content-between rainbow-text">
-                    <span>PYTHON (Security)</span>
-                    <span>10%</span>
-                </div>
-
-                <div class="progress-box">
-                    <div class="progress-bar" style="width:10%"></div>
-                </div>
-
-            </div>
-
-            <div class="skill-item">
-
-                <div class="d-flex justify-content-between rainbow-text">
-                    <span>NODE.JS / TS</span>
-                    <span>20%</span>
-                </div>
-
-                <div class="progress-box">
-                    <div class="progress-bar" style="width:20%"></div>
-                </div>
-
-            </div>
-
-            <div class="skill-item">
-
-                <div class="d-flex justify-content-between rainbow-text">
-                    <span>DATABASE (SQL)</span>
-                    <span>0%</span>
-                </div>
-
-                <div class="progress-box">
-                    <div class="progress-bar" style="width:0%"></div>
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 
-    <!-- CONTACT MY JOBS -->
-    <div class="glass-card">
 
-        <h5 class="rainbow-text section-title">
-            <i class="fa fa-briefcase"></i>
-            CONTACT MY JOBS.
-        </h5>
+    <!-- =====================================================
+         MUSIC BUTTON
+    ====================================================== -->
 
-        <div class="job-image">
+    <button
+        id="music-btn"
+        class="music-btn"
+        type="button"
+        aria-label="Music">
 
-            <img
-                src="https://files.catbox.moe/5hlvhv.jpg"
-                alt="Locket Gold">
+        <i class="fa-solid fa-music"></i>
 
-        </div>
-
-        <div class="contact-methods">
-
-            <a href="https://www.facebook.com/PhamBaoLongzz/"
-               target="_blank"
-               class="contact-method">
-
-                <i class="fa-brands fa-facebook"></i>
-                <span>Facebook</span>
-
-            </a>
-
-            <a href="https://zalo.me/0989632054"
-               target="_blank"
-               class="contact-method">
-
-                <i class="fa-brands fa-whatsapp"></i>
-                <span>Zalo</span>
-
-            </a>
-
-            <a href="https://www.tiktok.com/@ph.baolong14"
-               target="_blank"
-               class="contact-method">
-
-                <i class="fa-brands fa-tiktok"></i>
-                <span>TikTok</span>
-
-            </a>
-
-            <a href="https://t.me/pbl_96"
-               target="_blank"
-               class="contact-method">
-
-                <i class="fa-brands fa-telegram"></i>
-                <span>Telegram</span>
-
-            </a>
-
-        </div>
-
-    </div>
+    </button>
 
 
-    <!-- FOOTER -->
-    <footer class="rainbow-text">
-        COPYRIGHT © 2026 PBL - ALL RIGHTS RESERVED
-    </footer>
+    <!-- AUDIO -->
 
-</div>
+    <audio
+        id="bg-music"
+        preload="none">
+    </audio>
 
 
-<!-- jQuery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-<!-- MUSIC BUTTON -->
-<button id="music-btn" class="music-btn">
-    <i class="fa-solid fa-music"></i>
-</button>
+    <!-- =====================================================
+         MAIN JS
+    ====================================================== -->
 
-<audio id="bg-music"></audio>
-
-<!-- JS -->
-<script src="js/index.js"></script>
+    <script src="js/index.js"></script>
 
 </body>
+
 </html>
