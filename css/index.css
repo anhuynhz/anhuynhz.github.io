@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Quicksand:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Orbitron:wght@600;700;800&family=Outfit:wght@400;500;600;700;800&family=Quicksand:wght@300;400;500;600;700&display=swap');
 
 /* =========================================================
    ROOT
@@ -44,11 +44,13 @@ body {
     background: #000;
 
     font-family: 'Quicksand', sans-serif;
+
     color: #fff;
 
     overflow-x: hidden;
 
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -73,6 +75,8 @@ body {
     z-index: -1;
 
     background: #050505;
+
+    overflow: hidden;
 }
 
 
@@ -81,6 +85,7 @@ body {
 ========================================================= */
 
 .main-wrapper {
+    width: 100%;
     max-width: 900px;
 
     margin: 40px auto;
@@ -90,6 +95,8 @@ body {
     position: relative;
 
     z-index: 1;
+
+    box-sizing: border-box;
 }
 
 
@@ -98,6 +105,8 @@ body {
 ========================================================= */
 
 .glass-card {
+    position: relative;
+
     background: var(--glass);
 
     backdrop-filter: blur(20px);
@@ -113,6 +122,8 @@ body {
 
     box-shadow:
         0 15px 35px rgba(0, 0, 0, 0.6);
+
+    box-sizing: border-box;
 }
 
 
@@ -137,7 +148,6 @@ body {
 
 
 @keyframes rainbow_move {
-
     0% {
         background-position: 0% center;
     }
@@ -145,7 +155,6 @@ body {
     100% {
         background-position: 200% center;
     }
-
 }
 
 
@@ -178,6 +187,8 @@ body {
 
     width: 150px;
     height: 150px;
+
+    flex-shrink: 0;
 }
 
 
@@ -198,6 +209,8 @@ body {
 
     box-shadow:
         0 0 20px rgba(255, 255, 255, 0.2);
+
+    object-fit: cover;
 }
 
 
@@ -213,22 +226,194 @@ body {
     z-index: 3;
 
     pointer-events: none;
+
+    object-fit: contain;
 }
 
+
+/* =========================================================
+   TYPING CONTAINER
+========================================================= */
 
 .henry-gaming {
     margin-top: 10px;
 
+    width: 300px;
+    min-width: 300px;
+    height: 32px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
     font-family: 'Quicksand', sans-serif;
 
     font-size: 0.9rem;
+
+    line-height: 1;
 
     letter-spacing: 1px;
 
     text-shadow:
         0 0 8px rgba(255, 255, 255, 0.5);
 
-    min-width: 300px;
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   TYPING TEXT
+========================================================= */
+
+#typing-text {
+    display: inline-block;
+
+    vertical-align: middle;
+
+    white-space: nowrap;
+
+    line-height: 1;
+
+    height: 1em;
+
+    overflow: visible;
+
+    transition: none;
+
+    /* Quan trọng để chữ g không bị cắt */
+    padding-bottom: 3px;
+
+    box-sizing: content-box;
+}
+
+
+/* =========================================================
+   TYPING CURSOR
+========================================================= */
+
+.typing-cursor {
+    display: inline-block;
+
+    flex-shrink: 0;
+
+    margin-left: 3px;
+
+    font-family: 'Quicksand', sans-serif;
+
+    font-size: 0.9rem;
+
+    line-height: 1;
+
+    font-weight: 700;
+
+    background: var(--rainbow);
+
+    background-size: 200% auto;
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+
+    animation:
+        cursor-blink 0.7s infinite,
+        rainbow_move 4s linear infinite;
+}
+
+
+@keyframes cursor-blink {
+    0%,
+    45% {
+        opacity: 1;
+    }
+
+    46%,
+    100% {
+        opacity: 0;
+    }
+}
+
+
+/* =========================================================
+   TYPING STYLES
+   Tất cả cùng kích thước + line-height
+   để không bị nhảy căn
+========================================================= */
+
+.typing-style-1 {
+    font-family: 'Quicksand', sans-serif;
+
+    font-size: 0.9rem;
+    font-weight: 600;
+
+    line-height: 1;
+
+    letter-spacing: 1px;
+}
+
+
+.typing-style-2 {
+    font-family: 'Outfit', sans-serif;
+
+    font-size: 0.9rem;
+    font-weight: 600;
+
+    line-height: 1;
+
+    letter-spacing: 1px;
+}
+
+
+.typing-style-3 {
+    font-family: 'Orbitron', sans-serif;
+
+    font-size: 0.78rem;
+    font-weight: 700;
+
+    line-height: 1;
+
+    letter-spacing: 1px;
+}
+
+
+.typing-style-4 {
+    font-family: 'Montserrat', sans-serif;
+
+    font-size: 0.82rem;
+    font-weight: 700;
+
+    line-height: 1;
+
+    letter-spacing: 0.4px;
+}
+
+
+.typing-style-5 {
+    font-family: 'Quicksand', sans-serif;
+
+    font-size: 0.9rem;
+    font-weight: 500;
+
+    line-height: 1;
+
+    letter-spacing: 1.5px;
+}
+
+
+.typing-style-6 {
+    font-family: 'Outfit', sans-serif;
+
+    font-size: 0.9rem;
+    font-weight: 700;
+
+    line-height: 1;
+
+    letter-spacing: 1px;
 }
 
 
@@ -237,48 +422,54 @@ body {
 ========================================================= */
 
 .profile-name {
+    font-family: 'Quicksand', sans-serif;
+
     font-size: 3rem;
 
     margin: 0;
 
-    /*
-        Tăng line-height để không cắt
-        phần chân chữ như "g"
-    */
-    line-height: 1.2;
+    line-height: 1.25;
 
-    /*
-        Chừa thêm khoảng phía dưới
-    */
-    padding-bottom: 5px;
+    padding-bottom: 8px;
 
-    /*
-        Đảm bảo chữ không bị cắt
-    */
     overflow: visible;
+
+    white-space: nowrap;
+
+    box-sizing: content-box;
 }
 
 
 .profile-name span {
     color: #ff416c;
+
+    -webkit-text-fill-color: #ff416c;
 }
 
 
 .profile-subtitle {
+    font-family: 'Quicksand', sans-serif;
+
     font-size: 1.1rem;
 
     margin: 10px 0;
 
     font-weight: 600;
+
+    line-height: 1.4;
 }
 
 
 .profile-tag {
+    font-family: 'Quicksand', sans-serif;
+
     font-size: 0.8rem;
 
     opacity: 0.8;
 
     letter-spacing: 1px;
+
+    line-height: 1.4;
 }
 
 
@@ -318,6 +509,8 @@ body {
 
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
+
+    flex-shrink: 0;
 }
 
 
@@ -344,6 +537,8 @@ body {
     border-radius: 20px;
 
     border: 1px solid var(--glass-border);
+
+    box-sizing: border-box;
 }
 
 
@@ -355,6 +550,8 @@ body {
     grid-template-rows: repeat(7, 1fr);
 
     gap: 3px;
+
+    width: 100%;
 }
 
 
@@ -377,7 +574,6 @@ body {
 
 
 @keyframes jd_glow {
-
     0% {
         background-position: 0% 50%;
     }
@@ -389,7 +585,6 @@ body {
     100% {
         background-position: 0% 50%;
     }
-
 }
 
 
@@ -399,6 +594,8 @@ body {
 
 .section-title {
     margin-bottom: 24px;
+
+    line-height: 1.4;
 }
 
 
@@ -417,6 +614,8 @@ body {
     font-weight: 700;
 
     padding: 5px 0;
+
+    line-height: 1.5;
 }
 
 
@@ -496,6 +695,7 @@ body {
         0 10px 30px rgba(0, 0, 0, 0.4);
 
     -webkit-user-drag: none;
+
     user-drag: none;
 }
 
@@ -520,6 +720,8 @@ body {
     border: 1px solid var(--glass-border);
 
     border-radius: 15px;
+
+    box-sizing: border-box;
 }
 
 
@@ -544,11 +746,15 @@ body {
     text-decoration: none;
 
     transition: 0.3s;
+
+    min-width: 0;
 }
 
 
 .contact-method i {
     font-size: 20px;
+
+    flex-shrink: 0;
 }
 
 
@@ -600,6 +806,8 @@ body {
         0 8px 25px rgba(0, 0, 0, 0.5);
 
     transition: 0.3s;
+
+    padding: 0;
 }
 
 
@@ -616,7 +824,6 @@ body {
 
 
 @keyframes musicRotate {
-
     from {
         transform: rotate(0deg);
     }
@@ -624,7 +831,6 @@ body {
     to {
         transform: rotate(360deg);
     }
-
 }
 
 
@@ -636,6 +842,8 @@ img {
     -webkit-user-drag: none;
 
     user-drag: none;
+
+    max-width: 100%;
 }
 
 
@@ -653,91 +861,6 @@ textarea,
 
 
 /* =========================================================
-   TYPING EFFECT
-========================================================= */
-
-.typing-cursor {
-    display: inline-block;
-
-    margin-left: 3px;
-
-    font-weight: 700;
-
-    background: var(--rainbow);
-
-    background-size: 200% auto;
-
-    -webkit-background-clip: text;
-    background-clip: text;
-
-    -webkit-text-fill-color: transparent;
-
-    animation:
-        cursor-blink 0.7s infinite,
-        rainbow_move 4s linear infinite;
-}
-
-
-@keyframes cursor-blink {
-
-    0%,
-    45% {
-        opacity: 1;
-    }
-
-    46%,
-    100% {
-        opacity: 0;
-    }
-
-}
-
-
-.typing-style-1 {
-    font-family: 'Quicksand', sans-serif;
-}
-
-
-.typing-style-2 {
-    font-family: 'Outfit', sans-serif;
-}
-
-
-.typing-style-3 {
-    font-family: 'Orbitron', sans-serif;
-
-    letter-spacing: 1px;
-}
-
-
-.typing-style-4 {
-    font-family: 'Montserrat', sans-serif;
-
-    font-weight: 700;
-
-    letter-spacing: 0.5px;
-}
-
-
-.typing-style-5 {
-    font-family: 'Quicksand', sans-serif;
-
-    font-weight: 500;
-
-    letter-spacing: 2px;
-}
-
-
-.typing-style-6 {
-    font-family: 'Outfit', sans-serif;
-
-    font-weight: 800;
-
-    letter-spacing: 1px;
-}
-
-
-/* =========================================================
    FOOTER
 ========================================================= */
 
@@ -745,6 +868,8 @@ footer {
     text-align: center;
 
     padding: 20px;
+
+    line-height: 1.5;
 }
 
 
@@ -755,7 +880,18 @@ footer {
 @media (max-width: 768px) {
 
     .main-wrapper {
+        width: 100%;
+
         padding: 15px;
+
+        margin: 25px auto;
+    }
+
+
+    .glass-card {
+        padding: 28px 22px;
+
+        border-radius: 22px;
     }
 
 
@@ -763,6 +899,13 @@ footer {
         flex-direction: column;
 
         text-align: center;
+
+        gap: 20px;
+    }
+
+
+    .user-info {
+        width: 100%;
     }
 
 
@@ -774,11 +917,13 @@ footer {
 
     #contribution-grid {
         grid-template-columns: repeat(26, 1fr);
+
+        gap: 2px;
     }
 
 
     .avatar-wrap {
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
 
 
@@ -790,16 +935,31 @@ footer {
     .profile-name {
         font-size: 2.2rem;
 
-        line-height: 1.2;
+        line-height: 1.25;
 
-        padding-bottom: 4px;
-
-        overflow: visible;
+        padding-bottom: 7px;
     }
 
 
-    .glass-card {
-        border-radius: 22px;
+    .henry-gaming {
+        width: 300px;
+        min-width: 300px;
+
+        height: 32px;
+
+        margin-left: auto;
+        margin-right: auto;
+
+        white-space: nowrap;
+    }
+
+
+    #typing-text {
+        max-width: 270px;
+
+        overflow: hidden;
+
+        text-overflow: clip;
     }
 
 
@@ -809,17 +969,9 @@ footer {
 
         right: 15px;
         bottom: 15px;
+
+        font-size: 18px;
     }
-
-
-    .henry-gaming {
-        min-width: 0;
-
-        width: 100%;
-
-        white-space: nowrap;
-    }
-
 }
 
 
@@ -843,6 +995,55 @@ footer {
     }
 
 
+    .profile-name {
+        font-size: 2rem;
+
+        line-height: 1.3;
+
+        padding-bottom: 8px;
+
+        white-space: nowrap;
+    }
+
+
+    .henry-gaming {
+        width: 280px;
+        min-width: 280px;
+
+        height: 32px;
+
+        font-size: 0.85rem;
+    }
+
+
+    #typing-text {
+        max-width: 250px;
+    }
+
+
+    .typing-style-1,
+    .typing-style-2,
+    .typing-style-5,
+    .typing-style-6 {
+        font-size: 0.85rem;
+    }
+
+
+    .typing-style-3 {
+        font-size: 0.7rem;
+    }
+
+
+    .typing-style-4 {
+        font-size: 0.75rem;
+    }
+
+
+    .typing-cursor {
+        font-size: 0.85rem;
+    }
+
+
     .contact-methods {
         grid-template-columns: 1fr 1fr;
 
@@ -852,6 +1053,13 @@ footer {
 
     .contact-method {
         font-size: 0.8rem;
+
+        padding: 10px 6px;
+    }
+
+
+    .contact-method i {
+        font-size: 18px;
     }
 
 
@@ -862,28 +1070,73 @@ footer {
         right: 15px;
         bottom: 15px;
     }
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 360px) {
+
+    .glass-card {
+        padding: 18px;
+    }
 
 
     .profile-name {
-    font-family: 'Quicksand', sans-serif;
-    font-size: 3rem;
-    font-weight: 800;
-    line-height: 1.25;
-    margin: 0;
-    padding-bottom: 8px;
-    overflow: visible;
+        font-size: 1.8rem;
+    }
 
-    background: var(--rainbow);
-    background-size: 200% auto;
 
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    .henry-gaming {
+        width: 260px;
+        min-width: 260px;
+    }
 
-    animation: rainbow_move 4s linear infinite;
+
+    #typing-text {
+        max-width: 230px;
+    }
+
+
+    .social-links {
+        gap: 8px;
+    }
+
+
+    .social-item {
+        width: 40px;
+        height: 40px;
+    }
 }
 
-.profile-name span {
-    color: #ff416c;
-    -webkit-text-fill-color: #ff416c;
+
+/* =========================================================
+   SAFARI / IOS FIX
+========================================================= */
+
+@supports (-webkit-touch-callout: none) {
+
+    .profile-name,
+    #typing-text,
+    .typing-style-1,
+    .typing-style-2,
+    .typing-style-3,
+    .typing-style-4,
+    .typing-style-5,
+    .typing-style-6 {
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+    }
+
+
+    .profile-name {
+        padding-bottom: 10px;
+    }
+
+
+    #typing-text {
+        padding-bottom: 4px;
+    }
 }
