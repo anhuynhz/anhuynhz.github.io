@@ -1,10 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Quicksand:wght@300;400;500;600;700&display=swap');
 
-/* =========================================
+/* =========================================================
    ROOT
-========================================= */
+========================================================= */
 
 :root {
+    --glass: rgba(20, 20, 20, 0.75);
+    --glass-border: rgba(255, 255, 255, 0.2);
+
     --rainbow: linear-gradient(
         90deg,
         #a8edea,
@@ -27,48 +30,42 @@
         #ff00c8,
         #ff0000
     );
-
-    --glass-border: rgba(255,255,255,0.2);
 }
 
 
-/* =========================================
+/* =========================================================
    BODY
-========================================= */
-
-html {
-    min-height: 100%;
-}
+========================================================= */
 
 body {
     margin: 0;
     padding: 0;
 
-    min-height: 100vh;
-
     background: #000;
 
-    color: #fff;
-
     font-family: 'Quicksand', sans-serif;
+    color: #fff;
 
     overflow-x: hidden;
 
     -webkit-font-smoothing: antialiased;
 
     -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
     user-select: none;
 }
 
 
-/* =========================================
-   FLYING FISH
-========================================= */
+/* =========================================================
+   BACKGROUND
+========================================================= */
 
 #jsi-flying-fish-container {
     position: fixed;
 
-    inset: 0;
+    top: 0;
+    left: 0;
 
     width: 100%;
     height: 100%;
@@ -76,25 +73,19 @@ body {
     z-index: -1;
 
     background: #050505;
-
-    overflow: hidden;
-
-    pointer-events: auto;
 }
 
 
-/* =========================================
+/* =========================================================
    MAIN
-========================================= */
+========================================================= */
 
 .main-wrapper {
-    width: calc(100% - 40px);
-
     max-width: 900px;
 
     margin: 40px auto;
 
-    padding: 0;
+    padding: 20px;
 
     position: relative;
 
@@ -102,19 +93,17 @@ body {
 }
 
 
-/* =========================================
+/* =========================================================
    GLASS CARD
-========================================= */
+========================================================= */
 
 .glass-card {
-    position: relative;
-
-    background: rgba(20,20,20,0.82);
+    background: var(--glass);
 
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
 
-    border: 2px solid rgba(255,255,255,0.12);
+    border: 1px solid var(--glass-border);
 
     border-radius: 25px;
 
@@ -123,15 +112,13 @@ body {
     margin-bottom: 25px;
 
     box-shadow:
-        0 15px 35px rgba(0,0,0,0.6);
-
-    overflow: visible;
+        0 15px 35px rgba(0, 0, 0, 0.6);
 }
 
 
-/* =========================================
+/* =========================================================
    RAINBOW TEXT
-========================================= */
+========================================================= */
 
 .rainbow-text {
     background: var(--rainbow);
@@ -159,29 +146,22 @@ body {
 }
 
 
-/* =========================================
+/* =========================================================
    PROFILE
-========================================= */
+========================================================= */
 
 .profile-header {
     display: flex;
-
     align-items: center;
-
     gap: 40px;
 }
 
-
 .avatar-section {
     display: flex;
-
     flex-direction: column;
-
     align-items: center;
-
     flex-shrink: 0;
 }
-
 
 .avatar-wrap {
     position: relative;
@@ -190,12 +170,9 @@ body {
     height: 150px;
 }
 
-
 .avatar-img {
     width: 110px;
     height: 110px;
-
-    object-fit: cover;
 
     border-radius: 50%;
 
@@ -212,14 +189,11 @@ body {
         0 0 20px rgba(255,255,255,0.2);
 }
 
-
 .avatar-frame {
     position: absolute;
 
     width: 170px;
     height: 170px;
-
-    object-fit: contain;
 
     top: -10px;
     left: -10px;
@@ -229,9 +203,10 @@ body {
     pointer-events: none;
 }
 
-
 .henry-gaming {
     margin-top: 10px;
+
+    font-family: 'Quicksand', sans-serif;
 
     font-size: 0.9rem;
 
@@ -240,53 +215,25 @@ body {
     text-shadow:
         0 0 8px rgba(255,255,255,0.5);
 
-    text-align: center;
-
-    white-space: nowrap;
-
-    min-height: 24px;
+    min-width: 300px;
 }
 
 
-/* =========================================
-   PROFILE NAME
-   FIX CHỮ "g"
-========================================= */
+/* =========================================================
+   PROFILE TEXT
+========================================================= */
 
 .profile-name {
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
     font-size: 3rem;
-
-    font-weight: 800;
-
-    line-height: 1.3;
 
     margin: 0;
 
-    padding: 0 0 6px 0;
-
-    display: block;
-
-    overflow: visible;
-
-    white-space: nowrap;
+    line-height: 1;
 }
 
-
-.name-highlight {
+.profile-name span {
     color: #ff416c;
-
-    -webkit-text-fill-color: #ff416c;
 }
-
-
-/* =========================================
-   PROFILE SUBTITLE
-========================================= */
 
 .profile-subtitle {
     font-size: 1.1rem;
@@ -296,21 +243,18 @@ body {
     font-weight: 600;
 }
 
-
 .profile-tag {
     font-size: 0.8rem;
 
     opacity: 0.8;
 
     letter-spacing: 1px;
-
-    margin-bottom: 0;
 }
 
 
-/* =========================================
+/* =========================================================
    SOCIAL
-========================================= */
+========================================================= */
 
 .social-links {
     display: flex;
@@ -319,7 +263,6 @@ body {
 
     margin-top: 20px;
 }
-
 
 .social-item {
     width: 44px;
@@ -338,14 +281,13 @@ body {
 
     border: 1px solid var(--glass-border);
 
-    transition: 0.3s;
+    transition: 0.4s;
 
     text-decoration: none;
 
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
 }
-
 
 .social-item:hover {
     background: rgba(255,255,255,0.25);
@@ -356,12 +298,12 @@ body {
 }
 
 
-/* =========================================
+/* =========================================================
    CONTRIBUTION
-========================================= */
+========================================================= */
 
 .jd-music-container {
-    margin: 30px 0 10px;
+    margin: 30px 0 10px 0;
 
     padding: 20px;
 
@@ -370,21 +312,16 @@ body {
     border-radius: 20px;
 
     border: 1px solid var(--glass-border);
-
-    overflow: hidden;
 }
-
 
 #contribution-grid {
     display: grid;
 
-    grid-template-columns: repeat(52,1fr);
-
-    grid-template-rows: repeat(7,1fr);
+    grid-template-columns: repeat(52, 1fr);
+    grid-template-rows: repeat(7, 1fr);
 
     gap: 3px;
 }
-
 
 .dot {
     aspect-ratio: 1 / 1;
@@ -394,7 +331,6 @@ body {
     background: rgba(255,255,255,0.05);
 }
 
-
 .dot.jd-active {
     background-image: var(--jd-gradient);
 
@@ -402,7 +338,6 @@ body {
 
     animation: jd_glow 2s linear infinite;
 }
-
 
 @keyframes jd_glow {
     0% {
@@ -419,23 +354,21 @@ body {
 }
 
 
-/* =========================================
+/* =========================================================
    ABOUT
-========================================= */
+========================================================= */
 
 .section-title {
     margin-bottom: 24px;
 }
 
-
 .info-grid {
     display: grid;
 
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns: repeat(2, 1fr);
 
     gap: 15px;
 }
-
 
 .info-item {
     font-size: 0.9rem;
@@ -444,7 +377,6 @@ body {
 
     padding: 5px 0;
 }
-
 
 .info-item i {
     width: 25px;
@@ -455,9 +387,9 @@ body {
 }
 
 
-/* =========================================
+/* =========================================================
    SKILLS
-========================================= */
+========================================================= */
 
 .skill-list {
     display: grid;
@@ -466,7 +398,6 @@ body {
 
     gap: 20px;
 }
-
 
 .progress-box {
     height: 10px;
@@ -482,7 +413,6 @@ body {
     border: 1px solid rgba(255,255,255,0.05);
 }
 
-
 .progress-bar {
     height: 100%;
 
@@ -494,14 +424,13 @@ body {
 }
 
 
-/* =========================================
-   CONTACT JOBS
-========================================= */
+/* =========================================================
+   CONTACT MY JOBS
+========================================================= */
 
 .job-image {
     text-align: center;
 }
-
 
 .job-image img {
     width: 100%;
@@ -510,11 +439,11 @@ body {
 
     height: auto;
 
+    border-radius: 15px;
+
     display: block;
 
     margin: 0 auto;
-
-    border-radius: 15px;
 
     border: 1px solid var(--glass-border);
 
@@ -522,17 +451,18 @@ body {
         0 10px 30px rgba(0,0,0,0.4);
 
     -webkit-user-drag: none;
+    user-drag: none;
 }
 
 
-/* =========================================
+/* =========================================================
    CONTACT METHODS
-========================================= */
+========================================================= */
 
 .contact-methods {
     display: grid;
 
-    grid-template-columns: repeat(4,1fr);
+    grid-template-columns: repeat(4, 1fr);
 
     gap: 12px;
 
@@ -546,7 +476,6 @@ body {
 
     border-radius: 15px;
 }
-
 
 .contact-method {
     display: flex;
@@ -571,11 +500,9 @@ body {
     transition: 0.3s;
 }
 
-
 .contact-method i {
     font-size: 20px;
 }
-
 
 .contact-method:hover {
     background: rgba(255,255,255,0.18);
@@ -586,9 +513,9 @@ body {
 }
 
 
-/* =========================================
+/* =========================================================
    MUSIC BUTTON
-========================================= */
+========================================================= */
 
 .music-btn {
     position: fixed;
@@ -599,11 +526,14 @@ body {
     width: 55px;
     height: 55px;
 
-    border: 2px solid rgba(255,255,255,0.3);
+    border: 1px solid rgba(255,255,255,0.25);
 
     border-radius: 50%;
 
-    background: rgba(20,20,20,0.9);
+    background: rgba(20,20,20,0.75);
+
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
 
     color: #fff;
 
@@ -621,11 +551,8 @@ body {
     box-shadow:
         0 8px 25px rgba(0,0,0,0.5);
 
-    transition:
-        transform 0.3s ease,
-        background 0.3s ease;
+    transition: 0.3s;
 }
-
 
 .music-btn:hover {
     transform: scale(1.1);
@@ -633,11 +560,9 @@ body {
     background: rgba(255,255,255,0.18);
 }
 
-
 .music-btn.playing {
     animation: musicRotate 2s linear infinite;
 }
-
 
 @keyframes musicRotate {
     from {
@@ -650,9 +575,32 @@ body {
 }
 
 
-/* =========================================
-   TYPING
-========================================= */
+/* =========================================================
+   IMAGE
+========================================================= */
+
+img {
+    -webkit-user-drag: none;
+    user-drag: none;
+}
+
+
+/* =========================================================
+   SELECTABLE
+========================================================= */
+
+input,
+textarea,
+.selectable {
+    user-select: text;
+
+    -webkit-user-select: text;
+}
+
+
+/* =========================================================
+   TYPING EFFECT
+========================================================= */
 
 .typing-cursor {
     display: inline-block;
@@ -666,6 +614,7 @@ body {
     background-size: 200% auto;
 
     -webkit-background-clip: text;
+    background-clip: text;
 
     -webkit-text-fill-color: transparent;
 
@@ -674,89 +623,53 @@ body {
         rainbow_move 4s linear infinite;
 }
 
-
 @keyframes cursor-blink {
-    0%,45% {
+    0%,
+    45% {
         opacity: 1;
     }
 
-    46%,100% {
+    46%,
+    100% {
         opacity: 0;
     }
 }
 
-
 .typing-style-1 {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Quicksand', sans-serif;
 }
-
 
 .typing-style-2 {
-    font-family: Arial, Helvetica, sans-serif;
-
-    font-weight: 600;
+    font-family: 'Outfit', sans-serif;
 }
 
-
 .typing-style-3 {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 1px;
+}
 
+.typing-style-4 {
+    font-family: 'Montserrat', sans-serif;
     font-weight: 700;
-
     letter-spacing: 0.5px;
 }
 
-
-.typing-style-4 {
-    font-family: Arial, Helvetica, sans-serif;
-
-    font-weight: 700;
+.typing-style-5 {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 500;
+    letter-spacing: 2px;
 }
 
-
-.typing-style-5 {
-    font-family: Arial, Helvetica, sans-serif;
-
-    font-weight: 500;
-
+.typing-style-6 {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
     letter-spacing: 1px;
 }
 
 
-.typing-style-6 {
-    font-family: Arial, Helvetica, sans-serif;
-
-    font-weight: 800;
-}
-
-
-/* =========================================
-   IMAGE
-========================================= */
-
-img {
-    -webkit-user-drag: none;
-
-    user-select: none;
-}
-
-
-/* =========================================
-   SELECTABLE
-========================================= */
-
-input,
-textarea,
-.selectable {
-    user-select: text;
-
-    -webkit-user-select: text;
-}
-
-
-/* =========================================
+/* =========================================================
    FOOTER
-========================================= */
+========================================================= */
 
 footer {
     text-align: center;
@@ -765,80 +678,46 @@ footer {
 }
 
 
-/* =========================================
-   TABLET
-========================================= */
+/* =========================================================
+   MOBILE
+========================================================= */
 
-@media (max-width:768px) {
+@media (max-width: 768px) {
 
     .main-wrapper {
-        width: calc(100% - 30px);
-
-        margin: 25px auto;
+        padding: 15px;
     }
-
-
-    .glass-card {
-        padding: 25px;
-
-        border-radius: 22px;
-    }
-
 
     .profile-header {
         flex-direction: column;
 
         text-align: center;
-
-        gap: 20px;
     }
-
-
-    .user-info {
-        width: 100%;
-    }
-
-
-    .profile-name {
-        font-size: 2.2rem;
-
-        line-height: 1.3;
-
-        padding-bottom: 5px;
-
-        white-space: normal;
-    }
-
-
-    .social-links {
-        justify-content: center;
-
-        flex-wrap: wrap;
-    }
-
 
     .info-grid,
     .skill-list {
         grid-template-columns: 1fr;
     }
 
-
     #contribution-grid {
-        grid-template-columns: repeat(26,1fr);
-
-        gap: 2px;
+        grid-template-columns: repeat(26, 1fr);
     }
-
 
     .avatar-wrap {
-        margin-bottom: 10px;
+        margin-bottom: 20px;
     }
-
 
     .contact-methods {
-        grid-template-columns: repeat(2,1fr);
+        grid-template-columns: repeat(2, 1fr);
     }
 
+    .profile-name {
+        font-size: 2.2rem;
+    }
+
+    .glass-card {
+        border-radius: 22px;
+    }
 
     .music-btn {
         width: 50px;
@@ -846,57 +725,35 @@ footer {
 
         right: 15px;
         bottom: 15px;
+    }
 
-        font-size: 18px;
+    .henry-gaming {
+        min-width: 0;
+
+        width: 100%;
+
+        white-space: nowrap;
     }
 }
 
 
-/* =========================================
+/* =========================================================
    SMALL MOBILE
-========================================= */
+========================================================= */
 
-@media (max-width:480px) {
+@media (max-width: 480px) {
 
     .main-wrapper {
-        width: calc(100% - 20px);
+        padding: 10px;
 
         margin: 20px auto;
     }
 
-
     .glass-card {
-        padding: 20px;
+        padding: 22px;
 
         border-radius: 20px;
-
-        margin-bottom: 18px;
     }
-
-
-    .profile-name {
-        font-size: 1.9rem;
-
-        line-height: 1.35;
-
-        padding-bottom: 5px;
-    }
-
-
-    .profile-subtitle {
-        font-size: 1rem;
-    }
-
-
-    .profile-tag {
-        font-size: 0.75rem;
-    }
-
-
-    .jd-music-container {
-        padding: 12px;
-    }
-
 
     .contact-methods {
         grid-template-columns: 1fr 1fr;
@@ -904,18 +761,9 @@ footer {
         padding: 10px;
     }
 
-
     .contact-method {
         font-size: 0.8rem;
-
-        padding: 10px 5px;
     }
-
-
-    .contact-method i {
-        font-size: 17px;
-    }
-
 
     .music-btn {
         width: 50px;
