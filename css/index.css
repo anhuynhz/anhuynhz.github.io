@@ -268,10 +268,9 @@ body {
 /* TÍCH XANH NHỎ */
 .verified-badge {
     display: inline-block;
+    margin-left: 6px;
 
-    margin-left: 7px;
-
-    font-size: 0.38em;
+    font-size: 0.34em;
 
     color: #1d9bf0;
     -webkit-text-fill-color: #1d9bf0;
@@ -280,10 +279,14 @@ body {
 
     filter:
         drop-shadow(0 0 3px rgba(29, 155, 240, 0.7));
-
-    vertical-align: middle;
 }
 
+@media (max-width: 768px) {
+    .verified-badge {
+        margin-left: 5px;
+        font-size: 0.34em;
+    }
+}
 /* =========================
    MOBILE
 ========================= */
