@@ -236,6 +236,10 @@ body {
    PROFILE TEXT
 ========================================================= */
 
+/* =========================
+   PROFILE NAME + VERIFIED
+========================= */
+
 .profile-name {
     display: flex;
     align-items: center;
@@ -261,21 +265,43 @@ body {
     animation: rainbow_move 4s linear infinite;
 }
 
-/* TÍCH XANH */
+/* TÍCH XANH NHỎ */
 .verified-badge {
-    margin-left: 8px;
+    display: inline-block;
 
-    font-size: 0.72em;
+    margin-left: 7px;
+
+    font-size: 0.38em;
 
     color: #1d9bf0;
-
     -webkit-text-fill-color: #1d9bf0;
 
-    filter:
-        drop-shadow(0 0 4px rgba(29, 155, 240, 0.7))
-        drop-shadow(0 0 8px rgba(29, 155, 240, 0.35));
-
     flex-shrink: 0;
+
+    filter:
+        drop-shadow(0 0 3px rgba(29, 155, 240, 0.7));
+
+    vertical-align: middle;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+
+    .profile-name {
+        font-size: 2.2rem;
+        line-height: 1.25;
+        padding-bottom: 7px;
+    }
+
+    .verified-badge {
+        margin-left: 5px;
+        font-size: 0.38em;
+    }
+
 }
 
 .profile-name span {
