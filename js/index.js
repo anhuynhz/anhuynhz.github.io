@@ -9,933 +9,267 @@ const dots = [];
 const rows = 7;
 const cols = 52;
 
+if (grid) {
 
-/* Tạo các ô */
+    for (let i = 0; i < rows * cols; i++) {
 
-for (let i = 0; i < rows * cols; i++) {
+        const dot = document.createElement("div");
 
-    const dot = document.createElement("div");
+        dot.className = "dot";
 
-    dot.className = "dot";
+        grid.appendChild(dot);
 
-    grid.appendChild(dot);
-
-    dots.push(dot);
-}
-
-
-/* Hiệu ứng rainbow */
-
-function jdVisualizer() {
-
-    dots.forEach(function(dot) {
-
-        dot.classList.remove("jd-active");
-
-    });
-
-    for (let c = 0; c < cols; c++) {
-
-        const h = Math.floor(Math.random() * rows);
-
-        for (let r = 0; r <= h; r++) {
-
-            const idx =
-                (rows - 1 - r) * cols + c;
-
-            if (dots[idx]) {
-
-                dots[idx].classList.add("jd-active");
-
-            }
-
-        }
-
+        dots.push(dot);
     }
 
-}
 
-setInterval(jdVisualizer, 130);
+    function jdVisualizer() {
+
+        for (let i = 0; i < dots.length; i++) {
+            dots[i].classList.remove("jd-active");
+        }
+
+
+        for (let c = 0; c < cols; c++) {
+
+            const height =
+                Math.floor(Math.random() * rows);
+
+            for (let r = 0; r <= height; r++) {
+
+                const index =
+                    (rows - 1 - r) * cols + c;
+
+                if (dots[index]) {
+                    dots[index].classList.add("jd-active");
+                }
+            }
+        }
+    }
+
+
+    jdVisualizer();
+
+    setInterval(jdVisualizer, 130);
+}
 
 
 /* =========================================
-   FLYING FISH BACKGROUND
+   FLYING FISH
 ========================================= */
 
-var RENDERER = {
-
-    POINT_INTERVAL: 5,
-
-    FISH_COUNT: 3,
-
-    MAX_INTERVAL_COUNT: 50,
-
-    INIT_HEIGHT_RATE: 0.5,
-
-    THRESHOLD: 50,
+const fishContainer =
+    document.getElementById("jsi-flying-fish-container");
 
 
-    init: function() {
+if (fishContainer) {
 
-        this.setParameters();
+    const canvas =
+        document.createElement("canvas");
 
-        this.reconstructMethods();
+    const ctx =
+        canvas.getContext("2d");
 
-        this.setup();
-
-        this.bindEvent();
-
-        this.render();
-
-    },
+    fishContainer.appendChild(canvas);
 
 
-    setParameters: function() {
+    let width = 0;
+    let height = 0;
 
-        this.$window = $(window);
+    const fishes = [];
 
-        this.$container =
-            $("#jsi-flying-fish-container");
-
-        this.$canvas =
-            $("<canvas />");
-
-        this.context =
-            this.$canvas
-                .appendTo(this.$container)
-                .get(0)
-                .getContext("2d");
-
-        this.points = [];
-
-        this.fishes = [];
-
-        this.watchIds = [];
-
-    },
+    const FISH_COUNT = 3;
 
 
-    createSurfacePoints: function() {
+    function resizeCanvas() {
 
-        var count =
-            Math.round(
-                this.width /
-                this.POINT_INTERVAL
-            );
+        width = window.innerWidth;
 
-        this.pointInterval =
-            this.width /
-            (count - 1);
+        height = window.innerHeight;
 
-        this.points.push(
-            new SURFACE_POINT(
-                this,
-                0
-            )
-        );
+        canvas.width = width;
+        canvas.height = height;
+    }
 
-        for (
-            var i = 1;
-            i < count;
-            i++
-        ) {
 
-            var point =
-                new SURFACE_POINT(
-                    this,
-                    i * this.pointInterval
-                );
+    class Fish {
 
-            var previous =
-                this.points[i - 1];
+        constructor() {
 
-            point.setPreviousPoint(previous);
-
-            previous.setNextPoint(point);
-
-            this.points.push(point);
-
+            this.reset();
         }
 
-    },
 
+        reset() {
 
-    reconstructMethods: function() {
+            this.direction =
+                Math.random() < 0.5 ? 1 : -1;
 
-        this.watchWindowSize =
-            this.watchWindowSize.bind(this);
+            this.x =
+                this.direction === 1
+                    ? -50
+                    : width + 50;
 
-        this.jdugeToStopResize =
-            this.jdugeToStopResize.bind(this);
+            this.y =
+                height * 0.55 +
+                Math.random() * height * 0.3;
 
-        this.startEpicenter =
-            this.startEpicenter.bind(this);
+            this.vx =
+                this.direction *
+                (2.5 + Math.random() * 2.5);
 
-        this.moveEpicenter =
-            this.moveEpicenter.bind(this);
+            this.vy =
+                -(2 + Math.random() * 2);
 
-        this.reverseVertical =
-            this.reverseVertical.bind(this);
-
-        this.render =
-            this.render.bind(this);
-
-    },
-
-
-    setup: function() {
-
-        this.points.length = 0;
-
-        this.fishes.length = 0;
-
-        this.watchIds.length = 0;
-
-        this.intervalCount =
-            this.MAX_INTERVAL_COUNT;
-
-        this.width =
-            this.$container.width();
-
-        this.height =
-            this.$container.height();
-
-        this.fishCount =
-            this.FISH_COUNT *
-            this.width / 500 *
-            this.height / 500;
-
-        this.$canvas.attr({
-            width: this.width,
-            height: this.height
-        });
-
-        this.reverse = false;
-
-        this.fishes.push(
-            new FISH(this)
-        );
-
-        this.createSurfacePoints();
-
-    },
-
-
-    watchWindowSize: function() {
-
-        this.clearTimer();
-
-        this.tmpWidth =
-            this.$window.width();
-
-        this.tmpHeight =
-            this.$window.height();
-
-        this.watchIds.push(
-
-            setTimeout(
-                this.jdugeToStopResize,
-                300
-            )
-
-        );
-
-    },
-
-
-    clearTimer: function() {
-
-        while (
-            this.watchIds.length > 0
-        ) {
-
-            clearTimeout(
-                this.watchIds.pop()
-            );
-
+            this.gravity =
+                0.08 + Math.random() * 0.05;
         }
 
-    },
 
+        update() {
 
-    jdugeToStopResize: function() {
+            this.x += this.vx;
 
-        var width =
-            this.$window.width();
+            this.y += this.vy;
 
-        var height =
-            this.$window.height();
+            this.vy += this.gravity;
 
-        var stopped =
-            (
-                width == this.tmpWidth &&
-                height == this.tmpHeight
-            );
 
-        this.tmpWidth = width;
+            if (this.y > height * 0.55) {
 
-        this.tmpHeight = height;
+                this.vy =
+                    -(2 + Math.random() * 2);
+            }
 
-        if (stopped) {
-
-            this.setup();
-
-        }
-
-    },
-
-
-    bindEvent: function() {
-
-        this.$window.on(
-            "resize",
-            this.watchWindowSize
-        );
-
-        this.$container.on(
-            "mouseenter",
-            this.startEpicenter
-        );
-
-        this.$container.on(
-            "mousemove",
-            this.moveEpicenter
-        );
-
-        this.$container.on(
-            "click",
-            this.reverseVertical
-        );
-
-    },
-
-
-    getAxis: function(event) {
-
-        var offset =
-            this.$container.offset();
-
-        return {
-
-            x:
-                event.clientX -
-                offset.left +
-                this.$window.scrollLeft(),
-
-            y:
-                event.clientY -
-                offset.top +
-                this.$window.scrollTop()
-
-        };
-
-    },
-
-
-    startEpicenter: function(event) {
-
-        this.axis =
-            this.getAxis(event);
-
-    },
-
-
-    moveEpicenter: function(event) {
-
-        var axis =
-            this.getAxis(event);
-
-        if (!this.axis) {
-
-            this.axis = axis;
-
-        }
-
-        this.generateEpicenter(
-            axis.x,
-            axis.y,
-            axis.y - this.axis.y
-        );
-
-        this.axis = axis;
-
-    },
-
-
-    generateEpicenter: function(
-        x,
-        y,
-        velocity
-    ) {
-
-        if (
-            y <
-            this.height / 2 -
-            this.THRESHOLD ||
-
-            y >
-            this.height / 2 +
-            this.THRESHOLD
-        ) {
-
-            return;
-
-        }
-
-        var index =
-            Math.round(
-                x / this.pointInterval
-            );
-
-        if (
-            index < 0 ||
-            index >= this.points.length
-        ) {
-
-            return;
-
-        }
-
-        this.points[index]
-            .interfere(
-                y,
-                velocity
-            );
-
-    },
-
-
-    reverseVertical: function() {
-
-        this.reverse =
-            !this.reverse;
-
-        for (
-            var i = 0,
-            count = this.fishes.length;
-
-            i < count;
-
-            i++
-        ) {
-
-            this.fishes[i]
-                .reverseVertical();
-
-        }
-
-    },
-
-
-    controlStatus: function() {
-
-        for (
-            var i = 0,
-            count = this.points.length;
-
-            i < count;
-
-            i++
-        ) {
-
-            this.points[i]
-                .updateSelf();
-
-        }
-
-        for (
-            var i = 0,
-            count = this.points.length;
-
-            i < count;
-
-            i++
-        ) {
-
-            this.points[i]
-                .updateNeighbors();
-
-        }
-
-        if (
-            this.fishes.length <
-            this.fishCount
-        ) {
 
             if (
-                --this.intervalCount == 0
+                (this.direction === 1 &&
+                    this.x > width + 60) ||
+
+                (this.direction === -1 &&
+                    this.x < -60)
             ) {
 
-                this.intervalCount =
-                    this.MAX_INTERVAL_COUNT;
+                this.reset();
+            }
+        }
 
-                this.fishes.push(
-                    new FISH(this)
-                );
 
+        draw() {
+
+            ctx.save();
+
+            ctx.translate(
+                this.x,
+                this.y
+            );
+
+
+            if (this.direction === -1) {
+                ctx.scale(-1, 1);
             }
 
+
+            ctx.rotate(
+                Math.atan2(
+                    this.vy,
+                    this.vx
+                )
+            );
+
+
+            ctx.beginPath();
+
+            ctx.moveTo(-25, 0);
+
+            ctx.bezierCurveTo(
+                -15, 12,
+                10, 8,
+                30, 0
+            );
+
+            ctx.bezierCurveTo(
+                10, -8,
+                -15, -12,
+                -25, 0
+            );
+
+            ctx.fillStyle =
+                "rgba(255,255,255,0.22)";
+
+            ctx.fill();
+
+            ctx.restore();
+        }
+    }
+
+
+    function createFishes() {
+
+        fishes.length = 0;
+
+        const count =
+            window.innerWidth < 600
+                ? 1
+                : FISH_COUNT;
+
+        for (let i = 0; i < count; i++) {
+            fishes.push(new Fish());
+        }
+    }
+
+
+    function animateFish() {
+
+        ctx.clearRect(
+            0,
+            0,
+            width,
+            height
+        );
+
+
+        for (const fish of fishes) {
+
+            fish.update();
+
+            fish.draw();
         }
 
-    },
-
-
-    render: function() {
 
         requestAnimationFrame(
-            this.render
+            animateFish
         );
-
-        this.controlStatus();
-
-        this.context.clearRect(
-            0,
-            0,
-            this.width,
-            this.height
-        );
-
-        this.context.fillStyle =
-            "rgba(255, 255, 255, 0.22)";
-
-        for (
-            var i = 0,
-            count = this.fishes.length;
-
-            i < count;
-
-            i++
-        ) {
-
-            this.fishes[i]
-                .render(this.context);
-
-        }
-
-        this.context.save();
-
-        this.context.globalCompositeOperation =
-            "xor";
-
-        this.context.beginPath();
-
-        this.context.moveTo(
-            0,
-            this.reverse
-                ? 0
-                : this.height
-        );
-
-        for (
-            var i = 0,
-            count = this.points.length;
-
-            i < count;
-
-            i++
-        ) {
-
-            this.points[i]
-                .render(this.context);
-
-        }
-
-        this.context.lineTo(
-            this.width,
-            this.reverse
-                ? 0
-                : this.height
-        );
-
-        this.context.closePath();
-
-        this.context.fill();
-
-        this.context.restore();
-
     }
 
-};
 
+    resizeCanvas();
 
-/* =========================================
-   SURFACE POINT
-========================================= */
+    createFishes();
 
-var SURFACE_POINT =
-function(renderer, x) {
+    animateFish();
 
-    this.renderer = renderer;
 
-    this.x = x;
+    let resizeTimer;
 
-    this.init();
+    window.addEventListener(
+        "resize",
+        function () {
 
-};
+            clearTimeout(resizeTimer);
 
+            resizeTimer =
+                setTimeout(function () {
 
-SURFACE_POINT.prototype = {
+                    resizeCanvas();
 
-    SPRING_CONSTANT: 0.03,
+                    createFishes();
 
-    SPRING_FRICTION: 0.9,
-
-    WAVE_SPREAD: 0.3,
-
-    ACCELARATION_RATE: 0.01,
-
-
-    init: function() {
-
-        this.initHeight =
-            this.renderer.height *
-            this.renderer.INIT_HEIGHT_RATE;
-
-        this.height =
-            this.initHeight;
-
-        this.fy = 0;
-
-        this.force = {
-            previous: 0,
-            next: 0
-        };
-
-    },
-
-
-    setPreviousPoint: function(previous) {
-
-        this.previous = previous;
-
-    },
-
-
-    setNextPoint: function(next) {
-
-        this.next = next;
-
-    },
-
-
-    interfere: function(y, velocity) {
-
-        this.fy =
-
-            this.renderer.height *
-
-            this.ACCELARATION_RATE *
-
-            (
-                (
-                    this.renderer.height -
-                    this.height -
-                    y
-                ) >= 0
-                    ? -1
-                    : 1
-            ) *
-
-            Math.abs(velocity);
-
-    },
-
-
-    updateSelf: function() {
-
-        this.fy +=
-
-            this.SPRING_CONSTANT *
-
-            (
-                this.initHeight -
-                this.height
-            );
-
-        this.fy *=
-            this.SPRING_FRICTION;
-
-        this.height +=
-            this.fy;
-
-    },
-
-
-    updateNeighbors: function() {
-
-        if (this.previous) {
-
-            this.force.previous =
-
-                this.WAVE_SPREAD *
-
-                (
-                    this.height -
-                    this.previous.height
-                );
-
-        }
-
-        if (this.next) {
-
-            this.force.next =
-
-                this.WAVE_SPREAD *
-
-                (
-                    this.height -
-                    this.next.height
-                );
-
-        }
-
-    },
-
-
-    render: function(context) {
-
-        if (this.previous) {
-
-            this.previous.height +=
-                this.force.previous;
-
-            this.previous.fy +=
-                this.force.previous;
-
-        }
-
-        if (this.next) {
-
-            this.next.height +=
-                this.force.next;
-
-            this.next.fy +=
-                this.force.next;
-
-        }
-
-        context.lineTo(
-            this.x,
-            this.renderer.height -
-            this.height
-        );
-
-    }
-
-};
-
-
-/* =========================================
-   FISH
-========================================= */
-
-var FISH =
-function(renderer) {
-
-    this.renderer = renderer;
-
-    this.init();
-
-};
-
-
-FISH.prototype = {
-
-    GRAVITY: 0.4,
-
-
-    init: function() {
-
-        this.direction =
-            Math.random() < 0.5;
-
-        this.x =
-            this.direction
-                ? (
-                    this.renderer.width +
-                    this.renderer.THRESHOLD
-                )
-                : -this.renderer.THRESHOLD;
-
-        this.vx =
-            (
-                Math.random() * 5 + 3
-            ) *
-
-            (
-                this.direction
-                    ? -1
-                    : 1
-            );
-
-        this.y =
-
-            (
-                Math.random() *
-                this.renderer.height *
-                0.3
-            ) +
-
-            (
-                this.renderer.height *
-                0.6
-            );
-
-        this.vy =
-            Math.random() * -3 - 2;
-
-        this.ay =
-            Math.random() * -0.15 - 0.05;
-
-        this.isOut = false;
-
-    },
-
-
-    reverseVertical: function() {
-
-        this.isOut =
-            !this.isOut;
-
-        this.ay *= -1;
-
-    },
-
-
-    controlStatus: function() {
-
-        this.previousY =
-            this.y;
-
-        this.x +=
-            this.vx;
-
-        this.y +=
-            this.vy;
-
-        this.vy +=
-            this.ay;
-
-        if (
-            this.y <
-            this.renderer.height *
-            this.renderer.INIT_HEIGHT_RATE
-        ) {
-
-            this.vy +=
-                this.GRAVITY;
-
-            this.isOut = true;
-
-        } else {
-
-            this.isOut = false;
-
-        }
-
-        this.renderer.generateEpicenter(
-            this.x,
-            this.y,
-            this.y -
-            this.previousY
-        );
-
-        if (
-            (
-                this.vx > 0 &&
-                this.x >
-                this.renderer.width +
-                this.renderer.THRESHOLD
-            )
-
-            ||
-
-            (
-                this.vx < 0 &&
-                this.x <
-                -this.renderer.THRESHOLD
-            )
-        ) {
-
-            this.init();
-
-        }
-
-    },
-
-
-    render: function(context) {
-
-        context.save();
-
-        context.translate(
-            this.x,
-            this.y
-        );
-
-        context.rotate(
-
-            Math.PI +
-
-            Math.atan2(
-                this.vy,
-                this.vx
-            )
-
-        );
-
-        context.scale(
-            1,
-            this.direction
-                ? 1
-                : -1
-        );
-
-        context.beginPath();
-
-        context.moveTo(
-            -25,
-            0
-        );
-
-        context.bezierCurveTo(
-            -15,
-            12,
-            10,
-            8,
-            30,
-            0
-        );
-
-        context.bezierCurveTo(
-            10,
-            -8,
-            -15,
-            -12,
-            -25,
-            0
-        );
-
-        context.fill();
-
-        context.restore();
-
-        this.controlStatus();
-
-    }
-
-};
-
-
-/* =========================================
-   START FLYING FISH
-========================================= */
-
-$(function() {
-
-    RENDERER.init();
-
-});
+                }, 250);
+        },
+        { passive: true }
+    );
+}
 
 
 /* =========================================
@@ -946,17 +280,17 @@ const playlist = [
 
     {
         name: "Bài hát 1",
-        url: "//thanhdieu.com/files/Về-Bên-Anh.mp3"
+        url: "https://thanhdieu.com/files/Về-Bên-Anh.mp3"
     },
 
     {
         name: "Bài hát 2",
-        url: "//thanhdieu.com/files/Anh-Đã-Quen-Với-Cô-Đơn.mp3"
+        url: "https://thanhdieu.com/files/Anh-Đã-Quen-Với-Cô-Đơn.mp3"
     },
 
     {
         name: "Bài hát 3",
-        url: "//thanhdieu.com/files/Em-Nào-Có-Tội.mp3"
+        url: "https://thanhdieu.com/files/Em-Nào-Có-Tội.mp3"
     }
 
 ];
@@ -974,24 +308,30 @@ let currentSong = 0;
 let hasStarted = false;
 
 
-/* Load bài hát */
-
 function loadSong(index) {
+
+    if (!bgMusic || !playlist[index]) {
+        return;
+    }
 
     currentSong = index;
 
     bgMusic.src =
         playlist[currentSong].url;
 
+    bgMusic.load();
 }
 
 
-/* Phát nhạc */
-
 function playMusic() {
 
+    if (!bgMusic || !musicBtn) {
+        return;
+    }
+
+
     bgMusic.play()
-        .then(function() {
+        .then(function () {
 
             musicBtn.classList.add("playing");
 
@@ -999,7 +339,7 @@ function playMusic() {
                 '<i class="fa-solid fa-pause"></i>';
 
         })
-        .catch(function(error) {
+        .catch(function (error) {
 
             console.log(
                 "Không thể phát nhạc:",
@@ -1007,97 +347,86 @@ function playMusic() {
             );
 
         });
-
 }
 
 
-/* Nút nhạc */
+if (musicBtn && bgMusic) {
 
-musicBtn.addEventListener(
-    "click",
-    function() {
+    musicBtn.addEventListener(
+        "click",
+        function () {
 
-        /* Đang phát -> dừng */
+            if (!bgMusic.paused) {
 
-        if (!bgMusic.paused) {
+                bgMusic.pause();
 
-            bgMusic.pause();
+                musicBtn.classList.remove(
+                    "playing"
+                );
 
-            musicBtn.classList.remove(
-                "playing"
-            );
+                musicBtn.innerHTML =
+                    '<i class="fa-solid fa-music"></i>';
 
-            musicBtn.innerHTML =
-                '<i class="fa-solid fa-music"></i>';
-
-            return;
-
-        }
+                return;
+            }
 
 
-        /* Chưa phát lần nào */
+            if (!hasStarted) {
 
-        if (!hasStarted) {
+                hasStarted = true;
 
-            hasStarted = true;
+                loadSong(currentSong);
+
+                playMusic();
+
+                return;
+            }
+
+
+            currentSong++;
+
+            if (
+                currentSong >= playlist.length
+            ) {
+
+                currentSong = 0;
+            }
+
 
             loadSong(currentSong);
 
             playMusic();
 
-            return;
+        },
+        { passive: true }
+    );
+
+
+    bgMusic.addEventListener(
+        "ended",
+        function () {
+
+            currentSong++;
+
+            if (
+                currentSong >= playlist.length
+            ) {
+
+                currentSong = 0;
+            }
+
+
+            loadSong(currentSong);
+
+            playMusic();
 
         }
-
-
-        /* Đã phát -> next bài */
-
-        currentSong++;
-
-        if (
-            currentSong >=
-            playlist.length
-        ) {
-
-            currentSong = 0;
-
-        }
-
-        loadSong(currentSong);
-
-        playMusic();
-
-    }
-);
-
-
-/* Hết bài -> bài tiếp theo */
-
-bgMusic.addEventListener(
-    "ended",
-    function() {
-
-        currentSong++;
-
-        if (
-            currentSong >=
-            playlist.length
-        ) {
-
-            currentSong = 0;
-
-        }
-
-        loadSong(currentSong);
-
-        playMusic();
-
-    }
-);
+    );
+}
 
 
 /* =========================================
-   TYPING EFFECT - 6 STYLES
+   TYPING EFFECT
 ========================================= */
 
 const typingText =
@@ -1157,6 +486,11 @@ const pauseAfterDeleting = 500;
 
 function typingEffect() {
 
+    if (!typingText) {
+        return;
+    }
+
+
     const current =
         typingMessages[messageIndex];
 
@@ -1177,12 +511,12 @@ function typingEffect() {
 
 
         if (
-            charIndex ===
+            charIndex >=
             current.text.length
         ) {
 
             setTimeout(
-                function() {
+                function () {
 
                     deleting = true;
 
@@ -1193,7 +527,6 @@ function typingEffect() {
             );
 
             return;
-
         }
 
 
@@ -1201,7 +534,6 @@ function typingEffect() {
             typingEffect,
             typingSpeed
         );
-
 
     } else {
 
@@ -1214,7 +546,9 @@ function typingEffect() {
         charIndex--;
 
 
-        if (charIndex === 0) {
+        if (charIndex <= 0) {
+
+            charIndex = 0;
 
             deleting = false;
 
@@ -1227,7 +561,6 @@ function typingEffect() {
             ) {
 
                 messageIndex = 0;
-
             }
 
 
@@ -1237,7 +570,6 @@ function typingEffect() {
             );
 
             return;
-
         }
 
 
@@ -1245,9 +577,7 @@ function typingEffect() {
             typingEffect,
             deletingSpeed
         );
-
     }
-
 }
 
 
