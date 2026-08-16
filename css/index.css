@@ -268,8 +268,7 @@ body {
 /* TÍCH XANH NHỎ */
 .verified-badge {
     display: inline-block;
-
-    margin-left: 7px;
+    margin-left: 6px;
 
     font-size: 0.30em;
 
@@ -279,9 +278,14 @@ body {
     flex-shrink: 0;
 
     filter:
-        drop-shadow(0 0 3px rgba(29, 155, 240, 0.7));
+        drop-shadow(0 0 2px rgba(29, 155, 240, 0.7));
+}
 
-    vertical-align: middle;
+@media (max-width: 768px) {
+    .verified-badge {
+        margin-left: 5px;
+        font-size: 0.30em;
+    }
 }
 
 
