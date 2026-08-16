@@ -1,0 +1,775 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+/* =========================================================
+   ROOT
+========================================================= */
+
+:root {
+    --glass: rgba(20, 20, 20, 0.75);
+    --glass-border: rgba(255, 255, 255, 0.2);
+
+    --rainbow: linear-gradient(
+        90deg,
+        #a8edea,
+        #fed6e3,
+        #fac1ff,
+        #d4fc79,
+        #96e6a1,
+        #a8edea
+    );
+
+    --jd-gradient: linear-gradient(
+        45deg,
+        #ff0000,
+        #ff7300,
+        #fffb00,
+        #48ff00,
+        #00ffd5,
+        #002bff,
+        #7a00ff,
+        #ff00c8,
+        #ff0000
+    );
+}
+
+
+/* =========================================================
+   BODY
+========================================================= */
+
+body {
+    margin: 0;
+    padding: 0;
+
+    background: #000;
+
+    font-family: 'Quicksand', sans-serif;
+    color: #fff;
+
+    overflow-x: hidden;
+
+    -webkit-font-smoothing: antialiased;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+#jsi-flying-fish-container {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    z-index: -1;
+
+    background: #050505;
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.main-wrapper {
+    max-width: 900px;
+
+    margin: 40px auto;
+
+    padding: 20px;
+
+    position: relative;
+
+    z-index: 1;
+}
+
+
+/* =========================================================
+   GLASS CARD
+========================================================= */
+
+.glass-card {
+    background: var(--glass);
+
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    border: 1px solid var(--glass-border);
+
+    border-radius: 25px;
+
+    padding: 35px;
+
+    margin-bottom: 25px;
+
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.6);
+}
+
+
+/* =========================================================
+   RAINBOW TEXT
+========================================================= */
+
+.rainbow-text {
+    background: var(--rainbow);
+
+    background-size: 200% auto;
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+
+    animation: rainbow_move 4s linear infinite;
+
+    font-weight: 800;
+}
+
+@keyframes rainbow_move {
+    0% {
+        background-position: 0% center;
+    }
+
+    100% {
+        background-position: 200% center;
+    }
+}
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.avatar-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.avatar-wrap {
+    position: relative;
+
+    width: 150px;
+    height: 150px;
+}
+
+.avatar-img {
+    width: 110px;
+    height: 110px;
+
+    border-radius: 50%;
+
+    border: 3px solid #fff;
+
+    position: absolute;
+
+    top: 20px;
+    left: 20px;
+
+    z-index: 2;
+
+    box-shadow:
+        0 0 20px rgba(255,255,255,0.2);
+}
+
+.avatar-frame {
+    position: absolute;
+
+    width: 170px;
+    height: 170px;
+
+    top: -10px;
+    left: -10px;
+
+    z-index: 3;
+
+    pointer-events: none;
+}
+
+.henry-gaming {
+    margin-top: 10px;
+
+    font-family: 'Quicksand', sans-serif;
+
+    font-size: 0.9rem;
+
+    letter-spacing: 1px;
+
+    text-shadow:
+        0 0 8px rgba(255,255,255,0.5);
+
+    min-width: 300px;
+}
+
+
+/* =========================================================
+   PROFILE TEXT
+========================================================= */
+
+.profile-name {
+    font-size: 3rem;
+
+    margin: 0;
+
+    line-height: 1;
+}
+
+.profile-name span {
+    color: #ff416c;
+}
+
+.profile-subtitle {
+    font-size: 1.1rem;
+
+    margin: 10px 0;
+
+    font-weight: 600;
+}
+
+.profile-tag {
+    font-size: 0.8rem;
+
+    opacity: 0.8;
+
+    letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   SOCIAL
+========================================================= */
+
+.social-links {
+    display: flex;
+
+    gap: 12px;
+
+    margin-top: 20px;
+}
+
+.social-item {
+    width: 44px;
+    height: 44px;
+
+    background: rgba(255,255,255,0.12);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    color: #fff;
+
+    border: 1px solid var(--glass-border);
+
+    transition: 0.4s;
+
+    text-decoration: none;
+
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+.social-item:hover {
+    background: rgba(255,255,255,0.25);
+
+    transform: translateY(-5px);
+
+    color: #fff;
+}
+
+
+/* =========================================================
+   CONTRIBUTION
+========================================================= */
+
+.jd-music-container {
+    margin: 30px 0 10px 0;
+
+    padding: 20px;
+
+    background: rgba(0,0,0,0.3);
+
+    border-radius: 20px;
+
+    border: 1px solid var(--glass-border);
+}
+
+#contribution-grid {
+    display: grid;
+
+    grid-template-columns: repeat(52, 1fr);
+    grid-template-rows: repeat(7, 1fr);
+
+    gap: 3px;
+}
+
+.dot {
+    aspect-ratio: 1 / 1;
+
+    border-radius: 2px;
+
+    background: rgba(255,255,255,0.05);
+}
+
+.dot.jd-active {
+    background-image: var(--jd-gradient);
+
+    background-size: 800% 800%;
+
+    animation: jd_glow 2s linear infinite;
+}
+
+@keyframes jd_glow {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+
+/* =========================================================
+   ABOUT
+========================================================= */
+
+.section-title {
+    margin-bottom: 24px;
+}
+
+.info-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 15px;
+}
+
+.info-item {
+    font-size: 0.9rem;
+
+    font-weight: 700;
+
+    padding: 5px 0;
+}
+
+.info-item i {
+    width: 25px;
+
+    color: #4facfe;
+
+    margin-right: 5px;
+}
+
+
+/* =========================================================
+   SKILLS
+========================================================= */
+
+.skill-list {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 20px;
+}
+
+.progress-box {
+    height: 10px;
+
+    background: rgba(255,255,255,0.1);
+
+    border-radius: 10px;
+
+    overflow: hidden;
+
+    margin-top: 8px;
+
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.progress-bar {
+    height: 100%;
+
+    background: var(--rainbow);
+
+    background-size: 200% auto;
+
+    animation: rainbow_move 4s linear infinite;
+}
+
+
+/* =========================================================
+   CONTACT MY JOBS
+========================================================= */
+
+.job-image {
+    text-align: center;
+}
+
+.job-image img {
+    width: 100%;
+
+    max-width: 800px;
+
+    height: auto;
+
+    border-radius: 15px;
+
+    display: block;
+
+    margin: 0 auto;
+
+    border: 1px solid var(--glass-border);
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.4);
+
+    -webkit-user-drag: none;
+    user-drag: none;
+}
+
+
+/* =========================================================
+   CONTACT METHODS
+========================================================= */
+
+.contact-methods {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 12px;
+
+    margin-top: 20px;
+
+    padding: 15px;
+
+    background: rgba(255,255,255,0.05);
+
+    border: 1px solid var(--glass-border);
+
+    border-radius: 15px;
+}
+
+.contact-method {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 12px 8px;
+
+    background: rgba(255,255,255,0.08);
+
+    border-radius: 10px;
+
+    color: #fff;
+
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition: 0.3s;
+}
+
+.contact-method i {
+    font-size: 20px;
+}
+
+.contact-method:hover {
+    background: rgba(255,255,255,0.18);
+
+    transform: translateY(-3px);
+
+    color: #fff;
+}
+
+
+/* =========================================================
+   MUSIC BUTTON
+========================================================= */
+
+.music-btn {
+    position: fixed;
+
+    right: 20px;
+    bottom: 20px;
+
+    width: 55px;
+    height: 55px;
+
+    border: 1px solid rgba(255,255,255,0.25);
+
+    border-radius: 50%;
+
+    background: rgba(20,20,20,0.75);
+
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    color: #fff;
+
+    font-size: 20px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    z-index: 9999;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,0.5);
+
+    transition: 0.3s;
+}
+
+.music-btn:hover {
+    transform: scale(1.1);
+
+    background: rgba(255,255,255,0.18);
+}
+
+.music-btn.playing {
+    animation: musicRotate 2s linear infinite;
+}
+
+@keyframes musicRotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* =========================================================
+   IMAGE
+========================================================= */
+
+img {
+    -webkit-user-drag: none;
+    user-drag: none;
+}
+
+
+/* =========================================================
+   SELECTABLE
+========================================================= */
+
+input,
+textarea,
+.selectable {
+    user-select: text;
+
+    -webkit-user-select: text;
+}
+
+
+/* =========================================================
+   TYPING EFFECT
+========================================================= */
+
+.typing-cursor {
+    display: inline-block;
+
+    margin-left: 3px;
+
+    font-weight: 700;
+
+    background: var(--rainbow);
+
+    background-size: 200% auto;
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+
+    animation:
+        cursor-blink 0.7s infinite,
+        rainbow_move 4s linear infinite;
+}
+
+@keyframes cursor-blink {
+    0%,
+    45% {
+        opacity: 1;
+    }
+
+    46%,
+    100% {
+        opacity: 0;
+    }
+}
+
+.typing-style-1 {
+    font-family: 'Quicksand', sans-serif;
+}
+
+.typing-style-2 {
+    font-family: 'Outfit', sans-serif;
+}
+
+.typing-style-3 {
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 1px;
+}
+
+.typing-style-4 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.typing-style-5 {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 500;
+    letter-spacing: 2px;
+}
+
+.typing-style-6 {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+    text-align: center;
+
+    padding: 20px;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .main-wrapper {
+        padding: 15px;
+    }
+
+    .profile-header {
+        flex-direction: column;
+
+        text-align: center;
+    }
+
+    .info-grid,
+    .skill-list {
+        grid-template-columns: 1fr;
+    }
+
+    #contribution-grid {
+        grid-template-columns: repeat(26, 1fr);
+    }
+
+    .avatar-wrap {
+        margin-bottom: 20px;
+    }
+
+    .contact-methods {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .profile-name {
+        font-size: 2.2rem;
+    }
+
+    .glass-card {
+        border-radius: 22px;
+    }
+
+    .music-btn {
+        width: 50px;
+        height: 50px;
+
+        right: 15px;
+        bottom: 15px;
+    }
+
+    .henry-gaming {
+        min-width: 0;
+
+        width: 100%;
+
+        white-space: nowrap;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .main-wrapper {
+        padding: 10px;
+
+        margin: 20px auto;
+    }
+
+    .glass-card {
+        padding: 22px;
+
+        border-radius: 20px;
+    }
+
+    .contact-methods {
+        grid-template-columns: 1fr 1fr;
+
+        padding: 10px;
+    }
+
+    .contact-method {
+        font-size: 0.8rem;
+    }
+
+    .music-btn {
+        width: 50px;
+        height: 50px;
+
+        right: 15px;
+        bottom: 15px;
+    }
+}
