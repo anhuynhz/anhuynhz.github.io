@@ -1,1113 +1,243 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Orbitron:wght@700&display=swap');
+/* =========================================
+   FIX AVATAR + TYPING MOBILE
+========================================= */
 
-/* =========================================================
-   ROOT
-========================================================= */
+/* ---------- AVATAR ---------- */
 
-:root {
-    --glass: rgba(20, 20, 20, 0.82);
-    --glass-border: rgba(255, 255, 255, 0.2);
+.avatar-wrap {
+    position: relative;
+    width: 145px;
+    height: 145px;
+    flex: 0 0 145px;
 
-    --rainbow: linear-gradient(
-        90deg,
-        #a8edea,
-        #fed6e3,
-        #fac1ff,
-        #d4fc79,
-        #96e6a1,
-        #a8edea
-    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    --jd-gradient: linear-gradient(
-        45deg,
-        #ff0000,
-        #ff7300,
-        #fffb00,
-        #48ff00,
-        #00ffd5,
-        #002bff,
-        #7a00ff,
-        #ff00c8,
-        #ff0000
-    );
+    margin: 0 auto;
+    overflow: visible;
 }
 
-
-/* =========================================================
-   BODY
-========================================================= */
-
-body {
-    margin: 0;
-    padding: 0;
-
-    background: #000;
-
-    font-family: 'Quicksand', sans-serif;
-
-    color: #fff;
-
-    overflow-x: hidden;
-
-    -webkit-font-smoothing: antialiased;
-
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-
-/* =========================================================
-   BACKGROUND
-========================================================= */
-
-#jsi-flying-fish-container {
-    position: fixed;
-
-    top: 0;
-    left: 0;
+.avatar-img {
+    position: absolute;
+    inset: 0;
 
     width: 100%;
     height: 100%;
 
-    z-index: -1;
-
-    background: #050505;
-
-    overflow: hidden;
-}
-
-
-/* =========================================================
-   MAIN WRAPPER
-========================================================= */
-
-.main-wrapper {
-    max-width: 900px;
-
-    margin: 40px auto;
-
-    padding: 20px;
-
-    position: relative;
-
-    z-index: 1;
-
-    box-sizing: border-box;
-}
-
-
-/* =========================================================
-   GLASS CARD
-========================================================= */
-
-.glass-card {
-    position: relative;
-
-    isolation: isolate;
-
-    background: rgba(20, 20, 20, 0.82);
-
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-
-    border: 2px solid rgba(255, 255, 255, 0.15);
-
-    border-radius: 25px;
-
-    padding: 35px;
-
-    margin-bottom: 25px;
-
-    box-shadow:
-        0 15px 35px rgba(0, 0, 0, 0.6);
-
-    box-sizing: border-box;
-}
-
-
-/* =========================================================
-   PROFILE
-========================================================= */
-
-.profile-header {
-    display: flex;
-
-    align-items: center;
-
-    gap: 40px;
-
-    width: 100%;
-
-    box-sizing: border-box;
-}
-
-
-/* =========================================================
-   AVATAR SECTION
-========================================================= */
-
-.avatar-section {
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    width: 300px;
-    min-width: 300px;
-    max-width: 300px;
-
-    flex: 0 0 300px;
-
-    box-sizing: border-box;
-}
-
-
-/* =========================================================
-   AVATAR WRAP
-========================================================= */
-
-.avatar-wrap {
-    position: relative;
-
-    width: 150px;
-    height: 150px;
-
-    flex: 0 0 150px;
-
-    margin: 0 auto;
-
-    box-sizing: border-box;
-}
-
-
-/* =========================================================
-   AVATAR
-========================================================= */
-
-.avatar-img {
-    position: absolute;
-
-    width: 110px;
-    height: 110px;
-
-    top: 20px;
-    left: 20px;
+    object-fit: cover;
+    object-position: center;
 
     border-radius: 50%;
 
-    border: 3px solid #fff;
-
-    z-index: 2;
-
-    box-shadow:
-        0 0 20px rgba(255, 255, 255, 0.2);
-
-    object-fit: cover;
-
-    box-sizing: border-box;
-
-    -webkit-user-drag: none;
-    user-drag: none;
+    display: block;
+    z-index: 1;
 }
-
-
-/* =========================================================
-   AVATAR FRAME
-========================================================= */
 
 .avatar-frame {
     position: absolute;
+    inset: -2px;
 
-    width: 170px;
-    height: 170px;
-
-    top: -10px;
-    left: -10px;
-
-    z-index: 3;
-
-    pointer-events: none;
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
 
     object-fit: contain;
+    object-position: center;
 
-    -webkit-user-drag: none;
-    user-drag: none;
+    display: block;
+    z-index: 2;
+
+    pointer-events: none;
 }
 
 
-/* =========================================================
-   TYPING AREA
-========================================================= */
+/* ---------- TYPING ---------- */
 
 .henry-gaming {
-    margin-top: 10px;
+    position: relative;
 
-    width: 300px;
-    min-width: 300px;
-    max-width: 300px;
+    width: 100%;
+    max-width: 260px;
 
-    height: 32px;
-    min-height: 32px;
+    min-height: 26px;
+
+    margin: 12px auto 0;
 
     display: flex;
-
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
-
-    font-family: 'Quicksand', sans-serif;
-
-    font-size: 0.9rem;
-
-    font-weight: 600;
-
-    line-height: 1;
-
-    letter-spacing: 1px;
 
     text-align: center;
 
-    white-space: nowrap;
+    line-height: 1.5;
 
-    overflow: hidden;
+    overflow: visible;
 
-    text-shadow:
-        0 0 8px rgba(255, 255, 255, 0.5);
+    padding: 0 4px;
 
     box-sizing: border-box;
-
-    flex-shrink: 0;
 }
 
-
 #typing-text {
-    display: inline-block;
+    display: inline;
 
     max-width: 100%;
 
-    white-space: nowrap;
+    white-space: normal;
 
-    overflow: hidden;
+    overflow: visible;
 
-    text-overflow: clip;
+    overflow-wrap: break-word;
+    word-break: normal;
 
-    flex-shrink: 1;
+    text-align: center;
+
+    line-height: 1.5;
 }
-
 
 .typing-cursor {
     display: inline-block;
 
-    margin-left: 3px;
-
-    font-weight: 700;
+    margin-left: 2px;
 
     flex-shrink: 0;
 
-    background: var(--rainbow);
+    line-height: 1.5;
 
-    background-size: 200% auto;
-
-    -webkit-background-clip: text;
-    background-clip: text;
-
-    -webkit-text-fill-color: transparent;
-
-    animation:
-        cursor-blink 0.7s infinite,
-        rainbow_move 4s linear infinite;
+    animation: typingCursor 0.7s infinite;
 }
 
-
-@keyframes cursor-blink {
-
+@keyframes typingCursor {
     0%,
-    45% {
+    49% {
         opacity: 1;
     }
 
-    46%,
+    50%,
     100% {
         opacity: 0;
     }
 }
 
 
-/* =========================================================
-   TYPING STYLES
-========================================================= */
+/* =========================================
+   DESKTOP
+========================================= */
 
-.typing-style-1 {
-    font-family: 'Quicksand', sans-serif;
-    font-weight: 600;
-}
+@media (min-width: 769px) {
 
-.typing-style-2 {
-    font-family: 'Quicksand', sans-serif;
-    font-weight: 600;
-}
-
-.typing-style-3 {
-    font-family: 'Orbitron', sans-serif;
-    font-weight: 700;
-    letter-spacing: 1px;
-}
-
-.typing-style-4 {
-    font-family: 'Quicksand', sans-serif;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-}
-
-.typing-style-5 {
-    font-family: 'Quicksand', sans-serif;
-    font-weight: 500;
-    letter-spacing: 2px;
-}
-
-.typing-style-6 {
-    font-family: 'Quicksand', sans-serif;
-    font-weight: 700;
-    letter-spacing: 1px;
-}
-
-
-/* =========================================================
-   PROFILE NAME
-========================================================= */
-
-.profile-name {
-    font-size: 3rem;
-
-    margin: 0;
-
-    line-height: 1.2;
-
-    white-space: nowrap;
-}
-
-
-/*
-   PHAM BAO LONG
-   Toàn bộ tên đều rainbow
-*/
-
-.profile-name,
-.profile-name span {
-    background: var(--rainbow);
-
-    background-size: 200% auto;
-
-    -webkit-background-clip: text;
-    background-clip: text;
-
-    -webkit-text-fill-color: transparent;
-
-    animation:
-        rainbow_move 4s linear infinite;
-}
-
-
-/* =========================================================
-   PROFILE SUBTITLE
-========================================================= */
-
-.profile-subtitle {
-    font-size: 1.1rem;
-
-    margin: 10px 0;
-
-    font-weight: 600;
-}
-
-
-/* =========================================================
-   PROFILE TAG
-========================================================= */
-
-.profile-tag {
-    font-size: 0.8rem;
-
-    opacity: 0.8;
-
-    letter-spacing: 1px;
-}
-
-
-/* =========================================================
-   RAINBOW TEXT
-========================================================= */
-
-.rainbow-text {
-    background: var(--rainbow);
-
-    background-size: 200% auto;
-
-    -webkit-background-clip: text;
-    background-clip: text;
-
-    -webkit-text-fill-color: transparent;
-
-    animation:
-        rainbow_move 4s linear infinite;
-
-    font-weight: 800;
-}
-
-
-@keyframes rainbow_move {
-
-    0% {
-        background-position: 0% center;
+    .avatar-wrap {
+        width: 145px;
+        height: 145px;
+        flex-basis: 145px;
     }
 
-    100% {
-        background-position: 200% center;
+    .henry-gaming {
+        max-width: 280px;
     }
 }
 
 
-/* =========================================================
-   SOCIAL LINKS
-========================================================= */
-
-.social-links {
-    display: flex;
-
-    gap: 12px;
-
-    margin-top: 20px;
-
-    flex-wrap: wrap;
-}
-
-
-.social-item {
-    width: 44px;
-    height: 44px;
-
-    background: rgba(255, 255, 255, 0.12);
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 12px;
-
-    color: #fff;
-
-    border: 1px solid var(--glass-border);
-
-    transition: 0.4s;
-
-    text-decoration: none;
-
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-
-    flex-shrink: 0;
-}
-
-
-.social-item:hover {
-    background: rgba(255, 255, 255, 0.25);
-
-    transform: translateY(-5px);
-
-    color: #fff;
-}
-
-
-/* =========================================================
-   CONTRIBUTION GRID
-========================================================= */
-
-.jd-music-container {
-    margin: 30px 0 10px 0;
-
-    padding: 20px;
-
-    background: rgba(0, 0, 0, 0.3);
-
-    border-radius: 20px;
-
-    border: 1px solid var(--glass-border);
-
-    box-sizing: border-box;
-}
-
-
-#contribution-grid {
-    display: grid;
-
-    grid-template-columns: repeat(52, 1fr);
-
-    grid-template-rows: repeat(7, 1fr);
-
-    gap: 3px;
-
-    width: 100%;
-}
-
-
-.dot {
-    aspect-ratio: 1 / 1;
-
-    border-radius: 2px;
-
-    background: rgba(255, 255, 255, 0.05);
-}
-
-
-.dot.jd-active {
-    background-image: var(--jd-gradient);
-
-    background-size: 800% 800%;
-
-    animation: jd_glow 2s linear infinite;
-}
-
-
-@keyframes jd_glow {
-
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
-
-/* =========================================================
-   ABOUT
-========================================================= */
-
-.section-title {
-    margin-bottom: 24px;
-}
-
-
-.info-grid {
-    display: grid;
-
-    grid-template-columns: repeat(2, 1fr);
-
-    gap: 15px;
-}
-
-
-.info-item {
-    font-size: 0.9rem;
-
-    font-weight: 700;
-
-    padding: 5px 0;
-}
-
-
-.info-item i {
-    width: 25px;
-
-    color: #4facfe;
-
-    margin-right: 5px;
-}
-
-
-/* =========================================================
-   SKILLS
-========================================================= */
-
-.skill-list {
-    display: grid;
-
-    grid-template-columns: 1fr 1fr;
-
-    gap: 20px;
-}
-
-
-.progress-box {
-    height: 10px;
-
-    background: rgba(255, 255, 255, 0.1);
-
-    border-radius: 10px;
-
-    overflow: hidden;
-
-    margin-top: 8px;
-
-    border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-
-.progress-bar {
-    height: 100%;
-
-    background: var(--rainbow);
-
-    background-size: 200% auto;
-
-    animation:
-        rainbow_move 4s linear infinite;
-}
-
-
-/* =========================================================
-   CONTACT MY JOBS
-========================================================= */
-
-.job-image {
-    text-align: center;
-
-    width: 100%;
-}
-
-
-.job-image img {
-    width: 100%;
-
-    max-width: 800px;
-
-    height: auto;
-
-    border-radius: 15px;
-
-    display: block;
-
-    margin: 0 auto;
-
-    border: 1px solid var(--glass-border);
-
-    box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.4);
-
-    -webkit-user-drag: none;
-    user-drag: none;
-}
-
-
-/* =========================================================
-   CONTACT METHODS
-========================================================= */
-
-.contact-methods {
-    display: grid;
-
-    grid-template-columns: repeat(4, 1fr);
-
-    gap: 12px;
-
-    margin-top: 20px;
-
-    padding: 15px;
-
-    background: rgba(255, 255, 255, 0.05);
-
-    border: 1px solid var(--glass-border);
-
-    border-radius: 15px;
-
-    box-sizing: border-box;
-}
-
-
-.contact-method {
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    gap: 8px;
-
-    padding: 12px 8px;
-
-    background: rgba(255, 255, 255, 0.08);
-
-    border-radius: 10px;
-
-    color: #fff;
-
-    font-weight: 700;
-
-    text-decoration: none;
-
-    transition: 0.3s;
-
-    min-width: 0;
-}
-
-
-.contact-method i {
-    font-size: 20px;
-
-    flex-shrink: 0;
-}
-
-
-.contact-method:hover {
-    background: rgba(255, 255, 255, 0.18);
-
-    transform: translateY(-3px);
-
-    color: #fff;
-}
-
-
-/* =========================================================
-   MUSIC BUTTON
-========================================================= */
-
-.music-btn {
-    position: fixed;
-
-    right: 20px;
-    bottom: 20px;
-
-    width: 55px;
-    height: 55px;
-
-    border: 1px solid rgba(255, 255, 255, 0.25);
-
-    border-radius: 50%;
-
-    background: rgba(20, 20, 20, 0.85);
-
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-
-    color: #fff;
-
-    font-size: 20px;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    cursor: pointer;
-
-    z-index: 9999;
-
-    box-shadow:
-        0 8px 25px rgba(0, 0, 0, 0.5);
-
-    transition: 0.3s;
-}
-
-
-.music-btn:hover {
-    transform: scale(1.1);
-
-    background: rgba(255, 255, 255, 0.18);
-}
-
-
-.music-btn.playing {
-    animation: musicRotate 2s linear infinite;
-}
-
-
-@keyframes musicRotate {
-
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-
-/* =========================================================
-   IMAGE
-========================================================= */
-
-img {
-    -webkit-user-drag: none;
-
-    user-drag: none;
-}
-
-
-/* =========================================================
-   SELECTABLE
-========================================================= */
-
-input,
-textarea,
-.selectable {
-    user-select: text;
-
-    -webkit-user-select: text;
-}
-
-
-/* =========================================================
-   FOOTER
-========================================================= */
-
-footer {
-    text-align: center;
-
-    padding: 20px;
-}
-
-
-/* =========================================================
-   TABLET / MOBILE
-========================================================= */
+/* =========================================
+   MOBILE
+========================================= */
 
 @media (max-width: 768px) {
-
-    .main-wrapper {
-        padding: 15px;
-
-        margin: 25px auto;
-    }
-
-
-    .glass-card {
-        padding: 25px;
-
-        border-radius: 22px;
-    }
-
-
-    .profile-header {
-        flex-direction: column;
-
-        text-align: center;
-
-        gap: 20px;
-    }
-
-
-    .avatar-section {
-        width: 100%;
-        min-width: 0;
-        max-width: 100%;
-
-        flex: 0 0 auto;
-    }
-
 
     .avatar-wrap {
         width: 125px;
         height: 125px;
-
-        flex: 0 0 125px;
+        flex-basis: 125px;
     }
-
-
-    .avatar-img {
-        width: 92px;
-        height: 92px;
-
-        top: 16.5px;
-        left: 16.5px;
-    }
-
 
     .avatar-frame {
-        width: 145px;
-        height: 145px;
+        inset: -2px;
 
-        top: -10px;
-        left: -10px;
+        width: calc(100% + 4px);
+        height: calc(100% + 4px);
     }
 
+    .henry-gaming {
+        width: 100%;
+        max-width: 290px;
+
+        min-height: 48px;
+
+        margin-top: 10px;
+
+        padding-left: 8px;
+        padding-right: 8px;
+
+        font-size: 14px;
+
+        line-height: 1.5;
+
+        overflow: visible;
+    }
+
+    #typing-text {
+        max-width: 100%;
+
+        white-space: normal;
+
+        overflow: visible;
+
+        overflow-wrap: break-word;
+        word-break: normal;
+
+        line-height: 1.5;
+    }
+
+    .typing-cursor {
+        line-height: 1.5;
+    }
+}
+
+
+/* =========================================
+   MOBILE NHỎ
+========================================= */
+
+@media (max-width: 400px) {
+
+    .avatar-wrap {
+        width: 115px;
+        height: 115px;
+        flex-basis: 115px;
+    }
 
     .henry-gaming {
-        width: 280px;
-        min-width: 280px;
         max-width: 280px;
 
-        height: 32px;
-        min-height: 32px;
+        font-size: 13px;
 
-        flex: 0 0 280px;
-
-        margin-left: auto;
-        margin-right: auto;
-
-        white-space: nowrap;
-
-        overflow: hidden;
-    }
-
-
-    .info-grid,
-    .skill-list {
-        grid-template-columns: 1fr;
-    }
-
-
-    #contribution-grid {
-        grid-template-columns: repeat(26, 1fr);
-
-        gap: 2px;
-    }
-
-
-    .avatar-wrap {
-        margin-bottom: 5px;
-    }
-
-
-    .profile-name {
-        font-size: 2.2rem;
-
-        white-space: nowrap;
-    }
-
-
-    .user-info {
-        width: 100%;
-
-        min-width: 0;
-    }
-
-
-    .contact-methods {
-        grid-template-columns: repeat(2, 1fr);
+        min-height: 44px;
     }
 }
 
 
-/* =========================================================
-   SMALL MOBILE
-========================================================= */
+/* =========================================
+   TRÁNH AVATAR BỊ CO / LỆCH
+========================================= */
 
-@media (max-width: 480px) {
+.avatar-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-    .main-wrapper {
-        padding: 10px;
+    min-width: 0;
+}
 
-        margin: 20px auto;
-    }
-
-
-    .glass-card {
-        padding: 22px;
-
-        border-radius: 20px;
-    }
-
-
-    .avatar-wrap {
-        width: 120px;
-        height: 120px;
-
-        flex-basis: 120px;
-    }
-
-
-    .avatar-img {
-        width: 88px;
-        height: 88px;
-
-        top: 16px;
-        left: 16px;
-    }
-
-
-    .avatar-frame {
-        width: 140px;
-        height: 140px;
-
-        top: -10px;
-        left: -10px;
-    }
-
-
-    .henry-gaming {
-        width: 260px;
-        min-width: 260px;
-        max-width: 260px;
-
-        flex-basis: 260px;
-    }
-
-
-    .profile-name {
-        font-size: 2rem;
-
-        white-space: nowrap;
-    }
-
-
-    .profile-subtitle {
-        font-size: 1rem;
-    }
-
-
-    .contact-methods {
-        grid-template-columns: 1fr 1fr;
-
-        padding: 10px;
-    }
-
-
-    .contact-method {
-        font-size: 0.8rem;
-
-        padding: 10px 5px;
-    }
-
-
-    .contact-method i {
-        font-size: 17px;
-    }
-
-
-    .music-btn {
-        width: 50px;
-        height: 50px;
-
-        right: 15px;
-        bottom: 15px;
-    }
+.avatar-section,
+.avatar-wrap,
+.henry-gaming {
+    box-sizing: border-box;
 }
 
 
-/* =========================================================
-   VERY SMALL PHONE
-========================================================= */
-
-@media (max-width: 360px) {
-
-    .glass-card {
-        padding: 18px;
-    }
-
-
-    .henry-gaming {
-        width: 240px;
-        min-width: 240px;
-        max-width: 240px;
-
-        flex-basis: 240px;
-    }
-
-
-    .profile-name {
-        font-size: 1.8rem;
-    }
-
-
-    .social-links {
-        justify-content: center;
-    }
+/* Không để parent cắt crown */
+.avatar-section,
+.profile-header,
+.glass-card {
+    overflow: visible;
 }
