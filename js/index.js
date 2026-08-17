@@ -6,13 +6,11 @@
 =========================================================
 */
 
-/* =========================================================
-   PBL LOADING + MUSIC TOAST
-========================================================= */
-
 document.addEventListener("DOMContentLoaded", function () {
 
-    /* Tạo Toast */
+    /* =========================================================
+       PBL LOADING + MUSIC TOAST
+    ========================================================= */
 
     const toast = document.createElement("div");
 
@@ -20,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     toast.innerHTML = `
         <div class="pbl-toast-title">
-            <i class="fa-solid fa-spinner"></i>
+            <i class="fa-solid fa-spinner fa-spin"></i>
             PBL | HOME
         </div>
 
@@ -32,134 +30,93 @@ document.addEventListener("DOMContentLoaded", function () {
             <div id="pbl-loading-progress"></div>
         </div>
 
-        <span id="pbl-loading-percent">
-            0%
-        </span>
+        <span id="pbl-loading-percent">0%</span>
     `;
 
     document.body.appendChild(toast);
 
-
     const progress =
-        document.getElementById(
-            "pbl-loading-progress"
-        );
+        document.getElementById("pbl-loading-progress");
 
     const percent =
-        document.getElementById(
-            "pbl-loading-percent"
-        );
+        document.getElementById("pbl-loading-percent");
 
     const message =
-        document.getElementById(
-            "pbl-toast-message"
-        );
-
-
-    /* Hiện Toast */
+        document.getElementById("pbl-toast-message");
 
     toast.classList.add("show");
 
-
-    /* Loading */
-
     let loadingPercent = 0;
 
-    const loadingInterval =
-        setInterval(function () {
+    const loadingInterval = setInterval(function () {
 
-            loadingPercent +=
-                Math.floor(
-                    Math.random() * 8
-                ) + 2;
+        loadingPercent +=
+            Math.floor(Math.random() * 8) + 2;
 
-            if (loadingPercent >= 100) {
+        if (loadingPercent >= 100) {
 
-                loadingPercent = 100;
+            loadingPercent = 100;
 
-                clearInterval(
-                    loadingInterval
-                );
+            clearInterval(loadingInterval);
 
-                progress.style.width =
-                    "100%";
+            progress.style.width = "100%";
+            percent.textContent = "100%";
 
-                percent.textContent =
-                    "100%";
+            setTimeout(showMusicQuestion, 500);
 
+            return;
+        }
 
-                /* Đợi thanh chạy xong */
+        progress.style.width =
+            loadingPercent + "%";
 
-                setTimeout(function () {
+        percent.textContent =
+            loadingPercent + "%";
 
-                    showMusicQuestion();
-
-                }, 400);
-
-                return;
-            }
+    }, 80);
 
 
-            progress.style.width =
-                loadingPercent + "%";
-
-            percent.textContent =
-                loadingPercent + "%";
-
-        }, 80);
-
-
-    /* =====================================================
+    /* =========================================================
        MUSIC QUESTION
-    ===================================================== */
+    ========================================================= */
 
     function showMusicQuestion() {
 
-        const musicIcon =
+        const icon =
             document.querySelector(
                 "#pbl-loading-toast .pbl-toast-title i"
             );
 
-        if (musicIcon) {
+        if (icon) {
 
-            musicIcon.className =
+            icon.className =
                 "fa-solid fa-circle-check";
 
         }
 
-
         message.innerHTML =
             "Load web thành công! 🎉<br>" +
             "Bạn có muốn bật nhạc không?";
-
 
         const loadingBar =
             document.querySelector(
                 ".pbl-loading-bar"
             );
 
-        const loadingPercentText =
-            document.getElementById(
-                "pbl-loading-percent"
-            );
-
-
         if (loadingBar) {
-
-            loadingBar.style.display =
-                "none";
-
+            loadingBar.style.display = "none";
         }
 
-        if (loadingPercentText) {
+        percent.style.display = "none";
 
-            loadingPercentText.style.display =
-                "none";
 
+        const oldButtons =
+            toast.querySelector(".pbl-music-buttons");
+
+        if (oldButtons) {
+            oldButtons.remove();
         }
 
-
-        /* Tạo nút */
 
         const buttons =
             document.createElement("div");
@@ -168,11 +125,9 @@ document.addEventListener("DOMContentLoaded", function () {
             "pbl-music-buttons";
 
         buttons.innerHTML = `
-
             <button
                 class="pbl-music-btn yes"
                 id="pbl-music-yes">
-
                 <i class="fa-solid fa-volume-high"></i>
                 Có
             </button>
@@ -180,23 +135,26 @@ document.addEventListener("DOMContentLoaded", function () {
             <button
                 class="pbl-music-btn no"
                 id="pbl-music-no">
-
                 <i class="fa-solid fa-volume-xmark"></i>
                 Không
             </button>
-
         `;
 
         toast.appendChild(buttons);
 
 
-        /* =================================================
+        /* =====================================================
            NÚT CÓ
-        ================================================= */
+        ===================================================== */
 
-        document
-            .getElementById("pbl-music-yes")
-            .addEventListener(
+        const yesButton =
+            document.getElementById(
+                "pbl-music-yes"
+            );
+
+        if (yesButton) {
+
+            yesButton.addEventListener(
                 "click",
                 function () {
 
@@ -209,21 +167,31 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         musicBtn.click();
 
+                    } else {
+
+                        console.log(
+                            "Không tìm thấy #music-btn"
+                        );
                     }
 
                     closeToast();
-
                 }
             );
+        }
 
 
-        /* =================================================
+        /* =====================================================
            NÚT KHÔNG
-        ================================================= */
+        ===================================================== */
 
-        document
-            .getElementById("pbl-music-no")
-            .addEventListener(
+        const noButton =
+            document.getElementById(
+                "pbl-music-no"
+            );
+
+        if (noButton) {
+
+            noButton.addEventListener(
                 "click",
                 function () {
 
@@ -231,12 +199,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 }
             );
+        }
     }
 
 
-    /* =====================================================
+    /* =========================================================
        ĐÓNG TOAST
-    ===================================================== */
+    ========================================================= */
 
     function closeToast() {
 
@@ -244,21 +213,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
         setTimeout(function () {
 
-            toast.remove();
+            if (toast) {
+                toast.remove();
+            }
 
         }, 400);
-
     }
 
-});
-document.addEventListener("DOMContentLoaded", function () {
+
 
     /* =========================================================
        CONTRIBUTION GRID
     ========================================================= */
 
     const grid =
-        document.getElementById("contribution-grid");
+        document.getElementById(
+            "contribution-grid"
+        );
 
     if (grid) {
 
@@ -292,9 +263,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 i++
             ) {
 
-                dots[i]
-                    .classList
-                    .remove("jd-active");
+                dots[i].classList.remove(
+                    "jd-active"
+                );
             }
 
 
@@ -324,9 +295,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     if (dots[index]) {
 
-                        dots[index]
-                            .classList
-                            .add("jd-active");
+                        dots[index].classList.add(
+                            "jd-active"
+                        );
                     }
                 }
             }
@@ -342,6 +313,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
+
     /* =========================================================
        TYPING EFFECT
     ========================================================= */
@@ -351,7 +323,6 @@ document.addEventListener("DOMContentLoaded", function () {
             "typing-text"
         );
 
-
     if (typingText) {
 
         const typingMessages = [
@@ -359,7 +330,6 @@ document.addEventListener("DOMContentLoaded", function () {
             {
                 text:
                     "Hello everyone. I'm Phạm Bảo Long",
-
                 className:
                     "typing-style-1"
             },
@@ -367,7 +337,6 @@ document.addEventListener("DOMContentLoaded", function () {
             {
                 text:
                     "I'm a Developer",
-
                 className:
                     "typing-style-2"
             },
@@ -375,7 +344,6 @@ document.addEventListener("DOMContentLoaded", function () {
             {
                 text:
                     "Welcome to my website",
-
                 className:
                     "typing-style-3"
             },
@@ -383,7 +351,6 @@ document.addEventListener("DOMContentLoaded", function () {
             {
                 text:
                     "Cần lên Locket Gold vĩnh viễn ib nha",
-
                 className:
                     "typing-style-4"
             },
@@ -391,7 +358,6 @@ document.addEventListener("DOMContentLoaded", function () {
             {
                 text:
                     "Have a nice day ✨",
-
                 className:
                     "typing-style-5"
             },
@@ -399,7 +365,6 @@ document.addEventListener("DOMContentLoaded", function () {
             {
                 text:
                     "Thank you for visiting!",
-
                 className:
                     "typing-style-6"
             }
@@ -408,28 +373,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         let messageIndex = 0;
-
         let charIndex = 0;
-
         let deleting = false;
 
-
         const typingSpeed = 75;
-
         const deletingSpeed = 40;
-
         const pauseAfterTyping = 1800;
-
         const pauseAfterDeleting = 500;
 
 
         function typingEffect() {
 
             const current =
-                typingMessages[
-                    messageIndex
-                ];
-
+                typingMessages[messageIndex];
 
             typingText.className =
                 current.className;
@@ -442,7 +398,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         0,
                         charIndex + 1
                     );
-
 
                 charIndex++;
 
@@ -475,7 +430,6 @@ document.addEventListener("DOMContentLoaded", function () {
             } else {
 
                 charIndex--;
-
 
                 typingText.textContent =
                     current.text.substring(
@@ -523,448 +477,466 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-   /* =========================================================
-   MUSIC PLAYER
-   - Lần đầu bấm: random bài
-   - Đang phát: pause
-   - Bấm lại sau pause: next bài
-   - Hết bài cuối: quay lại bài đầu
-   - File lỗi: tự chuyển bài tiếp theo
-========================================================= */
 
-const playlist = [
+    /* =========================================================
+       MUSIC PLAYER
 
-    {
-        name: "Về bên anh",
-        url: "//thanhdieu.com/files/Về-Bên-Anh.mp3"
-    },
+       Lần đầu:
+       → Random bài
 
-    {
-        name: "Anh đã quen với cô đơn",
-        url: "//thanhdieu.com/files/Anh-Đã-Quen-Với-Cô-Đơn.mp3"
-    },
+       Đang phát:
+       → Pause
 
-    {
-        name: "Em nào có tội",
-        url: "//thanhdieu.com/files/Em-Nào-Có-Tội.mp3"
-    },
+       Pause rồi bấm:
+       → Next bài
 
-    {
-        name: "Anh Nhớ Em",
-        url: "https://files.catbox.moe/ihobra.mp3"
-    },
+       Hết bài:
+       → Next bài
 
-    {
-        name: "Rồi mùa yêu thương dần đang đến",
-        url: "https://files.catbox.moe/bgwso3.mp3"
-    },
+       Hết bài cuối:
+       → Quay lại bài đầu
 
-    {
-        name: "Chỉ bằng cái gật đầu",
-        url: "https://files.catbox.moe/s1hyzo.mp3"
-    },
+       File lỗi:
+       → Tự bỏ qua bài lỗi
+    ========================================================= */
 
-    {
-        name: "Đừng quên tên anh",
-        url: "https://files.catbox.moe/h43f1s.mp3"
-    },
+    const playlist = [
 
-    {
-        name: "Hối hận trong anh",
-        url: "https://files.catbox.moe/aebu0g.mp3"
-    },
+        {
+            name: "Về bên anh",
+            url:
+                "//thanhdieu.com/files/Về-Bên-Anh.mp3"
+        },
 
-    {
-        name: "Anh từng cố gắng",
-        url: "https://files.catbox.moe/mm085n.mp3"
-    },
+        {
+            name: "Anh đã quen với cô đơn",
+            url:
+                "//thanhdieu.com/files/Anh-Đã-Quen-Với-Cô-Đơn.mp3"
+        },
 
-    {
-        name: "Hình bóng em",
-        url: "https://files.catbox.moe/21c1fl.mp3"
-    },
+        {
+            name: "Em nào có tội",
+            url:
+                "//thanhdieu.com/files/Em-Nào-Có-Tội.mp3"
+        },
 
-    {
-        name: "Lời chúc không thật",
-        url: "https://files.catbox.moe/v6sqz2.mp3"
-    },
+        {
+            name: "Anh Nhớ Em",
+            url:
+                "https://files.catbox.moe/ihobra.mp3"
+        },
 
-    {
-        name: "Quên anh trong từng cơn đau",
-        url: "https://files.catbox.moe/crphp2.mp3"
-    }
+        {
+            name:
+                "Rồi mùa yêu thương dần đang đến",
+            url:
+                "https://files.catbox.moe/bgwso3.mp3"
+        },
 
-];
+        {
+            name:
+                "Chỉ bằng cái gật đầu",
+            url:
+                "https://files.catbox.moe/s1hyzo.mp3"
+        },
 
+        {
+            name:
+                "Đừng quên tên anh",
+            url:
+                "https://files.catbox.moe/h43f1s.mp3"
+        },
 
-const musicBtn = document.getElementById("music-btn");
-const bgMusic = document.getElementById("bg-music");
+        {
+            name:
+                "Hối hận trong anh",
+            url:
+                "https://files.catbox.moe/aebu0g.mp3"
+        },
 
+        {
+            name:
+                "Anh từng cố gắng",
+            url:
+                "https://files.catbox.moe/mm085n.mp3"
+        },
 
-if (
-    musicBtn &&
-    bgMusic &&
-    playlist.length > 0
-) {
+        {
+            name:
+                "Hình bóng em",
+            url:
+                "https://files.catbox.moe/21c1fl.mp3"
+        },
 
-    let currentSong = 0;
+        {
+            name:
+                "Lời chúc không thật",
+            url:
+                "https://files.catbox.moe/v6sqz2.mp3"
+        },
 
-    let hasStarted = false;
-
-    let isLoading = false;
-
-
-    /* =====================================================
-       LOAD SONG
-    ===================================================== */
-
-    function loadSong(index) {
-
-        if (index < 0) {
-            index = playlist.length - 1;
+        {
+            name:
+                "Quên anh trong từng cơn đau",
+            url:
+                "https://files.catbox.moe/crphp2.mp3"
         }
 
-        if (index >= playlist.length) {
-            index = 0;
-        }
+    ];
 
-        currentSong = index;
 
-        bgMusic.pause();
-
-        bgMusic.currentTime = 0;
-
-        bgMusic.src = playlist[currentSong].url;
-
-        bgMusic.load();
-
-        console.log(
-            "Đang tải:",
-            playlist[currentSong].name
+    const musicBtn =
+        document.getElementById(
+            "music-btn"
         );
-    }
+
+    const bgMusic =
+        document.getElementById(
+            "bg-music"
+        );
 
 
-    /* =====================================================
-       PLAYING STATE
-    ===================================================== */
+    if (
+        musicBtn &&
+        bgMusic &&
+        playlist.length > 0
+    ) {
 
-    function setPlayingState() {
+        let currentSong = 0;
 
-        musicBtn.classList.add("playing");
+        let hasStarted = false;
 
-        musicBtn.innerHTML =
-            '<i class="fa-solid fa-pause"></i>';
-    }
-
-
-    /* =====================================================
-       PAUSED STATE
-    ===================================================== */
-
-    function setPausedState() {
-
-        musicBtn.classList.remove("playing");
-
-        musicBtn.innerHTML =
-            '<i class="fa-solid fa-music"></i>';
-    }
+        let changingSong = false;
 
 
-    /* =====================================================
-       PLAY MUSIC
-    ===================================================== */
+        /* =====================================================
+           LOAD SONG
+        ===================================================== */
 
-    function playMusic() {
+        function loadSong(index) {
 
-        if (isLoading) {
-            return;
-        }
+            if (index < 0) {
 
-        isLoading = true;
+                index =
+                    playlist.length - 1;
+            }
 
-        const promise = bgMusic.play();
+            if (
+                index >=
+                playlist.length
+            ) {
 
-        if (promise !== undefined) {
+                index = 0;
+            }
 
-            promise
-                .then(function () {
+            currentSong = index;
 
-                    isLoading = false;
+            bgMusic.pause();
 
-                    setPlayingState();
+            bgMusic.currentTime = 0;
 
-                    console.log(
-                        "Đang phát:",
-                        playlist[currentSong].name
-                    );
+            bgMusic.src =
+                playlist[currentSong].url;
 
-                })
-                .catch(function (error) {
-
-                    isLoading = false;
-
-                    console.log(
-                        "Không thể phát:",
-                        playlist[currentSong].name,
-                        error
-                    );
-
-                    setPausedState();
-
-                });
-
-        } else {
-
-            isLoading = false;
-
-            setPlayingState();
-
-        }
-    }
-
-
-    /* =====================================================
-       NEXT SONG
-    ===================================================== */
-
-    function nextSong() {
-
-        currentSong++;
-
-        /*
-         * Hết playlist
-         * → quay lại bài đầu
-         */
-
-        if (currentSong >= playlist.length) {
-
-            currentSong = 0;
+            bgMusic.load();
 
             console.log(
-                "Đã hết playlist → phát lại từ đầu"
+                "Đang tải:",
+                playlist[currentSong].name
             );
         }
 
 
-        loadSong(currentSong);
+        /* =====================================================
+           PLAYING STATE
+        ===================================================== */
 
-        /*
-         * Chờ audio load xong rồi phát
-         */
+        function setPlayingState() {
 
-        bgMusic.addEventListener(
-            "canplay",
-            function playWhenReady() {
+            musicBtn.classList.add(
+                "playing"
+            );
 
-                bgMusic.removeEventListener(
-                    "canplay",
-                    playWhenReady
-                );
+            musicBtn.innerHTML =
+                '<i class="fa-solid fa-pause"></i>';
+        }
+
+
+        /* =====================================================
+           PAUSED STATE
+        ===================================================== */
+
+        function setPausedState() {
+
+            musicBtn.classList.remove(
+                "playing"
+            );
+
+            musicBtn.innerHTML =
+                '<i class="fa-solid fa-music"></i>';
+        }
+
+
+        /* =====================================================
+           PLAY
+        ===================================================== */
+
+        function playMusic() {
+
+            if (changingSong) {
+                return;
+            }
+
+            changingSong = true;
+
+
+            const promise =
+                bgMusic.play();
+
+
+            if (
+                promise &&
+                typeof promise.then ===
+                "function"
+            ) {
+
+                promise
+                    .then(function () {
+
+                        changingSong = false;
+
+                        setPlayingState();
+
+                        console.log(
+                            "Đang phát:",
+                            playlist[currentSong].name
+                        );
+
+                    })
+                    .catch(function (error) {
+
+                        changingSong = false;
+
+                        setPausedState();
+
+                        console.log(
+                            "Không thể phát:",
+                            playlist[currentSong].name,
+                            error
+                        );
+                    });
+
+            } else {
+
+                changingSong = false;
+
+                setPlayingState();
+            }
+        }
+
+
+        /* =====================================================
+           PLAY WHEN READY
+        ===================================================== */
+
+        function playWhenReady() {
+
+            if (
+                bgMusic.readyState >= 2
+            ) {
 
                 playMusic();
 
-            }
-        );
-
-    }
-
-
-    /* =====================================================
-       MUSIC BUTTON
-    ===================================================== */
-
-    musicBtn.addEventListener(
-        "click",
-        function () {
-
-            /*
-             * Đang phát
-             * → PAUSE
-             */
-
-            if (!bgMusic.paused) {
-
-                bgMusic.pause();
-
-                setPausedState();
-
-                console.log(
-                    "Đã pause:",
-                    playlist[currentSong].name
-                );
-
                 return;
             }
 
 
-            /*
-             * Lần đầu bấm
-             * → RANDOM
-             */
+            const handler =
+                function () {
 
-            if (!hasStarted) {
-
-                hasStarted = true;
-
-                currentSong =
-                    Math.floor(
-                        Math.random() *
-                        playlist.length
+                    bgMusic.removeEventListener(
+                        "canplay",
+                        handler
                     );
 
-                loadSong(currentSong);
+                    playMusic();
+                };
 
-                /*
-                 * Phát khi audio sẵn sàng
-                 */
 
-                bgMusic.addEventListener(
-                    "canplay",
-                    function playFirstSong() {
+            bgMusic.addEventListener(
+                "canplay",
+                handler
+            );
+        }
 
-                        bgMusic.removeEventListener(
-                            "canplay",
-                            playFirstSong
-                        );
 
-                        playMusic();
+        /* =====================================================
+           NEXT SONG
+        ===================================================== */
 
-                    }
-                );
+        function nextSong() {
 
+            if (changingSong) {
                 return;
             }
 
 
-            /*
-             * Đã từng phát
-             * → NEXT
-             */
+            currentSong++;
 
-            nextSong();
-
-        }
-    );
-
-
-    /* =====================================================
-       HẾT BÀI
-       → NEXT
-    ===================================================== */
-
-    bgMusic.addEventListener(
-        "ended",
-        function () {
-
-            console.log(
-                "Hết bài:",
-                playlist[currentSong].name
-            );
-
-            /*
-             * Nếu đây là bài cuối
-             * → quay lại bài đầu
-             */
 
             if (
                 currentSong >=
-                playlist.length - 1
+                playlist.length
             ) {
 
                 currentSong = 0;
 
-                loadSong(currentSong);
-
-            } else {
-
-                currentSong++;
-
-                loadSong(currentSong);
-
+                console.log(
+                    "Hết playlist → quay lại bài đầu"
+                );
             }
 
 
-            /*
-             * Chờ bài mới load
-             */
+            loadSong(currentSong);
 
-            bgMusic.addEventListener(
-                "canplay",
-                function playNextSong() {
-
-                    bgMusic.removeEventListener(
-                        "canplay",
-                        playNextSong
-                    );
-
-                    playMusic();
-
-                }
-            );
-
+            playWhenReady();
         }
-    );
 
 
-    /* =====================================================
-       AUDIO ERROR
-       → TỰ BỎ QUA BÀI LỖI
-    ===================================================== */
+        /* =====================================================
+           MUSIC BUTTON
+        ===================================================== */
 
-    bgMusic.addEventListener(
-        "error",
-        function () {
+        musicBtn.addEventListener(
+            "click",
+            function () {
 
-            console.log(
-                "Không tải được:",
-                playlist[currentSong].name
-            );
-
-            /*
-             * Chuyển bài sau 500ms
-             */
-
-            setTimeout(function () {
-
-                currentSong++;
-
-                /*
-                 * Nếu hết danh sách
-                 * → quay lại đầu
-                 */
+                /* Đang phát → PAUSE */
 
                 if (
-                    currentSong >=
-                    playlist.length
+                    !bgMusic.paused
                 ) {
 
-                    currentSong = 0;
+                    bgMusic.pause();
 
+                    setPausedState();
+
+                    console.log(
+                        "Pause:",
+                        playlist[currentSong].name
+                    );
+
+                    return;
                 }
 
-                loadSong(currentSong);
 
-                bgMusic.addEventListener(
-                    "canplay",
-                    function retrySong() {
+                /* Lần đầu → RANDOM */
 
-                        bgMusic.removeEventListener(
-                            "canplay",
-                            retrySong
+                if (!hasStarted) {
+
+                    hasStarted = true;
+
+                    currentSong =
+                        Math.floor(
+                            Math.random() *
+                            playlist.length
                         );
 
-                        playMusic();
+                    loadSong(currentSong);
 
-                    }
+                    playWhenReady();
+
+                    return;
+                }
+
+
+                /* Đã phát → NEXT */
+
+                nextSong();
+
+            }
+        );
+
+
+        /* =====================================================
+           HẾT BÀI
+        ===================================================== */
+
+        bgMusic.addEventListener(
+            "ended",
+            function () {
+
+                console.log(
+                    "Hết bài:",
+                    playlist[currentSong].name
                 );
 
-            }, 500);
+                nextSong();
 
-        }
-    );
+            }
+        );
 
-}
+
+        /* =====================================================
+           AUDIO ERROR
+        ===================================================== */
+
+        bgMusic.addEventListener(
+            "error",
+            function () {
+
+                if (!hasStarted) {
+                    return;
+                }
+
+                console.log(
+                    "File lỗi:",
+                    playlist[currentSong].name
+                );
+
+
+                /*
+                 * Đợi một chút rồi bỏ qua
+                 * bài lỗi
+                 */
+
+                setTimeout(
+                    function () {
+
+                        if (
+                            !bgMusic.error
+                        ) {
+                            return;
+                        }
+
+                        changingSong = false;
+
+                        currentSong++;
+
+
+                        if (
+                            currentSong >=
+                            playlist.length
+                        ) {
+
+                            currentSong = 0;
+                        }
+
+
+                        loadSong(
+                            currentSong
+                        );
+
+                        playWhenReady();
+
+                    },
+                    500
+                );
+            }
+        );
+
+    }
+
 
 
     /* =========================================================
@@ -1133,14 +1105,11 @@ if (
 
                 this.watchIds.length = 0;
 
-
                 this.intervalCount =
                     this.MAX_INTERVAL_COUNT;
 
-
                 this.width =
                     this.$container.width();
-
 
                 this.height =
                     this.$container.height();
@@ -1185,10 +1154,8 @@ if (
 
                     this.clearTimer();
 
-
                     this.tmpWidth =
                         this.$window.width();
-
 
                     this.tmpHeight =
                         this.$window.height();
@@ -1223,7 +1190,6 @@ if (
                     var width =
                         this.$window.width();
 
-
                     var height =
                         this.$window.height();
 
@@ -1231,9 +1197,9 @@ if (
                     var stopped =
                         (
                             width ===
-                                this.tmpWidth &&
+                            this.tmpWidth &&
                             height ===
-                                this.tmpHeight
+                            this.tmpHeight
                         );
 
 
@@ -1291,14 +1257,12 @@ if (
                         x:
                             event.clientX -
                             offset.left +
-                            this.$window
-                                .scrollLeft(),
+                            this.$window.scrollLeft(),
 
                         y:
                             event.clientY -
                             offset.top +
-                            this.$window
-                                .scrollTop()
+                            this.$window.scrollTop()
 
                     };
                 },
@@ -1329,7 +1293,7 @@ if (
                         axis.x,
                         axis.y,
                         axis.y -
-                            this.axis.y
+                        this.axis.y
                     );
 
 
@@ -1346,12 +1310,12 @@ if (
 
                     if (
                         y <
-                            this.height / 2 -
-                            this.THRESHOLD ||
+                        this.height / 2 -
+                        this.THRESHOLD ||
 
                         y >
-                            this.height / 2 +
-                            this.THRESHOLD
+                        this.height / 2 +
+                        this.THRESHOLD
                     ) {
 
                         return;
@@ -1368,7 +1332,7 @@ if (
                     if (
                         index < 0 ||
                         index >=
-                            this.points.length
+                        this.points.length
                     ) {
 
                         return;
@@ -1702,7 +1666,6 @@ if (
                         this.previous.height +=
                             this.force.previous;
 
-
                         this.previous.fy +=
                             this.force.previous;
                     }
@@ -1713,7 +1676,6 @@ if (
                         this.next.height +=
                             this.force.next;
 
-
                         this.next.fy +=
                             this.force.next;
                     }
@@ -1722,7 +1684,7 @@ if (
                     context.lineTo(
                         this.x,
                         this.renderer.height -
-                            this.height
+                        this.height
                     );
                 }
         };
@@ -1849,7 +1811,7 @@ if (
                             this.x,
                             this.y,
                             this.y -
-                                this.previousY
+                            this.previousY
                         );
 
 
@@ -1951,20 +1913,24 @@ if (
             RENDERER.init();
 
         });
+
     }
 
 
+
     /* =========================================================
-       SAKURA / FALLING IMAGE EFFECT
+       SAKURA / FALLING IMAGE
        
        Ảnh:
        https://files.catbox.moe/k5h1qm.png
-       
-       Tần suất:
-       80ms / 1 ảnh
-       
-       Ban đầu:
-       35 ảnh
+
+       Đã sửa:
+       - Gán ảnh trực tiếp bằng JS
+       - Không phụ thuộc background-image trong CSS
+       - Có 3D
+       - Có gió
+       - Có xoay
+       - Không bị mất hoa
     ========================================================= */
 
     (function () {
@@ -1972,52 +1938,92 @@ if (
         const sakuraContainer =
             document.createElement("div");
 
-
         sakuraContainer.id =
             "sakura-container";
-
 
         document.body.appendChild(
             sakuraContainer
         );
 
 
+        /* =====================================================
+           STYLE CHO CONTAINER
+        ===================================================== */
+
+        sakuraContainer.style.position =
+            "fixed";
+
+        sakuraContainer.style.top =
+            "0";
+
+        sakuraContainer.style.left =
+            "0";
+
+        sakuraContainer.style.width =
+            "100vw";
+
+        sakuraContainer.style.height =
+            "100vh";
+
+        sakuraContainer.style.pointerEvents =
+            "none";
+
+        sakuraContainer.style.overflow =
+            "hidden";
+
+        sakuraContainer.style.zIndex =
+            "9998";
+
+
         function createSakura() {
 
             const sakura =
-                document.createElement("div");
-
+                document.createElement("img");
 
             sakura.className =
                 "sakura";
 
 
-            /* Kích thước */
+            /* =================================================
+               ẢNH HOA
+            ================================================= */
+
+            sakura.src =
+                "https://files.catbox.moe/k5h1qm.png";
+
+
+            /* =================================================
+               KÍCH THƯỚC
+            ================================================= */
 
             const size =
                 Math.random() * 12 + 10;
 
 
-            /* Vị trí */
+            /* =================================================
+               VỊ TRÍ
+            ================================================= */
 
             const startX =
                 Math.random() *
                 window.innerWidth;
 
 
-            /* Tốc độ */
+            /* =================================================
+               TỐC ĐỘ
+            ================================================= */
 
             const duration =
                 Math.random() * 5 + 6;
 
 
-            /* Delay */
-
             const delay =
                 Math.random() * 1.5;
 
 
-            /* Gió */
+            /* =================================================
+               GIÓ
+            ================================================= */
 
             const wind =
                 (
@@ -2025,30 +2031,44 @@ if (
                 ) * 250;
 
 
-            /* Xoay */
+            /* =================================================
+               XOAY
+            ================================================= */
 
             const rotate =
                 Math.random() * 720 - 360;
 
 
+            /* =================================================
+               STYLE
+            ================================================= */
+
+            sakura.style.position =
+                "absolute";
+
             sakura.style.width =
                 size + "px";
-
 
             sakura.style.height =
                 size + "px";
 
+            sakura.style.objectFit =
+                "contain";
 
             sakura.style.left =
                 startX + "px";
 
+            sakura.style.top =
+                "-40px";
 
-            sakura.style.animationDuration =
-                duration + "s";
+            sakura.style.pointerEvents =
+                "none";
 
+            sakura.style.userSelect =
+                "none";
 
-            sakura.style.animationDelay =
-                delay + "s";
+            sakura.style.willChange =
+                "transform";
 
 
             sakura.style.setProperty(
@@ -2063,71 +2083,183 @@ if (
             );
 
 
+            /* =================================================
+               ANIMATION
+            ================================================= */
+
+            sakura.style.animation =
+                `pblSakuraFall ${duration}s linear ${delay}s forwards`;
+
+
             sakuraContainer.appendChild(
                 sakura
             );
 
 
-            /* Xóa sau khi rơi */
+            /* =================================================
+               XÓA HOA
+            ================================================= */
 
             setTimeout(
                 function () {
 
-                    sakura.remove();
+                    if (
+                        sakura &&
+                        sakura.parentNode
+                    ) {
+
+                        sakura.remove();
+                    }
 
                 },
                 (
                     duration +
                     delay
-                ) * 1000 + 500
+                ) * 1000 + 1000
             );
         }
 
 
         /* =====================================================
-           TẠO HOA LIÊN TỤC
+           TẠO KEYFRAME BẰNG JS
            
-           80ms = nhiều hơn bản cũ 120ms
+           Không cần thêm CSS.
+        ===================================================== */
+
+        if (
+            !document.getElementById(
+                "pbl-sakura-style"
+            )
+        ) {
+
+            const style =
+                document.createElement("style");
+
+            style.id =
+                "pbl-sakura-style";
+
+            style.textContent = `
+
+                @keyframes pblSakuraFall {
+
+                    0% {
+
+                        transform:
+                            translate3d(
+                                0,
+                                -50px,
+                                0
+                            )
+                            rotate(
+                                0deg
+                            )
+                            scale(
+                                0.7
+                            );
+
+                        opacity:
+                            0;
+                    }
+
+                    8% {
+
+                        opacity:
+                            1;
+                    }
+
+                    30% {
+
+                        transform:
+                            translate3d(
+                                calc(
+                                    var(--wind) * 0.25
+                                ),
+                                30vh,
+                                120px
+                            )
+                            rotate(
+                                calc(
+                                    var(--rotate) * 0.3
+                                )
+                            )
+                            scale(
+                                1
+                            );
+                    }
+
+                    60% {
+
+                        transform:
+                            translate3d(
+                                calc(
+                                    var(--wind) * -0.5
+                                ),
+                                65vh,
+                                -100px
+                            )
+                            rotate(
+                                calc(
+                                    var(--rotate) * 0.7
+                                )
+                            )
+                            scale(
+                                0.85
+                            );
+                    }
+
+                    100% {
+
+                        transform:
+                            translate3d(
+                                var(--wind),
+                                115vh,
+                                0
+                            )
+                            rotate(
+                                var(--rotate)
+                            )
+                            scale(
+                                0.7
+                            );
+
+                        opacity:
+                            0;
+                    }
+                }
+
+            `;
+
+            document.head.appendChild(
+                style
+            );
+        }
+
+
+        /* =====================================================
+           HOA LIÊN TỤC
         ===================================================== */
 
         setInterval(
             createSakura,
-            80
+            120
         );
 
 
         /* =====================================================
-           TẠO SẴN KHI LOAD
+           TẠO SẴN
         ===================================================== */
 
         for (
             let i = 0;
-            i < 35;
+            i < 25;
             i++
         ) {
 
             setTimeout(
                 createSakura,
-                i * 70
+                i * 100
             );
         }
-
-
-        /* =====================================================
-           RESIZE
-        ===================================================== */
-
-        window.addEventListener(
-            "resize",
-            function () {
-
-                /*
-                 * Không cần reset hoa.
-                 * Các hoa đang rơi vẫn tiếp tục.
-                 */
-
-            }
-        );
 
     })();
 
