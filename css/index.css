@@ -1484,202 +1484,187 @@ footer {
 }
 
 /* =========================================================
-   LOADING / MUSIC TOAST
+   PBL LOADING & MUSIC TOAST - PHẦN KIỂU DÁNG CSS
 ========================================================= */
 
+/* Khung chứa Toast chính - Dạng thẻ kính mờ nổi ở góc màn hình */
 #pbl-loading-toast {
     position: fixed;
-    top: 25px;
-    left: 50%;
-    transform: translateX(-50%) translateY(-20px);
-
-    width: min(420px, calc(100% - 30px));
-
-    padding: 18px 20px;
-
-    background: rgba(15, 15, 15, 0.88);
-
-    border: 1px solid rgba(255, 255, 255, 0.18);
-
-    border-radius: 18px;
-
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-
-    box-shadow:
-        0 15px 40px rgba(0, 0, 0, 0.55);
-
-    z-index: 100000;
-
+    top: 24px;
+    right: 24px;
+    z-index: 99999;
+    width: 340px;
+    max-width: calc(100vw - 32px);
+    padding: 20px;
+    background: rgba(20, 20, 30, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35),
+                0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+    color: #ffffff;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     opacity: 0;
-
     visibility: hidden;
-
-    transition:
-        opacity 0.35s ease,
-        transform 0.35s ease,
-        visibility 0.35s ease;
-
-    box-sizing: border-box;
+    transform: translateY(-20px) scale(0.95);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Trạng thái hiển thị Toast */
 #pbl-loading-toast.show {
     opacity: 1;
-
     visibility: visible;
-
-    transform: translateX(-50%) translateY(100%);
+    transform: translateY(0) scale(1);
 }
 
-
-.pbl-toast-title {
-    font-family: 'Quicksand', sans-serif;
-
-    font-size: 1rem;
-
-    font-weight: 800;
-
-    margin-bottom: 6px;
-
-    background: var(--rainbow);
-
-    background-size: 200% auto;
-
-    -webkit-background-clip: text;
-    background-clip: text;
-
-    -webkit-text-fill-color: transparent;
-
-    animation: rainbow_move 4s linear infinite;
+/* Tiêu đề Toast */
+#pbl-loading-toast .pbl-toast-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #ffffff;
+    margin-bottom: 8px;
 }
 
+/* Biểu tượng trong tiêu đề */
+#pbl-loading-toast .pbl-toast-title i {
+    font-size: 16px;
+    color: #6366f1; /* Tông màu xanh tím chủ đạo */
+}
 
+/* Biểu tượng tích xanh khi hoàn thành */
+#pbl-loading-toast .pbl-toast-title i.fa-circle-check {
+    color: #10b981; /* Màu xanh lá thành công */
+}
+
+/* Nội dung văn bản thông báo */
 .pbl-toast-message {
-    color: rgba(255, 255, 255, 0.9);
-
-    font-size: 0.85rem;
-
+    font-size: 13.5px;
     line-height: 1.5;
-
-    margin-bottom: 12px;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 14px;
 }
 
-
-/* Loading progress */
-
+/* Khung nền thanh tiến trình (Loading Bar) */
 .pbl-loading-bar {
     width: 100%;
-
     height: 6px;
-
     background: rgba(255, 255, 255, 0.1);
-
-    border-radius: 10px;
-
+    border-radius: 99px;
     overflow: hidden;
-
-    margin-top: 10px;
+    position: relative;
+    margin-bottom: 6px;
 }
 
-
+/* Dải màu tiến trình đang chạy */
 #pbl-loading-progress {
     width: 0%;
-
     height: 100%;
-
-    background: var(--rainbow);
-
-    background-size: 200% auto;
-
-    border-radius: 10px;
-
-    transition: width 0.15s ease;
-
-    animation: rainbow_move 4s linear infinite;
+    background: linear-gradient(90deg, #6366f1, #a855f7);
+    border-radius: 99px;
+    transition: width 0.15s ease-out;
+    box-shadow: 0 0 12px rgba(99, 102, 241, 0.6);
 }
 
-
+/* Chữ hiển thị phần trăm (0% - 100%) */
 #pbl-loading-percent {
     display: block;
-
     text-align: right;
-
-    margin-top: 6px;
-
-    font-size: 0.75rem;
-
-    font-weight: 700;
-
-    color: rgba(255, 255, 255, 0.7);
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.5);
+    font-variant-numeric: tabular-nums;
 }
 
-
-/* Music buttons */
-
+/* Khung chứa các nút bấm hành động (Hiện ra khi load xong) */
 .pbl-music-buttons {
     display: flex;
-
     gap: 10px;
-
     margin-top: 14px;
+    animation: pblFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-
+/* Kiểu dáng chung cho nút bấm */
 .pbl-music-btn {
     flex: 1;
-
-    border: 1px solid rgba(255, 255, 255, 0.15);
-
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 9px 14px;
+    font-size: 13px;
+    font-weight: 600;
     border-radius: 10px;
-
-    padding: 10px;
-
-    font-family: 'Quicksand', sans-serif;
-
-    font-weight: 800;
-
+    border: none;
     cursor: pointer;
-
-    transition: 0.25s;
-
-    color: #fff;
-
-    background: rgba(255, 255, 255, 0.08);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    outline: none;
 }
 
-
-.pbl-music-btn:hover {
-    background: rgba(255, 255, 255, 0.18);
-
-    transform: translateY(-2px);
-}
-
-
+/* Nút "Có" (Nút chính) */
 .pbl-music-btn.yes {
-    background: rgba(255, 255, 255, 0.15);
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
 }
 
+/* Hiệu ứng rê chuột vào nút "Có" */
+.pbl-music-btn.yes:hover {
+    background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+    transform: translateY(-1.5px);
+    box-shadow: 0 6px 16px rgba(99, 102, 241, 0.45);
+}
 
+/* Hiệu ứng nhấp chuột vào nút "Có" */
+.pbl-music-btn.yes:active {
+    transform: translateY(0);
+}
+
+/* Nút "Không" (Nút phụ) */
 .pbl-music-btn.no {
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* Hiệu ứng rê chuột vào nút "Không" */
+.pbl-music-btn.no:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    transform: translateY(-1.5px);
+}
 
+/* Hiệu ứng nhấp chuột vào nút "Không" */
+.pbl-music-btn.no:active {
+    transform: translateY(0);
+}
+
+/* Hiệu ứng xuất hiện từ từ cho các nút bấm */
+@keyframes pblFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Tối ưu giao diện cho màn hình điện thoại (Mobile) */
 @media (max-width: 480px) {
-
     #pbl-loading-toast {
-        top: 15px;
-
-        width: calc(100% - 20px);
-
-        padding: 16px;
+        top: auto;
+        bottom: 20px;
+        right: 50%;
+        transform: translateX(50%) translateY(20px) scale(0.95);
     }
 
-    .pbl-toast-title {
-        font-size: 0.95rem;
-    }
-
-    .pbl-toast-message {
-        font-size: 0.8rem;
+    #pbl-loading-toast.show {
+        transform: translateX(50%) translateY(0) scale(1);
     }
 }
