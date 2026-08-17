@@ -2,17 +2,20 @@
 =========================================================
     Source by PBL
     PBL | HOME Source v1.0
-    View source đi trước khi bị đóng :>
 =========================================================
 */
+
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Orbitron:wght@600;700;800&family=Outfit:wght@400;500;600;700;800&family=Quicksand:wght@300;400;500;600;700&display=swap');
+
 
 /* =========================================================
    ROOT
 ========================================================= */
 
 :root {
+
     --glass: rgba(20, 20, 20, 0.75);
+
     --glass-border: rgba(255, 255, 255, 0.2);
 
     --rainbow: linear-gradient(
@@ -37,6 +40,7 @@
         #ff00c8,
         #ff0000
     );
+
 }
 
 
@@ -45,11 +49,15 @@
 ========================================================= */
 
 html {
+
     width: 100%;
     min-height: 100%;
+
 }
 
+
 body {
+
     margin: 0;
     padding: 0;
 
@@ -69,6 +77,7 @@ body {
 
     -webkit-user-select: none;
     user-select: none;
+
 }
 
 
@@ -77,21 +86,22 @@ body {
 ========================================================= */
 
 #jsi-flying-fish-container {
+
     position: fixed;
 
-    top: 0;
-    left: 0;
+    inset: 0;
 
     width: 100%;
     height: 100vh;
 
-    z-index: -1;
+    z-index: -2;
 
     background: #050505;
 
     overflow: hidden;
 
     pointer-events: none;
+
 }
 
 
@@ -100,7 +110,9 @@ body {
 ========================================================= */
 
 .main-wrapper {
+
     width: 100%;
+
     max-width: 900px;
 
     margin: 40px auto;
@@ -112,6 +124,7 @@ body {
     z-index: 1;
 
     box-sizing: border-box;
+
 }
 
 
@@ -120,6 +133,7 @@ body {
 ========================================================= */
 
 .glass-card {
+
     position: relative;
 
     width: 100%;
@@ -143,6 +157,7 @@ body {
     box-sizing: border-box;
 
     overflow: visible;
+
 }
 
 
@@ -151,6 +166,7 @@ body {
 ========================================================= */
 
 .rainbow-text {
+
     background: var(--rainbow);
 
     background-size: 200% auto;
@@ -163,9 +179,12 @@ body {
     animation: rainbow_move 4s linear infinite;
 
     font-weight: 800;
+
 }
 
+
 @keyframes rainbow_move {
+
     0% {
         background-position: 0% center;
     }
@@ -173,6 +192,7 @@ body {
     100% {
         background-position: 200% center;
     }
+
 }
 
 
@@ -181,6 +201,7 @@ body {
 ========================================================= */
 
 .profile-header {
+
     display: flex;
 
     align-items: center;
@@ -192,10 +213,12 @@ body {
     box-sizing: border-box;
 
     overflow: visible;
+
 }
 
 
 .avatar-section {
+
     display: flex;
 
     flex-direction: column;
@@ -214,6 +237,7 @@ body {
     box-sizing: border-box;
 
     overflow: visible;
+
 }
 
 
@@ -222,6 +246,7 @@ body {
 ========================================================= */
 
 .avatar-wrap {
+
     position: relative;
 
     width: 145px;
@@ -239,10 +264,12 @@ body {
     overflow: visible;
 
     box-sizing: border-box;
+
 }
 
 
 .avatar-img {
+
     position: absolute;
 
     width: 92%;
@@ -252,11 +279,10 @@ body {
     left: 4%;
 
     object-fit: cover;
+
     object-position: center;
 
     border-radius: 50%;
-
-    border: 0;
 
     display: block;
 
@@ -268,10 +294,12 @@ body {
     box-sizing: border-box;
 
     pointer-events: none;
+
 }
 
 
 .avatar-frame {
+
     position: absolute;
 
     inset: -2px;
@@ -280,6 +308,7 @@ body {
     height: calc(100% + 4px);
 
     object-fit: contain;
+
     object-position: center;
 
     display: block;
@@ -287,6 +316,7 @@ body {
     z-index: 2;
 
     pointer-events: none;
+
 }
 
 
@@ -295,12 +325,14 @@ body {
 ========================================================= */
 
 .henry-gaming {
+
     position: relative;
 
     width: 145px;
     max-width: 145px;
 
     height: 52px;
+
     min-height: 52px;
     max-height: 52px;
 
@@ -324,22 +356,22 @@ body {
     flex: 0 0 52px;
 
     contain: layout paint;
+
 }
 
 
-/* =========================================================
-   TYPING TEXT
-========================================================= */
-
 #typing-text {
+
     display: inline;
 
     width: auto;
+
     max-width: 100%;
 
     white-space: normal;
 
     overflow-wrap: anywhere;
+
     word-break: normal;
 
     text-align: center;
@@ -350,10 +382,12 @@ body {
     margin: 0;
 
     box-sizing: border-box;
+
 }
 
 
 .typing-cursor {
+
     display: inline-block;
 
     width: 4px;
@@ -376,10 +410,12 @@ body {
     animation:
         typingCursor 0.7s infinite,
         rainbow_move 4s linear infinite;
+
 }
 
 
 @keyframes typingCursor {
+
     0%,
     49% {
         opacity: 1;
@@ -389,6 +425,7 @@ body {
     100% {
         opacity: 0;
     }
+
 }
 
 
@@ -397,51 +434,92 @@ body {
 ========================================================= */
 
 .typing-style-1 {
+
     font-family: 'Quicksand', sans-serif;
+
     font-size: 0.82rem;
+
     font-weight: 600;
+
     line-height: 1.4;
+
     letter-spacing: 0.5px;
+
 }
+
 
 .typing-style-2 {
+
     font-family: 'Outfit', sans-serif;
+
     font-size: 0.85rem;
+
     font-weight: 600;
+
     line-height: 1.4;
+
     letter-spacing: 0.5px;
+
 }
+
 
 .typing-style-3 {
+
     font-family: 'Orbitron', sans-serif;
+
     font-size: 0.68rem;
+
     font-weight: 700;
+
     line-height: 1.4;
+
     letter-spacing: 0.5px;
+
 }
+
 
 .typing-style-4 {
+
     font-family: 'Montserrat', sans-serif;
+
     font-size: 0.68rem;
+
     font-weight: 700;
+
     line-height: 1.4;
+
     letter-spacing: 0.2px;
+
 }
+
 
 .typing-style-5 {
+
     font-family: 'Quicksand', sans-serif;
+
     font-size: 0.82rem;
+
     font-weight: 500;
+
     line-height: 1.4;
+
     letter-spacing: 0.8px;
+
 }
 
+
 .typing-style-6 {
+
     font-family: 'Outfit', sans-serif;
+
     font-size: 0.82rem;
+
     font-weight: 700;
+
     line-height: 1.4;
+
     letter-spacing: 0.5px;
+
 }
 
 
@@ -450,15 +528,18 @@ body {
 ========================================================= */
 
 .user-info {
+
     flex: 1 1 auto;
 
     min-width: 0;
 
     box-sizing: border-box;
+
 }
 
 
 .profile-name {
+
     font-family: 'Quicksand', sans-serif;
 
     font-size: 3rem;
@@ -474,10 +555,12 @@ body {
     white-space: nowrap;
 
     box-sizing: border-box;
+
 }
 
 
 .profile-name span {
+
     background: inherit;
 
     background-size: inherit;
@@ -488,10 +571,12 @@ body {
     -webkit-text-fill-color: transparent;
 
     color: transparent;
+
 }
 
 
 .profile-subtitle {
+
     font-family: 'Quicksand', sans-serif;
 
     font-size: 1.1rem;
@@ -501,10 +586,12 @@ body {
     font-weight: 600;
 
     line-height: 1.4;
+
 }
 
 
 .profile-tag {
+
     font-family: 'Quicksand', sans-serif;
 
     font-size: 0.8rem;
@@ -514,6 +601,7 @@ body {
     letter-spacing: 1px;
 
     line-height: 1.4;
+
 }
 
 
@@ -522,6 +610,7 @@ body {
 ========================================================= */
 
 .social-links {
+
     display: flex;
 
     gap: 12px;
@@ -529,10 +618,12 @@ body {
     margin-top: 20px;
 
     flex-wrap: wrap;
+
 }
 
 
 .social-item {
+
     width: 44px;
     height: 44px;
 
@@ -557,15 +648,18 @@ body {
     -webkit-backdrop-filter: blur(5px);
 
     flex-shrink: 0;
+
 }
 
 
 .social-item:hover {
+
     background: rgba(255, 255, 255, 0.25);
 
     transform: translateY(-5px);
 
     color: #fff;
+
 }
 
 
@@ -574,6 +668,7 @@ body {
 ========================================================= */
 
 .jd-music-container {
+
     margin: 30px 0 10px;
 
     padding: 20px;
@@ -585,10 +680,12 @@ body {
     border: 1px solid var(--glass-border);
 
     box-sizing: border-box;
+
 }
 
 
 #contribution-grid {
+
     display: grid;
 
     grid-template-columns: repeat(52, 1fr);
@@ -598,28 +695,34 @@ body {
     gap: 3px;
 
     width: 100%;
+
 }
 
 
 .dot {
+
     aspect-ratio: 1 / 1;
 
     border-radius: 2px;
 
     background: rgba(255, 255, 255, 0.05);
+
 }
 
 
 .dot.jd-active {
+
     background-image: var(--jd-gradient);
 
     background-size: 800% 800%;
 
     animation: jd_glow 2s linear infinite;
+
 }
 
 
 @keyframes jd_glow {
+
     0% {
         background-position: 0% 50%;
     }
@@ -631,6 +734,7 @@ body {
     100% {
         background-position: 0% 50%;
     }
+
 }
 
 
@@ -639,22 +743,27 @@ body {
 ========================================================= */
 
 .section-title {
+
     margin-bottom: 24px;
 
     line-height: 1.4;
+
 }
 
 
 .info-grid {
+
     display: grid;
 
     grid-template-columns: repeat(2, 1fr);
 
     gap: 15px;
+
 }
 
 
 .info-item {
+
     font-size: 0.9rem;
 
     font-weight: 700;
@@ -662,15 +771,18 @@ body {
     padding: 5px 0;
 
     line-height: 1.5;
+
 }
 
 
 .info-item i {
+
     width: 25px;
 
     color: #4facfe;
 
     margin-right: 5px;
+
 }
 
 
@@ -679,15 +791,18 @@ body {
 ========================================================= */
 
 .skill-list {
+
     display: grid;
 
     grid-template-columns: 1fr 1fr;
 
     gap: 20px;
+
 }
 
 
 .progress-box {
+
     height: 10px;
 
     background: rgba(255, 255, 255, 0.1);
@@ -699,10 +814,12 @@ body {
     margin-top: 8px;
 
     border: 1px solid rgba(255, 255, 255, 0.05);
+
 }
 
 
 .progress-bar {
+
     height: 100%;
 
     background: var(--rainbow);
@@ -710,21 +827,25 @@ body {
     background-size: 200% auto;
 
     animation: rainbow_move 4s linear infinite;
+
 }
 
 
 /* =========================================================
-   CONTACT MY JOBS
+   CONTACT JOBS
 ========================================================= */
 
 .job-image {
+
     text-align: center;
 
     width: 100%;
+
 }
 
 
 .job-image img {
+
     width: 100%;
 
     max-width: 800px;
@@ -745,6 +866,7 @@ body {
     -webkit-user-drag: none;
 
     user-drag: none;
+
 }
 
 
@@ -753,6 +875,7 @@ body {
 ========================================================= */
 
 .contact-methods {
+
     display: grid;
 
     grid-template-columns: repeat(4, 1fr);
@@ -770,10 +893,12 @@ body {
     border-radius: 15px;
 
     box-sizing: border-box;
+
 }
 
 
 .contact-method {
+
     display: flex;
 
     align-items: center;
@@ -796,22 +921,27 @@ body {
     transition: 0.3s;
 
     min-width: 0;
+
 }
 
 
 .contact-method i {
+
     font-size: 20px;
 
     flex-shrink: 0;
+
 }
 
 
 .contact-method:hover {
+
     background: rgba(255, 255, 255, 0.18);
 
     transform: translateY(-3px);
 
     color: #fff;
+
 }
 
 
@@ -820,6 +950,7 @@ body {
 ========================================================= */
 
 .music-btn {
+
     position: fixed;
 
     right: 20px;
@@ -856,22 +987,28 @@ body {
     transition: 0.3s;
 
     padding: 0;
+
 }
 
 
 .music-btn:hover {
+
     transform: scale(1.1);
 
     background: rgba(255, 255, 255, 0.18);
+
 }
 
 
 .music-btn.playing {
+
     animation: musicRotate 2s linear infinite;
+
 }
 
 
 @keyframes musicRotate {
+
     from {
         transform: rotate(0deg);
     }
@@ -879,6 +1016,7 @@ body {
     to {
         transform: rotate(360deg);
     }
+
 }
 
 
@@ -887,11 +1025,13 @@ body {
 ========================================================= */
 
 img {
+
     -webkit-user-drag: none;
 
     user-drag: none;
 
     max-width: 100%;
+
 }
 
 
@@ -902,9 +1042,11 @@ img {
 input,
 textarea,
 .selectable {
+
     user-select: text;
 
     -webkit-user-select: text;
+
 }
 
 
@@ -913,19 +1055,22 @@ textarea,
 ========================================================= */
 
 footer {
+
     text-align: center;
 
     padding: 20px;
 
     line-height: 1.5;
+
 }
 
 
 /* =========================================================
-   SAKURA / FALLING IMAGE
+   SAKURA
 ========================================================= */
 
 #sakura-container {
+
     position: fixed;
 
     inset: 0;
@@ -938,10 +1083,12 @@ footer {
     overflow: hidden;
 
     z-index: 9998;
+
 }
 
 
 .sakura {
+
     position: absolute;
 
     top: -35px;
@@ -971,26 +1118,28 @@ footer {
     will-change: transform;
 
     transform-origin: center;
+
 }
 
 
 @keyframes sakuraFall {
 
     0% {
+
         transform:
             translate3d(0, -35px, 0)
             rotate(0deg);
 
         opacity: 0;
-    }
 
+    }
 
     10% {
         opacity: 0.9;
     }
 
-
     25% {
+
         transform:
             translate3d(
                 calc(var(--wind) * 0.25),
@@ -1000,10 +1149,11 @@ footer {
             rotate(
                 calc(var(--rotate) * 0.25)
             );
+
     }
 
-
     50% {
+
         transform:
             translate3d(
                 calc(var(--wind) * -0.2),
@@ -1013,10 +1163,11 @@ footer {
             rotate(
                 calc(var(--rotate) * 0.5)
             );
+
     }
 
-
     75% {
+
         transform:
             translate3d(
                 calc(var(--wind) * 0.7),
@@ -1026,10 +1177,11 @@ footer {
             rotate(
                 calc(var(--rotate) * 0.75)
             );
+
     }
 
-
     100% {
+
         transform:
             translate3d(
                 var(--wind),
@@ -1039,7 +1191,212 @@ footer {
             rotate(var(--rotate));
 
         opacity: 0;
+
     }
+
+}
+
+
+/* =========================================================
+   LOADING TOAST
+========================================================= */
+
+#pbl-loading-toast {
+
+    position: fixed;
+
+    left: 50%;
+
+    bottom: 25px;
+
+    transform:
+        translate(-50%, 130%);
+
+    width: min(390px, calc(100vw - 30px));
+
+    padding: 20px;
+
+    background: rgba(15, 15, 15, 0.92);
+
+    border: 1px solid rgba(255, 255, 255, 0.18);
+
+    border-radius: 18px;
+
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.6);
+
+    z-index: 10000;
+
+    box-sizing: border-box;
+
+    transition:
+        transform 0.4s ease,
+        opacity 0.4s ease;
+
+    opacity: 0;
+
+}
+
+
+#pbl-loading-toast.show {
+
+    transform:
+        translate(-50%, 0);
+
+    opacity: 1;
+
+}
+
+
+.pbl-toast-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    font-family: 'Orbitron', sans-serif;
+
+    font-size: 0.9rem;
+
+    font-weight: 700;
+
+    margin-bottom: 10px;
+
+    background: var(--rainbow);
+
+    background-size: 200% auto;
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+
+    animation: rainbow_move 4s linear infinite;
+
+}
+
+
+.pbl-toast-title i {
+
+    font-size: 16px;
+
+}
+
+
+.pbl-toast-message {
+
+    color: #fff;
+
+    font-size: 0.85rem;
+
+    line-height: 1.5;
+
+    margin-bottom: 12px;
+
+}
+
+
+.pbl-loading-bar {
+
+    width: 100%;
+
+    height: 7px;
+
+    background: rgba(255, 255, 255, 0.1);
+
+    border-radius: 10px;
+
+    overflow: hidden;
+
+}
+
+
+#pbl-loading-progress {
+
+    width: 0%;
+
+    height: 100%;
+
+    background: var(--rainbow);
+
+    background-size: 200% auto;
+
+    animation: rainbow_move 3s linear infinite;
+
+    transition: width 0.15s linear;
+
+}
+
+
+#pbl-loading-percent {
+
+    display: block;
+
+    text-align: right;
+
+    margin-top: 5px;
+
+    color: rgba(255, 255, 255, 0.65);
+
+    font-size: 0.75rem;
+
+}
+
+
+.pbl-music-buttons {
+
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 15px;
+
+}
+
+
+.pbl-music-btn {
+
+    flex: 1;
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+
+    border-radius: 10px;
+
+    padding: 10px;
+
+    color: #fff;
+
+    background: rgba(255, 255, 255, 0.08);
+
+    cursor: pointer;
+
+    font-family: 'Quicksand', sans-serif;
+
+    font-weight: 700;
+
+    transition: 0.25s;
+
+}
+
+
+.pbl-music-btn:hover {
+
+    background: rgba(255, 255, 255, 0.18);
+
+    transform: translateY(-2px);
+
+}
+
+
+.pbl-music-btn i {
+
+    margin-right: 5px;
+
 }
 
 
@@ -1050,24 +1407,29 @@ footer {
 @media (max-width: 768px) {
 
     .main-wrapper {
+
         width: 100%;
 
         padding: 15px;
 
         margin: 25px auto;
+
     }
 
 
     .glass-card {
+
         padding: 28px 22px;
 
         border-radius: 22px;
 
         overflow: visible;
+
     }
 
 
     .profile-header {
+
         flex-direction: column;
 
         text-align: center;
@@ -1075,72 +1437,71 @@ footer {
         gap: 20px;
 
         overflow: visible;
+
     }
 
 
     .avatar-section {
+
         flex: 0 0 auto;
 
         width: 145px;
 
         min-width: 145px;
+
         max-width: 145px;
+
     }
 
 
     .user-info {
+
         width: 100%;
 
         min-width: 0;
+
     }
 
 
     .info-grid,
     .skill-list {
+
         grid-template-columns: 1fr;
+
     }
 
 
     #contribution-grid {
+
         grid-template-columns: repeat(26, 1fr);
 
         gap: 2px;
+
     }
 
 
     .avatar-wrap {
+
         width: 125px;
+
         height: 125px;
 
         flex-basis: 125px;
 
         margin-bottom: 10px;
-    }
 
-
-    .avatar-img {
-        width: 92%;
-        height: 92%;
-
-        top: 4%;
-        left: 4%;
-    }
-
-
-    .avatar-frame {
-        inset: -2px;
-
-        width: calc(100% + 4px);
-        height: calc(100% + 4px);
     }
 
 
     .contact-methods {
+
         grid-template-columns: repeat(2, 1fr);
+
     }
 
 
     .profile-name {
+
         font-size: 2.2rem;
 
         line-height: 1.25;
@@ -1148,10 +1509,12 @@ footer {
         padding-bottom: 7px;
 
         overflow: visible;
+
     }
 
 
     .henry-gaming {
+
         width: 145px;
 
         max-width: 145px;
@@ -1161,21 +1524,16 @@ footer {
         height: 52px;
 
         min-height: 52px;
+
         max-height: 52px;
 
         margin: 10px auto 0;
 
-        padding: 0;
-
-        overflow: hidden;
-
-        flex: 0 0 52px;
-
-        box-sizing: border-box;
     }
 
 
     #typing-text {
+
         max-width: 135px;
 
         white-space: normal;
@@ -1186,31 +1544,30 @@ footer {
 
         word-break: normal;
 
-        line-height: 1.4;
-
-        box-sizing: border-box;
-    }
-
-
-    .typing-cursor {
-        line-height: 1.4;
     }
 
 
     .music-btn {
+
         width: 50px;
+
         height: 50px;
 
         right: 15px;
+
         bottom: 15px;
 
         font-size: 18px;
+
     }
 
 
     .sakura {
+
         filter: none;
+
     }
+
 }
 
 
@@ -1221,47 +1578,47 @@ footer {
 @media (max-width: 480px) {
 
     .main-wrapper {
+
         padding: 10px;
 
         margin: 20px auto;
+
     }
 
 
     .glass-card {
+
         padding: 22px;
 
         border-radius: 20px;
 
-        overflow: visible;
     }
 
 
     .avatar-section {
+
         width: 135px;
 
         min-width: 135px;
+
         max-width: 135px;
+
     }
 
 
     .avatar-wrap {
+
         width: 130px;
+
         height: 130px;
 
         flex-basis: 130px;
-    }
 
-
-    .avatar-img {
-        width: 92%;
-        height: 92%;
-
-        top: 4%;
-        left: 4%;
     }
 
 
     .profile-name {
+
         font-size: 2rem;
 
         line-height: 1.3;
@@ -1269,36 +1626,24 @@ footer {
         padding-bottom: 8px;
 
         white-space: nowrap;
+
     }
 
 
     .henry-gaming {
+
         width: 145px;
 
         min-width: 145px;
+
         max-width: 145px;
 
         height: 52px;
 
         min-height: 52px;
+
         max-height: 52px;
 
-        font-size: 0.85rem;
-
-        line-height: 1.4;
-    }
-
-
-    #typing-text {
-        max-width: 135px;
-
-        white-space: normal;
-
-        overflow: hidden;
-
-        overflow-wrap: anywhere;
-
-        word-break: normal;
     }
 
 
@@ -1306,51 +1651,63 @@ footer {
     .typing-style-2,
     .typing-style-5,
     .typing-style-6 {
+
         font-size: 0.8rem;
+
     }
 
 
     .typing-style-3 {
+
         font-size: 0.68rem;
+
     }
 
 
     .typing-style-4 {
+
         font-size: 0.7rem;
-    }
 
-
-    .typing-cursor {
-        font-size: 0.8rem;
     }
 
 
     .contact-methods {
+
         grid-template-columns: 1fr 1fr;
 
         padding: 10px;
+
     }
 
 
     .contact-method {
+
         font-size: 0.8rem;
 
         padding: 10px 6px;
+
     }
 
 
     .contact-method i {
+
         font-size: 18px;
+
     }
 
 
     .music-btn {
+
         width: 50px;
+
         height: 50px;
 
         right: 15px;
+
         bottom: 15px;
+
     }
+
 }
 
 
@@ -1361,74 +1718,85 @@ footer {
 @media (max-width: 360px) {
 
     .glass-card {
+
         padding: 18px;
 
-        overflow: visible;
     }
 
 
     .avatar-section {
+
         width: 125px;
 
         min-width: 125px;
+
         max-width: 125px;
+
     }
 
 
     .avatar-wrap {
+
         width: 120px;
+
         height: 120px;
 
         flex-basis: 120px;
-    }
 
-
-    .avatar-img {
-        width: 92%;
-        height: 92%;
-
-        top: 4%;
-        left: 4%;
     }
 
 
     .profile-name {
+
         font-size: 1.8rem;
+
     }
 
 
     .henry-gaming {
+
         width: 140px;
 
         min-width: 140px;
+
         max-width: 140px;
 
         height: 52px;
 
         min-height: 52px;
+
         max-height: 52px;
+
     }
 
 
     #typing-text {
+
         max-width: 130px;
+
     }
 
 
     .social-links {
+
         gap: 8px;
+
     }
 
 
     .social-item {
+
         width: 40px;
+
         height: 40px;
+
     }
+
 }
 
 
 /* =========================================================
-   SAFARI / IOS FIX
+   SAFARI / IOS
 ========================================================= */
 
 @supports (-webkit-touch-callout: none) {
@@ -1441,20 +1809,27 @@ footer {
     .typing-style-4,
     .typing-style-5,
     .typing-style-6 {
+
         -webkit-font-smoothing: antialiased;
 
         text-rendering: optimizeLegibility;
+
     }
 
 
     .profile-name {
+
         padding-bottom: 10px;
+
     }
 
 
     #typing-text {
+
         padding-bottom: 2px;
+
     }
+
 }
 
 
@@ -1465,266 +1840,28 @@ footer {
 .avatar-section,
 .avatar-wrap,
 .henry-gaming {
+
     flex-shrink: 0;
+
 }
 
 
 .avatar-section {
+
     overflow: visible;
+
 }
 
 
 .henry-gaming {
+
     contain: layout paint;
+
 }
 
 
 #typing-text {
+
     contain: layout;
+
 }
-
-/* =========================================================
-   PBL LOADING + MUSIC TOAST
-========================================================= */
-
-document.addEventListener("DOMContentLoaded", function () {
-
-    /* Tạo Toast */
-
-    const toast = document.createElement("div");
-
-    toast.id = "pbl-loading-toast";
-
-    toast.innerHTML = `
-        <div class="pbl-toast-title">
-            <i class="fa-solid fa-spinner"></i>
-            PBL | HOME
-        </div>
-
-        <div class="pbl-toast-message" id="pbl-toast-message">
-            Đang tải website...
-        </div>
-
-        <div class="pbl-loading-bar">
-            <div id="pbl-loading-progress"></div>
-        </div>
-
-        <span id="pbl-loading-percent">
-            0%
-        </span>
-    `;
-
-    document.body.appendChild(toast);
-
-
-    const progress =
-        document.getElementById(
-            "pbl-loading-progress"
-        );
-
-    const percent =
-        document.getElementById(
-            "pbl-loading-percent"
-        );
-
-    const message =
-        document.getElementById(
-            "pbl-toast-message"
-        );
-
-
-    /* Hiện Toast */
-
-    toast.classList.add("show");
-
-
-    /* Loading */
-
-    let loadingPercent = 0;
-
-    const loadingInterval =
-        setInterval(function () {
-
-            loadingPercent +=
-                Math.floor(
-                    Math.random() * 8
-                ) + 2;
-
-            if (loadingPercent >= 100) {
-
-                loadingPercent = 100;
-
-                clearInterval(
-                    loadingInterval
-                );
-
-                progress.style.width =
-                    "100%";
-
-                percent.textContent =
-                    "100%";
-
-
-                /* Đợi thanh chạy xong */
-
-                setTimeout(function () {
-
-                    showMusicQuestion();
-
-                }, 400);
-
-                return;
-            }
-
-
-            progress.style.width =
-                loadingPercent + "%";
-
-            percent.textContent =
-                loadingPercent + "%";
-
-        }, 80);
-
-
-    /* =====================================================
-       MUSIC QUESTION
-    ===================================================== */
-
-    function showMusicQuestion() {
-
-        const musicIcon =
-            document.querySelector(
-                "#pbl-loading-toast .pbl-toast-title i"
-            );
-
-        if (musicIcon) {
-
-            musicIcon.className =
-                "fa-solid fa-circle-check";
-
-        }
-
-
-        message.innerHTML =
-            "Load web thành công! 🎉<br>" +
-            "Bạn có muốn bật nhạc không?";
-
-
-        const loadingBar =
-            document.querySelector(
-                ".pbl-loading-bar"
-            );
-
-        const loadingPercentText =
-            document.getElementById(
-                "pbl-loading-percent"
-            );
-
-
-        if (loadingBar) {
-
-            loadingBar.style.display =
-                "none";
-
-        }
-
-        if (loadingPercentText) {
-
-            loadingPercentText.style.display =
-                "none";
-
-        }
-
-
-        /* Tạo nút */
-
-        const buttons =
-            document.createElement("div");
-
-        buttons.className =
-            "pbl-music-buttons";
-
-        buttons.innerHTML = `
-
-            <button
-                class="pbl-music-btn yes"
-                id="pbl-music-yes">
-
-                <i class="fa-solid fa-volume-high"></i>
-                Có
-            </button>
-
-            <button
-                class="pbl-music-btn no"
-                id="pbl-music-no">
-
-                <i class="fa-solid fa-volume-xmark"></i>
-                Không
-            </button>
-
-        `;
-
-        toast.appendChild(buttons);
-
-
-        /* =================================================
-           NÚT CÓ
-        ================================================= */
-
-        document
-            .getElementById("pbl-music-yes")
-            .addEventListener(
-                "click",
-                function () {
-
-                    const musicBtn =
-                        document.getElementById(
-                            "music-btn"
-                        );
-
-                    if (musicBtn) {
-
-                        musicBtn.click();
-
-                    }
-
-                    closeToast();
-
-                }
-            );
-
-
-        /* =================================================
-           NÚT KHÔNG
-        ================================================= */
-
-        document
-            .getElementById("pbl-music-no")
-            .addEventListener(
-                "click",
-                function () {
-
-                    closeToast();
-
-                }
-            );
-    }
-
-
-    /* =====================================================
-       ĐÓNG TOAST
-    ===================================================== */
-
-    function closeToast() {
-
-        toast.classList.remove("show");
-
-        setTimeout(function () {
-
-            toast.remove();
-
-        }, 400);
-
-    }
-
-});
