@@ -205,215 +205,287 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* =====================================================
-       MUSIC PLAYER
-    ===================================================== */
+   /* =====================================================
+   MUSIC PLAYER
+===================================================== */
 
-    const playlist = [
+const playlist = [
 
-        {
-            name: "Bài hát 1",
-            url: "//thanhdieu.com/files/Về-Bên-Anh.mp3"
-        },
+    {
+        name: "Về bên anh",
+        url: "//thanhdieu.com/files/Về-Bên-Anh.mp3"
+    },
 
-        {
-            name: "Bài hát 2",
-            url: "//thanhdieu.com/files/Anh-Đã-Quen-Với-Cô-Đơn.mp3"
-        },
+    {
+        name: "Anh đã quen với cô đơn",
+        url: "//thanhdieu.com/files/Anh-Đã-Quen-Với-Cô-Đơn.mp3"
+    },
 
-        {
-            name: "Bài hát 3",
-            url: "//thanhdieu.com/files/Em-Nào-Có-Tội.mp3"
-        }
+    {
+        name: "Em nào có tội",
+        url: "//thanhdieu.com/files/Em-Nào-Có-Tội.mp3"
+    },
 
-    ];
+    {
+        name: "Anh Nhớ Em",
+        url: "https://files.catbox.moe/ihobra.mp3"
+    },
 
-    const musicBtn =
-        document.getElementById("music-btn");
+    {
+        name: "Rồi mùa yêu thương dần đang đến",
+        url: "https://files.catbox.moe/bgwso3.mp3"
+    },
 
-    const bgMusic =
-        document.getElementById("bg-music");
+    {
+        name: "Chỉ bằng cái gật đầu",
+        url: "https://files.catbox.moe/s1hyzo.mp3"
+    },
 
-    if (
-        musicBtn &&
-        bgMusic &&
-        playlist.length > 0
-    ) {
+    {
+        name: "Đừng quên tên anh",
+        url: "https://files.catbox.moe/h43f1s.mp3"
+    },
 
-        let currentSong = 0;
-        let hasStarted = false;
+    {
+        name: "Hối hận trong anh",
+        url: "https://files.catbox.moe/aebu0g.mp3"
+    },
 
-        /*
-         * Load bài hát
-         */
-        function loadSong(index) {
+    {
+        name: "Anh từng cố gắng",
+        url: "https://files.catbox.moe/mm085n.mp3"
+    },
 
-            currentSong = index;
+    {
+        name: "Hình bóng em",
+        url: "https://files.catbox.moe/21c1fl.mp3"
+    },
 
-            bgMusic.src =
-                playlist[currentSong].url;
+    {
+        name: "Lời chúc không thật",
+        url: "https://files.catbox.moe/v6sqz2.mp3"
+    },
 
-            bgMusic.load();
-        }
+    {
+        name: "Quên anh trong từng cơn đau",
+        url: "https://files.catbox.moe/crphp2.mp3"
+    }
 
-
-        /*
-         * Cập nhật nút
-         */
-        function setPlayingState() {
-
-            musicBtn.classList.add("playing");
-
-            musicBtn.innerHTML =
-                '<i class="fa-solid fa-pause"></i>';
-        }
-
-
-        function setPausedState() {
-
-            musicBtn.classList.remove("playing");
-
-            musicBtn.innerHTML =
-                '<i class="fa-solid fa-music"></i>';
-        }
+];
 
 
-        /*
-         * Phát nhạc
-         */
-        function playMusic() {
+const musicBtn =
+    document.getElementById("music-btn");
 
-            const promise =
-                bgMusic.play();
-
-            if (promise !== undefined) {
-
-                promise
-                    .then(function () {
-
-                        setPlayingState();
-
-                    })
-                    .catch(function (error) {
-
-                        console.log(
-                            "Không thể phát nhạc:",
-                            error
-                        );
-
-                        setPausedState();
-
-                    });
-
-            } else {
-
-                setPlayingState();
-
-            }
-        }
+const bgMusic =
+    document.getElementById("bg-music");
 
 
-        /*
-         * Nút nhạc
-         */
-        musicBtn.addEventListener(
-            "click",
-            function () {
+if (
+    musicBtn &&
+    bgMusic &&
+    playlist.length > 0
+) {
 
-                /*
-                 * Đang phát
-                 * -> Dừng
-                 */
-                if (!bgMusic.paused) {
+    let currentSong = 0;
 
-                    bgMusic.pause();
+    let hasStarted = false;
+
+
+    /* =================================================
+       LOAD SONG
+    ================================================= */
+
+    function loadSong(index) {
+
+        currentSong = index;
+
+        bgMusic.src =
+            playlist[currentSong].url;
+
+        bgMusic.load();
+    }
+
+
+    /* =================================================
+       PLAYING STATE
+    ================================================= */
+
+    function setPlayingState() {
+
+        musicBtn.classList.add("playing");
+
+        musicBtn.innerHTML =
+            '<i class="fa-solid fa-pause"></i>';
+    }
+
+
+    /* =================================================
+       PAUSED STATE
+    ================================================= */
+
+    function setPausedState() {
+
+        musicBtn.classList.remove("playing");
+
+        musicBtn.innerHTML =
+            '<i class="fa-solid fa-music"></i>';
+    }
+
+
+    /* =================================================
+       PLAY MUSIC
+    ================================================= */
+
+    function playMusic() {
+
+        const promise =
+            bgMusic.play();
+
+
+        if (promise !== undefined) {
+
+            promise
+                .then(function () {
+
+                    setPlayingState();
+
+                })
+                .catch(function (error) {
+
+                    console.log(
+                        "Không thể phát nhạc:",
+                        error
+                    );
 
                     setPausedState();
 
-                    return;
-                }
+                });
 
+        } else {
 
-                /*
-                 * Chưa từng phát
-                 * -> Phát bài đầu
-                 */
-                if (!hasStarted) {
+            setPlayingState();
 
-                    hasStarted = true;
-
-                    loadSong(currentSong);
-
-                    playMusic();
-
-                    return;
-                }
-
-
-                /*
-                 * Đã từng phát
-                 * -> Next bài
-                 */
-                currentSong++;
-
-                if (
-                    currentSong >=
-                    playlist.length
-                ) {
-
-                    currentSong = 0;
-                }
-
-                loadSong(currentSong);
-
-                playMusic();
-            }
-        );
-
-
-        /*
-         * Hết bài
-         * -> Tự chuyển bài
-         */
-        bgMusic.addEventListener(
-            "ended",
-            function () {
-
-                currentSong++;
-
-                if (
-                    currentSong >=
-                    playlist.length
-                ) {
-
-                    currentSong = 0;
-                }
-
-                loadSong(currentSong);
-
-                playMusic();
-            }
-        );
-
-
-        /*
-         * Nếu trình duyệt báo lỗi audio
-         */
-        bgMusic.addEventListener(
-            "error",
-            function () {
-
-                console.log(
-                    "Không tải được file nhạc."
-                );
-
-                setPausedState();
-            }
-        );
+        }
     }
 
-});
 
+    /* =================================================
+       NEXT SONG
+    ================================================= */
+
+    function nextSong() {
+
+        currentSong++;
+
+        if (
+            currentSong >=
+            playlist.length
+        ) {
+
+            currentSong = 0;
+
+        }
+
+        loadSong(currentSong);
+
+        playMusic();
+    }
+
+
+    /* =================================================
+       MUSIC BUTTON
+    ================================================= */
+
+    musicBtn.addEventListener(
+        "click",
+        function () {
+
+
+            /* =========================================
+               ĐANG PHÁT
+               → PAUSE
+            ========================================= */
+
+            if (!bgMusic.paused) {
+
+                bgMusic.pause();
+
+                setPausedState();
+
+                return;
+            }
+
+
+            /* =========================================
+               LẦN ĐẦU BẤM
+               → RANDOM
+            ========================================= */
+
+            if (!hasStarted) {
+
+                hasStarted = true;
+
+
+                currentSong =
+                    Math.floor(
+                        Math.random() *
+                        playlist.length
+                    );
+
+
+                loadSong(currentSong);
+
+                playMusic();
+
+                return;
+            }
+
+
+            /* =========================================
+               ĐÃ PHÁT TRƯỚC ĐÓ
+               → NEXT
+            ========================================= */
+
+            nextSong();
+
+        }
+    );
+
+
+    /* =================================================
+       HẾT BÀI
+       → NEXT
+    ================================================= */
+
+    bgMusic.addEventListener(
+        "ended",
+        function () {
+
+            nextSong();
+
+        }
+    );
+
+
+    /* =================================================
+       AUDIO ERROR
+    ================================================= */
+
+    bgMusic.addEventListener(
+        "error",
+        function () {
+
+            console.log(
+                "Không tải được file nhạc."
+            );
+
+            setPausedState();
+
+        }
+    );
+
+}
 
 /* =========================================================
    FLYING FISH BACKGROUND
