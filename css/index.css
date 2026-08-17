@@ -1421,29 +1421,25 @@ footer {
 
 .sakura {
     position: absolute;
-    top: -30px;
+    top: -50px;
 
-    background: linear-gradient(
-        135deg,
-        #ffb7d5,
-        #ff8fbd
-    );
+    width: 28px;
+    height: 28px;
 
-    border-radius: 100% 0 100% 0;
+    background-image: url("https://files.catbox.moe/k5h1qm.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 
-    opacity: 0.85;
-
-    transform: rotate(25deg);
-
-    filter: drop-shadow(
-        0 1px 2px rgba(255, 105, 180, 0.25)
-    );
+    opacity: 0.9;
 
     animation-name: sakuraFall;
     animation-timing-function: linear;
     animation-fill-mode: forwards;
 
-    will-change: transform, top;
+    pointer-events: none;
+
+    will-change: transform;
 }
 
 @keyframes sakuraFall {
