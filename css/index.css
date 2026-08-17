@@ -37,9 +37,17 @@
    BODY
 ========================================================= */
 
+html {
+    width: 100%;
+    min-height: 100%;
+}
+
 body {
     margin: 0;
     padding: 0;
+
+    width: 100%;
+    min-height: 100vh;
 
     background: #000;
 
@@ -53,8 +61,6 @@ body {
     -moz-osx-font-smoothing: grayscale;
 
     -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
 }
 
@@ -70,13 +76,15 @@ body {
     left: 0;
 
     width: 100%;
-    height: 100%;
+    height: 100vh;
 
     z-index: -1;
 
     background: #050505;
 
     overflow: hidden;
+
+    pointer-events: none;
 }
 
 
@@ -107,6 +115,8 @@ body {
 .glass-card {
     position: relative;
 
+    width: 100%;
+
     background: var(--glass);
 
     backdrop-filter: blur(20px);
@@ -124,6 +134,8 @@ body {
         0 15px 35px rgba(0, 0, 0, 0.6);
 
     box-sizing: border-box;
+
+    overflow: visible;
 }
 
 
@@ -146,7 +158,6 @@ body {
     font-weight: 800;
 }
 
-
 @keyframes rainbow_move {
     0% {
         background-position: 0% center;
@@ -168,6 +179,12 @@ body {
     align-items: center;
 
     gap: 40px;
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    overflow: visible;
 }
 
 
@@ -178,9 +195,18 @@ body {
 
     align-items: center;
 
-    flex-shrink: 0;
+    justify-content: flex-start;
 
-    min-width: 0;
+    flex: 0 0 145px;
+
+    width: 145px;
+
+    min-width: 145px;
+    max-width: 145px;
+
+    box-sizing: border-box;
+
+    overflow: visible;
 }
 
 
@@ -209,7 +235,7 @@ body {
 }
 
 
-/* Avatar nhỏ hơn khung vương miện một chút */
+/* Avatar */
 
 .avatar-img {
     position: absolute;
@@ -235,6 +261,8 @@ body {
         0 0 20px rgba(255, 255, 255, 0.2);
 
     box-sizing: border-box;
+
+    pointer-events: none;
 }
 
 
@@ -260,18 +288,24 @@ body {
 
 
 /* =========================================================
-   TYPING CONTAINER
+   TYPING AREA
+   QUAN TRỌNG:
+   KÍCH THƯỚC ĐƯỢC KHÓA, KHÔNG CHẠY THEO CHỮ
 ========================================================= */
 
 .henry-gaming {
     position: relative;
 
-    width: 100%;
-    max-width: 260px;
+    width: 145px;
+    max-width: 145px;
 
-    min-height: 26px;
+    height: 52px;
+    min-height: 52px;
+    max-height: 52px;
 
     margin: 12px auto 0;
+
+    padding: 0;
 
     display: flex;
 
@@ -280,13 +314,15 @@ body {
 
     text-align: center;
 
-    line-height: 1.5;
-
-    overflow: visible;
-
-    padding: 0 4px;
+    line-height: 1.4;
 
     box-sizing: border-box;
+
+    overflow: hidden;
+
+    flex: 0 0 52px;
+
+    contain: layout paint;
 }
 
 
@@ -297,37 +333,37 @@ body {
 #typing-text {
     display: inline;
 
+    width: auto;
     max-width: 100%;
 
     white-space: normal;
 
-    overflow: visible;
-
-    overflow-wrap: break-word;
+    overflow-wrap: anywhere;
     word-break: normal;
 
     text-align: center;
 
-    line-height: 1.5;
+    line-height: 1.4;
 
-    padding-bottom: 3px;
+    padding: 0;
+    margin: 0;
 
-    box-sizing: content-box;
+    box-sizing: border-box;
 }
 
 
-/* =========================================================
-   TYPING CURSOR
-========================================================= */
+/* Cursor */
 
 .typing-cursor {
     display: inline-block;
 
+    width: 4px;
+
     margin-left: 2px;
 
-    flex-shrink: 0;
+    flex: 0 0 auto;
 
-    line-height: 1.5;
+    line-height: 1.4;
 
     background: var(--rainbow);
 
@@ -363,61 +399,94 @@ body {
 
 .typing-style-1 {
     font-family: 'Quicksand', sans-serif;
-    font-size: 0.9rem;
+
+    font-size: 0.82rem;
+
     font-weight: 600;
-    line-height: 1;
-    letter-spacing: 1px;
+
+    line-height: 1.4;
+
+    letter-spacing: 0.5px;
 }
 
 
 .typing-style-2 {
     font-family: 'Outfit', sans-serif;
-    font-size: 0.9rem;
+
+    font-size: 0.85rem;
+
     font-weight: 600;
-    line-height: 1;
-    letter-spacing: 1px;
+
+    line-height: 1.4;
+
+    letter-spacing: 0.5px;
 }
 
 
 .typing-style-3 {
     font-family: 'Orbitron', sans-serif;
-    font-size: 0.78rem;
+
+    font-size: 0.68rem;
+
     font-weight: 700;
-    line-height: 1;
-    letter-spacing: 1px;
+
+    line-height: 1.4;
+
+    letter-spacing: 0.5px;
 }
 
 
 .typing-style-4 {
     font-family: 'Montserrat', sans-serif;
-    font-size: 0.82rem;
+
+    font-size: 0.68rem;
+
     font-weight: 700;
-    line-height: 1;
-    letter-spacing: 0.4px;
+
+    line-height: 1.4;
+
+    letter-spacing: 0.2px;
 }
 
 
 .typing-style-5 {
     font-family: 'Quicksand', sans-serif;
-    font-size: 0.9rem;
+
+    font-size: 0.82rem;
+
     font-weight: 500;
-    line-height: 1;
-    letter-spacing: 1.5px;
+
+    line-height: 1.4;
+
+    letter-spacing: 0.8px;
 }
 
 
 .typing-style-6 {
     font-family: 'Outfit', sans-serif;
-    font-size: 0.9rem;
+
+    font-size: 0.82rem;
+
     font-weight: 700;
-    line-height: 1;
-    letter-spacing: 1px;
+
+    line-height: 1.4;
+
+    letter-spacing: 0.5px;
 }
 
 
 /* =========================================================
    PROFILE TEXT
 ========================================================= */
+
+.user-info {
+    flex: 1 1 auto;
+
+    min-width: 0;
+
+    box-sizing: border-box;
+}
+
 
 .profile-name {
     font-family: 'Quicksand', sans-serif;
@@ -428,20 +497,32 @@ body {
 
     line-height: 1.25;
 
-    padding-bottom: 8px;
+    padding: 0 0 8px;
 
     overflow: visible;
 
     white-space: nowrap;
 
-    box-sizing: content-box;
+    box-sizing: border-box;
 }
 
 
-.profile-name span {
-    color: #ff416c;
+/*
+   Long cũng rainbow
+   Không dùng màu riêng nữa
+*/
 
-    -webkit-text-fill-color: #ff416c;
+.profile-name span {
+    background: inherit;
+
+    background-size: inherit;
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+
+    color: transparent;
 }
 
 
@@ -481,6 +562,8 @@ body {
     gap: 12px;
 
     margin-top: 20px;
+
+    flex-wrap: wrap;
 }
 
 
@@ -526,7 +609,7 @@ body {
 ========================================================= */
 
 .jd-music-container {
-    margin: 30px 0 10px 0;
+    margin: 30px 0 10px;
 
     padding: 20px;
 
@@ -671,6 +754,8 @@ body {
 
 .job-image {
     text-align: center;
+
+    width: 100%;
 }
 
 
@@ -872,7 +957,7 @@ footer {
 
 
 /* =========================================================
-   TABLET / MOBILE
+   TABLET
 ========================================================= */
 
 @media (max-width: 768px) {
@@ -903,6 +988,16 @@ footer {
         gap: 20px;
 
         overflow: visible;
+    }
+
+
+    .avatar-section {
+        flex: 0 0 auto;
+
+        width: 145px;
+
+        min-width: 145px;
+        max-width: 145px;
     }
 
 
@@ -969,45 +1064,55 @@ footer {
     }
 
 
+    /*
+       QUAN TRỌNG:
+       Không dùng width: 100% cho vùng typing
+       vì nó có thể làm layout thay đổi.
+    */
+
     .henry-gaming {
-        width: 100%;
+        width: 145px;
 
-        max-width: 290px;
+        max-width: 145px;
 
-        min-height: 48px;
+        min-width: 145px;
+
+        height: 52px;
+
+        min-height: 52px;
+        max-height: 52px;
 
         margin: 10px auto 0;
 
-        padding-left: 8px;
-        padding-right: 8px;
+        padding: 0;
 
-        font-size: 14px;
+        overflow: hidden;
 
-        line-height: 1.5;
+        flex: 0 0 52px;
 
-        overflow: visible;
-
-        white-space: normal;
+        box-sizing: border-box;
     }
 
 
     #typing-text {
-        max-width: 100%;
+        max-width: 135px;
 
         white-space: normal;
 
-        overflow: visible;
+        overflow: hidden;
 
-        overflow-wrap: break-word;
+        overflow-wrap: anywhere;
 
         word-break: normal;
 
-        line-height: 1.5;
+        line-height: 1.4;
+
+        box-sizing: border-box;
     }
 
 
     .typing-cursor {
-        line-height: 1.5;
+        line-height: 1.4;
     }
 
 
@@ -1045,6 +1150,35 @@ footer {
     }
 
 
+    .avatar-section {
+        width: 135px;
+
+        min-width: 135px;
+        max-width: 135px;
+    }
+
+
+    .avatar-wrap {
+        width: 130px;
+        height: 130px;
+
+        flex-basis: 130px;
+    }
+
+
+    /*
+       Avatar lớn hơn bản 125px trước đó một chút
+    */
+
+    .avatar-img {
+        width: 92%;
+        height: 92%;
+
+        top: 4%;
+        left: 4%;
+    }
+
+
     .profile-name {
         font-size: 2rem;
 
@@ -1056,46 +1190,31 @@ footer {
     }
 
 
-    .avatar-wrap {
-        width: 125px;
-        height: 125px;
-
-        flex-basis: 125px;
-    }
-
-
-    .avatar-img {
-        width: 92%;
-        height: 92%;
-
-        top: 4%;
-        left: 4%;
-    }
-
-
     .henry-gaming {
-        width: 280px;
+        width: 145px;
 
-        min-width: 280px;
+        min-width: 145px;
+        max-width: 145px;
 
-        min-height: 44px;
+        height: 52px;
 
-        height: auto;
+        min-height: 52px;
+        max-height: 52px;
 
         font-size: 0.85rem;
 
-        line-height: 1.5;
+        line-height: 1.4;
     }
 
 
     #typing-text {
-        max-width: 250px;
+        max-width: 135px;
 
         white-space: normal;
 
-        overflow: visible;
+        overflow: hidden;
 
-        overflow-wrap: break-word;
+        overflow-wrap: anywhere;
 
         word-break: normal;
     }
@@ -1105,22 +1224,22 @@ footer {
     .typing-style-2,
     .typing-style-5,
     .typing-style-6 {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
     }
 
 
     .typing-style-3 {
-        font-size: 0.7rem;
+        font-size: 0.68rem;
     }
 
 
     .typing-style-4 {
-        font-size: 0.75rem;
+        font-size: 0.7rem;
     }
 
 
     .typing-cursor {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
     }
 
 
@@ -1166,16 +1285,19 @@ footer {
     }
 
 
-    .profile-name {
-        font-size: 1.8rem;
+    .avatar-section {
+        width: 125px;
+
+        min-width: 125px;
+        max-width: 125px;
     }
 
 
     .avatar-wrap {
-        width: 115px;
-        height: 115px;
+        width: 120px;
+        height: 120px;
 
-        flex-basis: 115px;
+        flex-basis: 120px;
     }
 
 
@@ -1188,17 +1310,26 @@ footer {
     }
 
 
+    .profile-name {
+        font-size: 1.8rem;
+    }
+
+
     .henry-gaming {
-        width: 260px;
+        width: 140px;
 
-        min-width: 260px;
+        min-width: 140px;
+        max-width: 140px;
 
-        max-width: 260px;
+        height: 52px;
+
+        min-height: 52px;
+        max-height: 52px;
     }
 
 
     #typing-text {
-        max-width: 230px;
+        max-width: 130px;
     }
 
 
@@ -1240,86 +1371,37 @@ footer {
 
 
     #typing-text {
-        padding-bottom: 4px;
+        padding-bottom: 2px;
     }
 }
 
 
 /* =========================================================
-   FINAL AVATAR FIX
+   FINAL LAYOUT PROTECTION
 ========================================================= */
 
-.avatar-section {
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    min-width: 0;
-
-    box-sizing: border-box;
-}
-
-
-.avatar-wrap {
-    position: relative;
-
-    overflow: visible;
-
-    box-sizing: border-box;
-}
-
-
-/* Avatar nằm lọt bên trong khung */
-
-.avatar-img {
-    position: absolute;
-
-    width: 92%;
-    height: 92%;
-
-    top: 4%;
-    left: 4%;
-
-    object-fit: cover;
-    object-position: center;
-
-    border-radius: 50%;
-
-    display: block;
-
-    z-index: 1;
-
-    box-sizing: border-box;
-}
-
-
-/* Crown nằm bên ngoài avatar */
-
-.avatar-frame {
-    position: absolute;
-
-    inset: -2px;
-
-    width: calc(100% + 4px);
-    height: calc(100% + 4px);
-
-    object-fit: contain;
-    object-position: center;
-
-    display: block;
-
-    z-index: 2;
-
-    pointer-events: none;
-}
-
-
-/* Không cắt khung */
+/*
+   Các phần này đảm bảo typing không thể
+   làm thay đổi kích thước avatar/card.
+*/
 
 .avatar-section,
-.profile-header,
-.glass-card {
+.avatar-wrap,
+.henry-gaming {
+    flex-shrink: 0;
+}
+
+
+.avatar-section {
     overflow: visible;
+}
+
+
+.henry-gaming {
+    contain: layout paint;
+}
+
+
+#typing-text {
+    contain: layout;
 }
