@@ -179,55 +179,83 @@ body {
     align-items: center;
 
     flex-shrink: 0;
+
+    min-width: 0;
 }
 
+
+/* =========================================================
+   AVATAR
+========================================================= */
 
 .avatar-wrap {
     position: relative;
 
-    width: 150px;
-    height: 150px;
+    width: 145px;
+    height: 145px;
 
-    flex-shrink: 0;
+    flex: 0 0 145px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto;
+
+    overflow: visible;
+
+    box-sizing: border-box;
 }
 
 
+/* Avatar nhỏ hơn khung vương miện một chút */
+
 .avatar-img {
-    width: 110px;
-    height: 110px;
+    position: absolute;
+
+    width: 92%;
+    height: 92%;
+
+    top: 4%;
+    left: 4%;
+
+    object-fit: cover;
+    object-position: center;
 
     border-radius: 50%;
 
-    border: 3px solid #fff;
+    border: 0;
 
-    position: absolute;
+    display: block;
 
-    top: 20px;
-    left: 20px;
-
-    z-index: 2;
+    z-index: 1;
 
     box-shadow:
         0 0 20px rgba(255, 255, 255, 0.2);
 
-    object-fit: cover;
+    box-sizing: border-box;
 }
 
+
+/* Khung vương miện */
 
 .avatar-frame {
     position: absolute;
 
-    width: 170px;
-    height: 170px;
+    inset: -2px;
 
-    top: -10px;
-    left: -10px;
-
-    z-index: 3;
-
-    pointer-events: none;
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
 
     object-fit: contain;
+    object-position: center;
+
+    display: block;
+
+    z-index: 2;
+
+    pointer-events: none;
 }
 
 
@@ -236,31 +264,27 @@ body {
 ========================================================= */
 
 .henry-gaming {
-    margin-top: 10px;
+    position: relative;
 
-    width: 300px;
-    min-width: 300px;
-    height: 32px;
+    width: 100%;
+    max-width: 260px;
+
+    min-height: 26px;
+
+    margin: 12px auto 0;
 
     display: flex;
 
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
 
-    font-family: 'Quicksand', sans-serif;
+    text-align: center;
 
-    font-size: 0.9rem;
+    line-height: 1.5;
 
-    line-height: 1;
+    overflow: visible;
 
-    letter-spacing: 1px;
-
-    text-shadow:
-        0 0 8px rgba(255, 255, 255, 0.5);
-
-    white-space: nowrap;
-
-    overflow: hidden;
+    padding: 0 4px;
 
     box-sizing: border-box;
 }
@@ -271,21 +295,21 @@ body {
 ========================================================= */
 
 #typing-text {
-    display: inline-block;
+    display: inline;
 
-    vertical-align: middle;
+    max-width: 100%;
 
-    white-space: nowrap;
-
-    line-height: 1;
-
-    height: 1em;
+    white-space: normal;
 
     overflow: visible;
 
-    transition: none;
+    overflow-wrap: break-word;
+    word-break: normal;
 
-    /* Quan trọng để chữ g không bị cắt */
+    text-align: center;
+
+    line-height: 1.5;
+
     padding-bottom: 3px;
 
     box-sizing: content-box;
@@ -299,17 +323,11 @@ body {
 .typing-cursor {
     display: inline-block;
 
+    margin-left: 2px;
+
     flex-shrink: 0;
 
-    margin-left: 3px;
-
-    font-family: 'Quicksand', sans-serif;
-
-    font-size: 0.9rem;
-
-    line-height: 1;
-
-    font-weight: 700;
+    line-height: 1.5;
 
     background: var(--rainbow);
 
@@ -321,18 +339,18 @@ body {
     -webkit-text-fill-color: transparent;
 
     animation:
-        cursor-blink 0.7s infinite,
+        typingCursor 0.7s infinite,
         rainbow_move 4s linear infinite;
 }
 
 
-@keyframes cursor-blink {
+@keyframes typingCursor {
     0%,
-    45% {
+    49% {
         opacity: 1;
     }
 
-    46%,
+    50%,
     100% {
         opacity: 0;
     }
@@ -341,78 +359,58 @@ body {
 
 /* =========================================================
    TYPING STYLES
-   Tất cả cùng kích thước + line-height
-   để không bị nhảy căn
 ========================================================= */
 
 .typing-style-1 {
     font-family: 'Quicksand', sans-serif;
-
     font-size: 0.9rem;
     font-weight: 600;
-
     line-height: 1;
-
     letter-spacing: 1px;
 }
 
 
 .typing-style-2 {
     font-family: 'Outfit', sans-serif;
-
     font-size: 0.9rem;
     font-weight: 600;
-
     line-height: 1;
-
     letter-spacing: 1px;
 }
 
 
 .typing-style-3 {
     font-family: 'Orbitron', sans-serif;
-
     font-size: 0.78rem;
     font-weight: 700;
-
     line-height: 1;
-
     letter-spacing: 1px;
 }
 
 
 .typing-style-4 {
     font-family: 'Montserrat', sans-serif;
-
     font-size: 0.82rem;
     font-weight: 700;
-
     line-height: 1;
-
     letter-spacing: 0.4px;
 }
 
 
 .typing-style-5 {
     font-family: 'Quicksand', sans-serif;
-
     font-size: 0.9rem;
     font-weight: 500;
-
     line-height: 1;
-
     letter-spacing: 1.5px;
 }
 
 
 .typing-style-6 {
     font-family: 'Outfit', sans-serif;
-
     font-size: 0.9rem;
     font-weight: 700;
-
     line-height: 1;
-
     letter-spacing: 1px;
 }
 
@@ -892,6 +890,8 @@ footer {
         padding: 28px 22px;
 
         border-radius: 22px;
+
+        overflow: visible;
     }
 
 
@@ -901,11 +901,15 @@ footer {
         text-align: center;
 
         gap: 20px;
+
+        overflow: visible;
     }
 
 
     .user-info {
         width: 100%;
+
+        min-width: 0;
     }
 
 
@@ -923,7 +927,29 @@ footer {
 
 
     .avatar-wrap {
+        width: 125px;
+        height: 125px;
+
+        flex-basis: 125px;
+
         margin-bottom: 10px;
+    }
+
+
+    .avatar-img {
+        width: 92%;
+        height: 92%;
+
+        top: 4%;
+        left: 4%;
+    }
+
+
+    .avatar-frame {
+        inset: -2px;
+
+        width: calc(100% + 4px);
+        height: calc(100% + 4px);
     }
 
 
@@ -938,28 +964,50 @@ footer {
         line-height: 1.25;
 
         padding-bottom: 7px;
+
+        overflow: visible;
     }
 
 
     .henry-gaming {
-        width: 300px;
-        min-width: 300px;
+        width: 100%;
 
-        height: 32px;
+        max-width: 290px;
 
-        margin-left: auto;
-        margin-right: auto;
+        min-height: 48px;
 
-        white-space: nowrap;
+        margin: 10px auto 0;
+
+        padding-left: 8px;
+        padding-right: 8px;
+
+        font-size: 14px;
+
+        line-height: 1.5;
+
+        overflow: visible;
+
+        white-space: normal;
     }
 
 
     #typing-text {
-        max-width: 270px;
+        max-width: 100%;
 
-        overflow: hidden;
+        white-space: normal;
 
-        text-overflow: clip;
+        overflow: visible;
+
+        overflow-wrap: break-word;
+
+        word-break: normal;
+
+        line-height: 1.5;
+    }
+
+
+    .typing-cursor {
+        line-height: 1.5;
     }
 
 
@@ -992,6 +1040,8 @@ footer {
         padding: 22px;
 
         border-radius: 20px;
+
+        overflow: visible;
     }
 
 
@@ -1006,18 +1056,48 @@ footer {
     }
 
 
+    .avatar-wrap {
+        width: 125px;
+        height: 125px;
+
+        flex-basis: 125px;
+    }
+
+
+    .avatar-img {
+        width: 92%;
+        height: 92%;
+
+        top: 4%;
+        left: 4%;
+    }
+
+
     .henry-gaming {
         width: 280px;
+
         min-width: 280px;
 
-        height: 32px;
+        min-height: 44px;
+
+        height: auto;
 
         font-size: 0.85rem;
+
+        line-height: 1.5;
     }
 
 
     #typing-text {
         max-width: 250px;
+
+        white-space: normal;
+
+        overflow: visible;
+
+        overflow-wrap: break-word;
+
+        word-break: normal;
     }
 
 
@@ -1081,6 +1161,8 @@ footer {
 
     .glass-card {
         padding: 18px;
+
+        overflow: visible;
     }
 
 
@@ -1089,9 +1171,29 @@ footer {
     }
 
 
+    .avatar-wrap {
+        width: 115px;
+        height: 115px;
+
+        flex-basis: 115px;
+    }
+
+
+    .avatar-img {
+        width: 92%;
+        height: 92%;
+
+        top: 4%;
+        left: 4%;
+    }
+
+
     .henry-gaming {
         width: 260px;
+
         min-width: 260px;
+
+        max-width: 260px;
     }
 
 
@@ -1127,6 +1229,7 @@ footer {
     .typing-style-5,
     .typing-style-6 {
         -webkit-font-smoothing: antialiased;
+
         text-rendering: optimizeLegibility;
     }
 
@@ -1140,32 +1243,44 @@ footer {
         padding-bottom: 4px;
     }
 }
-/* =========================================
-   FIX AVATAR + TYPING MOBILE
-========================================= */
 
-/* ---------- AVATAR ---------- */
+
+/* =========================================================
+   FINAL AVATAR FIX
+========================================================= */
+
+.avatar-section {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    min-width: 0;
+
+    box-sizing: border-box;
+}
+
 
 .avatar-wrap {
     position: relative;
-    width: 145px;
-    height: 145px;
-    flex: 0 0 145px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    margin: 0 auto;
     overflow: visible;
+
+    box-sizing: border-box;
 }
+
+
+/* Avatar nằm lọt bên trong khung */
 
 .avatar-img {
     position: absolute;
-    inset: 0;
 
-    width: 100%;
-    height: 100%;
+    width: 92%;
+    height: 92%;
+
+    top: 4%;
+    left: 4%;
 
     object-fit: cover;
     object-position: center;
@@ -1173,11 +1288,18 @@ footer {
     border-radius: 50%;
 
     display: block;
+
     z-index: 1;
+
+    box-sizing: border-box;
 }
+
+
+/* Crown nằm bên ngoài avatar */
 
 .avatar-frame {
     position: absolute;
+
     inset: -2px;
 
     width: calc(100% + 4px);
@@ -1187,197 +1309,15 @@ footer {
     object-position: center;
 
     display: block;
+
     z-index: 2;
 
     pointer-events: none;
 }
 
 
-/* ---------- TYPING ---------- */
+/* Không cắt khung */
 
-.henry-gaming {
-    position: relative;
-
-    width: 100%;
-    max-width: 260px;
-
-    min-height: 26px;
-
-    margin: 12px auto 0;
-
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-
-    text-align: center;
-
-    line-height: 1.5;
-
-    overflow: visible;
-
-    padding: 0 4px;
-
-    box-sizing: border-box;
-}
-
-#typing-text {
-    display: inline;
-
-    max-width: 100%;
-
-    white-space: normal;
-
-    overflow: visible;
-
-    overflow-wrap: break-word;
-    word-break: normal;
-
-    text-align: center;
-
-    line-height: 1.5;
-}
-
-.typing-cursor {
-    display: inline-block;
-
-    margin-left: 2px;
-
-    flex-shrink: 0;
-
-    line-height: 1.5;
-
-    animation: typingCursor 0.7s infinite;
-}
-
-@keyframes typingCursor {
-    0%,
-    49% {
-        opacity: 1;
-    }
-
-    50%,
-    100% {
-        opacity: 0;
-    }
-}
-
-
-/* =========================================
-   DESKTOP
-========================================= */
-
-@media (min-width: 769px) {
-
-    .avatar-wrap {
-        width: 145px;
-        height: 145px;
-        flex-basis: 145px;
-    }
-
-    .henry-gaming {
-        max-width: 280px;
-    }
-}
-
-
-/* =========================================
-   MOBILE
-========================================= */
-
-@media (max-width: 768px) {
-
-    .avatar-wrap {
-        width: 125px;
-        height: 125px;
-        flex-basis: 125px;
-    }
-
-    .avatar-frame {
-        inset: -2px;
-
-        width: calc(100% + 4px);
-        height: calc(100% + 4px);
-    }
-
-    .henry-gaming {
-        width: 100%;
-        max-width: 290px;
-
-        min-height: 48px;
-
-        margin-top: 10px;
-
-        padding-left: 8px;
-        padding-right: 8px;
-
-        font-size: 14px;
-
-        line-height: 1.5;
-
-        overflow: visible;
-    }
-
-    #typing-text {
-        max-width: 100%;
-
-        white-space: normal;
-
-        overflow: visible;
-
-        overflow-wrap: break-word;
-        word-break: normal;
-
-        line-height: 1.5;
-    }
-
-    .typing-cursor {
-        line-height: 1.5;
-    }
-}
-
-
-/* =========================================
-   MOBILE NHỎ
-========================================= */
-
-@media (max-width: 400px) {
-
-    .avatar-wrap {
-        width: 115px;
-        height: 115px;
-        flex-basis: 115px;
-    }
-
-    .henry-gaming {
-        max-width: 280px;
-
-        font-size: 13px;
-
-        min-height: 44px;
-    }
-}
-
-
-/* =========================================
-   TRÁNH AVATAR BỊ CO / LỆCH
-========================================= */
-
-.avatar-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    min-width: 0;
-}
-
-.avatar-section,
-.avatar-wrap,
-.henry-gaming {
-    box-sizing: border-box;
-}
-
-
-/* Không để parent cắt crown */
 .avatar-section,
 .profile-header,
 .glass-card {
