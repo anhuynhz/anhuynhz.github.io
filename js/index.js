@@ -1285,4 +1285,122 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 });
+/* =========================================================
+   SAKURA FALLING EFFECT
+========================================================= */
+
+(function () {
+
+    const sakuraContainer = document.createElement("div");
+
+    sakuraContainer.id = "sakura-container";
+
+    document.body.appendChild(sakuraContainer);
+
+
+    function createSakura() {
+
+        const sakura = document.createElement("div");
+
+        sakura.className = "sakura";
+
+        /*
+         * Kích thước ngẫu nhiên
+         */
+        const size =
+            Math.random() * 10 + 8;
+
+        /*
+         * Vị trí bắt đầu
+         */
+        const startX =
+            Math.random() * window.innerWidth;
+
+        /*
+         * Thời gian rơi
+         */
+        const duration =
+            Math.random() * 6 + 7;
+
+        /*
+         * Độ trễ
+         */
+        const delay =
+            Math.random() * 2;
+
+        /*
+         * Gió
+         */
+        const wind =
+            (Math.random() - 0.5) * 180;
+
+        /*
+         * Xoay
+         */
+        const rotate =
+            Math.random() * 720 - 360;
+
+        sakura.style.width =
+            size + "px";
+
+        sakura.style.height =
+            size * 0.65 + "px";
+
+        sakura.style.left =
+            startX + "px";
+
+        sakura.style.animationDuration =
+            duration + "s";
+
+        sakura.style.animationDelay =
+            delay + "s";
+
+        sakura.style.setProperty(
+            "--wind",
+            wind + "px"
+        );
+
+        sakura.style.setProperty(
+            "--rotate",
+            rotate + "deg"
+        );
+
+        sakuraContainer.appendChild(sakura);
+
+
+        /*
+         * Xóa lá sau khi rơi xong
+         */
+        setTimeout(function () {
+
+            sakura.remove();
+
+        }, (duration + delay) * 1000 + 500);
+    }
+
+
+    /*
+     * Tạo lá liên tục
+     */
+    setInterval(function () {
+
+        createSakura();
+
+    }, 350);
+
+
+    /*
+     * Tạo sẵn một số lá khi mở trang
+     */
+    for (let i = 0; i < 15; i++) {
+
+        setTimeout(function () {
+
+            createSakura();
+
+        }, i * 180);
+
+    }
+
+})();
 
