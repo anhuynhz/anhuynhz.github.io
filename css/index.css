@@ -5,712 +5,1863 @@
 =========================================================
 */
 
-document.addEventListener("DOMContentLoaded", () => {
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Orbitron:wght@600;700;800&family=Outfit:wght@400;500;600;700;800&family=Quicksand:wght@300;400;500;600;700&display=swap');
 
-    /* =====================================================
-       TYPING EFFECT
-    ===================================================== */
 
-    const typingText = document.getElementById("typing-text");
+/* =========================================================
+   ROOT
+========================================================= */
 
-    const typingMessages = [
-        "Welcome to PBL | HOME",
-        "Pham Bao Long",
-        "Thằng bé đầy tham vọng",
-        "HTML | CSS | JavaScript",
-        "Have a nice day <3"
-    ];
+:root {
 
-    let messageIndex = 0;
-    let charIndex = 0;
-    let deleting = false;
+    --glass: rgba(20, 20, 20, 0.75);
 
-    const typingStyles = [
-        "typing-style-1",
-        "typing-style-2",
-        "typing-style-3",
-        "typing-style-4",
-        "typing-style-5",
-        "typing-style-6"
-    ];
+    --glass-border: rgba(255, 255, 255, 0.2);
 
-    function changeTypingStyle() {
-
-        if (!typingText) return;
-
-        typingStyles.forEach(style => {
-            typingText.classList.remove(style);
-        });
-
-        const randomStyle =
-            typingStyles[
-                Math.floor(
-                    Math.random() * typingStyles.length
-                )
-            ];
-
-        typingText.classList.add(randomStyle);
-    }
-
-    function typeEffect() {
-
-        if (!typingText) return;
-
-        const currentMessage =
-            typingMessages[messageIndex];
-
-        if (!deleting) {
-
-            typingText.textContent =
-                currentMessage.substring(
-                    0,
-                    charIndex + 1
-                );
-
-            charIndex++;
-
-            if (charIndex >= currentMessage.length) {
-
-                deleting = true;
-
-                setTimeout(typeEffect, 1800);
-
-                return;
-
-            }
-
-            setTimeout(typeEffect, 75);
-
-        } else {
-
-            typingText.textContent =
-                currentMessage.substring(
-                    0,
-                    charIndex - 1
-                );
-
-            charIndex--;
-
-            if (charIndex <= 0) {
-
-                deleting = false;
-
-                messageIndex =
-                    (messageIndex + 1)
-                    % typingMessages.length;
-
-                changeTypingStyle();
-
-                setTimeout(typeEffect, 400);
-
-                return;
-
-            }
-
-            setTimeout(typeEffect, 40);
-
-        }
-
-    }
-
-    changeTypingStyle();
-
-    typeEffect();
-
-
-    /* =====================================================
-       CONTRIBUTION GRID
-    ===================================================== */
-
-    const contributionGrid =
-        document.getElementById(
-            "contribution-grid"
-        );
-
-    if (contributionGrid) {
-
-        const totalDots = 52 * 7;
-
-        for (
-            let i = 0;
-            i < totalDots;
-            i++
-        ) {
-
-            const dot =
-                document.createElement("div");
-
-            dot.className = "dot";
-
-            /*
-             * Random active dots
-             */
-            if (Math.random() < 0.28) {
-
-                dot.classList.add(
-                    "jd-active"
-                );
-
-            }
-
-            contributionGrid.appendChild(dot);
-
-        }
-
-    }
-
-
-    /* =====================================================
-       MUSIC
-    ===================================================== */
-
-    const musicBtn =
-        document.getElementById(
-            "music-btn"
-        );
-
-    const audio =
-        document.getElementById(
-            "bg-music"
-        );
-
-    /*
-     * Thay link nhạc ở đây.
-     *
-     * Có thể thêm nhiều bài.
-     */
-    const musicList = [
-        "https://files.catbox.moe/7xqf5k.mp3"
-    ];
-
-    let currentMusic = 0;
-
-    function loadMusic(index) {
-
-        if (!audio || !musicList.length) {
-            return;
-        }
-
-        currentMusic =
-            (index + musicList.length)
-            % musicList.length;
-
-        audio.src =
-            musicList[currentMusic];
-
-        audio.load();
-
-    }
-
-    function updateMusicIcon() {
-
-        if (!musicBtn) return;
-
-        const icon =
-            musicBtn.querySelector("i");
-
-        if (!icon) return;
-
-        if (!audio.paused) {
-
-            icon.className =
-                "fa-solid fa-pause";
-
-            musicBtn.classList.add(
-                "playing"
-            );
-
-        } else {
-
-            icon.className =
-                "fa-solid fa-music";
-
-            musicBtn.classList.remove(
-                "playing"
-            );
-
-        }
-
-    }
-
-    async function playMusic() {
-
-        if (!audio || !musicList.length) {
-            return;
-        }
-
-        try {
-
-            await audio.play();
-
-            updateMusicIcon();
-
-        } catch (error) {
-
-            console.log(
-                "Không thể phát nhạc:",
-                error
-            );
-
-        }
-
-    }
-
-    function pauseMusic() {
-
-        if (!audio) return;
-
-        audio.pause();
-
-        updateMusicIcon();
-
-    }
-
-    /*
-     * Nút music:
-     *
-     * - Đang tắt -> bật
-     * - Đang bật -> dừng
-     * - Bấm lại sau khi dừng -> tiếp tục
-     */
-    if (musicBtn) {
-
-        musicBtn.addEventListener(
-            "click",
-            () => {
-
-                if (!audio) return;
-
-                if (audio.paused) {
-
-                    playMusic();
-
-                } else {
-
-                    pauseMusic();
-
-                }
-
-            }
-        );
-
-    }
-
-    /*
-     * Khi bài hát kết thúc:
-     * chuyển sang bài tiếp theo.
-     */
-    if (audio) {
-
-        audio.addEventListener(
-            "ended",
-            () => {
-
-                if (
-                    musicList.length <= 1
-                ) {
-
-                    audio.currentTime = 0;
-
-                    playMusic();
-
-                    return;
-
-                }
-
-                currentMusic++;
-
-                loadMusic(currentMusic);
-
-                playMusic();
-
-            }
-        );
-
-    }
-
-    /*
-     * Load bài đầu tiên nhưng KHÔNG tự phát.
-     */
-    loadMusic(0);
-
-
-    /* =====================================================
-       SAKURA
-    ===================================================== */
-
-    const sakuraContainer =
-        document.getElementById(
-            "sakura-container"
-        );
-
-    function createSakura() {
-
-        if (!sakuraContainer) {
-            return;
-        }
-
-        const sakura =
-            document.createElement("div");
-
-        sakura.className = "sakura";
-
-        const size =
-            Math.random() * 20 + 15;
-
-        const left =
-            Math.random() * 100;
-
-        const wind =
-            (Math.random() * 300 - 150);
-
-        const rotate =
-            Math.random() * 720 - 360;
-
-        const duration =
-            Math.random() * 7 + 7;
-
-        const delay =
-            Math.random() * 2;
-
-        sakura.style.width =
-            `${size}px`;
-
-        sakura.style.height =
-            `${size}px`;
-
-        sakura.style.left =
-            `${left}%`;
-
-        sakura.style.setProperty(
-            "--wind",
-            `${wind}px`
-        );
-
-        sakura.style.setProperty(
-            "--rotate",
-            `${rotate}deg`
-        );
-
-        sakura.style.animationDuration =
-            `${duration}s`;
-
-        sakura.style.animationDelay =
-            `${delay}s`;
-
-        sakuraContainer.appendChild(
-            sakura
-        );
-
-        setTimeout(() => {
-
-            sakura.remove();
-
-        }, (duration + delay) * 1000 + 500);
-
-    }
-
-    /*
-     * Tạo hoa rơi.
-     * Không tạo quá dày để mobile đỡ lag.
-     */
-    for (let i = 0; i < 18; i++) {
-
-        setTimeout(
-            createSakura,
-            i * 300
-        );
-
-    }
-
-    setInterval(
-        createSakura,
-        700
+    --rainbow: linear-gradient(
+        90deg,
+        #a8edea,
+        #fed6e3,
+        #fac1ff,
+        #d4fc79,
+        #96e6a1,
+        #a8edea
     );
 
+    --jd-gradient: linear-gradient(
+        45deg,
+        #ff0000,
+        #ff7300,
+        #fffb00,
+        #48ff00,
+        #00ffd5,
+        #002bff,
+        #7a00ff,
+        #ff00c8,
+        #ff0000
+    );
 
-    /* =====================================================
-       LOADING TOAST
-    ===================================================== */
+}
 
-    const toast =
-        document.createElement("div");
 
-    toast.id =
-        "pbl-loading-toast";
+/* =========================================================
+   BODY
+========================================================= */
 
-    toast.innerHTML = `
+html {
 
-        <div class="pbl-toast-title">
+    width: 100%;
+    min-height: 100%;
 
-            <i class="fa-solid fa-spinner"></i>
+}
 
-            PBL | HOME
 
-        </div>
+body {
 
-        <div
-            class="pbl-toast-message"
-            id="pbl-toast-message">
+    margin: 0;
+    padding: 0;
 
-            Đang tải website...
+    width: 100%;
+    min-height: 100vh;
 
-        </div>
+    background: #000;
 
-        <div class="pbl-loading-bar">
+    font-family: 'Quicksand', sans-serif;
 
-            <div
-                id="pbl-loading-progress">
-            </div>
+    color: #fff;
 
-        </div>
+    overflow-x: hidden;
 
-        <span id="pbl-loading-percent">
-            0%
-        </span>
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 
-    `;
+    -webkit-user-select: none;
+    user-select: none;
 
-    document.body.appendChild(toast);
+}
 
-    const progress =
-        document.getElementById(
-            "pbl-loading-progress"
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+#jsi-flying-fish-container {
+
+    position: fixed;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100vh;
+
+    z-index: -2;
+
+    background: #050505;
+
+    overflow: hidden;
+
+    pointer-events: none;
+
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.main-wrapper {
+
+    width: 100%;
+
+    max-width: 900px;
+
+    margin: 40px auto;
+
+    padding: 20px;
+
+    position: relative;
+
+    z-index: 1;
+
+    box-sizing: border-box;
+
+}
+
+
+/* =========================================================
+   GLASS CARD
+========================================================= */
+
+.glass-card {
+
+    position: relative;
+
+    width: 100%;
+
+    background: var(--glass);
+
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    border: 1px solid var(--glass-border);
+
+    border-radius: 25px;
+
+    padding: 35px;
+
+    margin-bottom: 25px;
+
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.6);
+
+    box-sizing: border-box;
+
+    overflow: visible;
+
+}
+
+
+/* =========================================================
+   RAINBOW TEXT
+========================================================= */
+
+.rainbow-text {
+
+    background: var(--rainbow);
+
+    background-size: 200% auto;
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+
+    animation: rainbow_move 4s linear infinite;
+
+    font-weight: 800;
+
+}
+
+
+@keyframes rainbow_move {
+
+    0% {
+        background-position: 0% center;
+    }
+
+    100% {
+        background-position: 200% center;
+    }
+
+}
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+.profile-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 40px;
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    overflow: visible;
+
+}
+
+
+.avatar-section {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: flex-start;
+
+    flex: 0 0 145px;
+
+    width: 145px;
+
+    min-width: 145px;
+    max-width: 145px;
+
+    box-sizing: border-box;
+
+    overflow: visible;
+
+}
+
+
+/* =========================================================
+   AVATAR
+========================================================= */
+
+.avatar-wrap {
+
+    position: relative;
+
+    width: 145px;
+    height: 145px;
+
+    flex: 0 0 145px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto;
+
+    overflow: visible;
+
+    box-sizing: border-box;
+
+}
+
+
+.avatar-img {
+
+    position: absolute;
+
+    width: 92%;
+    height: 92%;
+
+    top: 4%;
+    left: 4%;
+
+    object-fit: cover;
+
+    object-position: center;
+
+    border-radius: 50%;
+
+    display: block;
+
+    z-index: 1;
+
+    box-shadow:
+        0 0 20px rgba(255, 255, 255, 0.2);
+
+    box-sizing: border-box;
+
+    pointer-events: none;
+
+}
+
+
+.avatar-frame {
+
+    position: absolute;
+
+    inset: -2px;
+
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+
+    object-fit: contain;
+
+    object-position: center;
+
+    display: block;
+
+    z-index: 2;
+
+    pointer-events: none;
+
+}
+
+
+/* =========================================================
+   TYPING AREA
+========================================================= */
+
+.henry-gaming {
+
+    position: relative;
+
+    width: 145px;
+    max-width: 145px;
+
+    height: 52px;
+
+    min-height: 52px;
+    max-height: 52px;
+
+    margin: 12px auto 0;
+
+    padding: 0;
+
+    display: flex;
+
+    align-items: flex-start;
+    justify-content: center;
+
+    text-align: center;
+
+    line-height: 1.4;
+
+    box-sizing: border-box;
+
+    overflow: hidden;
+
+    flex: 0 0 52px;
+
+    contain: layout paint;
+
+}
+
+
+#typing-text {
+
+    display: inline;
+
+    width: auto;
+
+    max-width: 100%;
+
+    white-space: normal;
+
+    overflow-wrap: anywhere;
+
+    word-break: normal;
+
+    text-align: center;
+
+    line-height: 1.4;
+
+    padding: 0;
+    margin: 0;
+
+    box-sizing: border-box;
+
+}
+
+
+.typing-cursor {
+
+    display: inline-block;
+
+    width: 4px;
+
+    margin-left: 2px;
+
+    flex: 0 0 auto;
+
+    line-height: 1.4;
+
+    background: var(--rainbow);
+
+    background-size: 200% auto;
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+
+    animation:
+        typingCursor 0.7s infinite,
+        rainbow_move 4s linear infinite;
+
+}
+
+
+@keyframes typingCursor {
+
+    0%,
+    49% {
+        opacity: 1;
+    }
+
+    50%,
+    100% {
+        opacity: 0;
+    }
+
+}
+
+
+/* =========================================================
+   TYPING STYLES
+========================================================= */
+
+.typing-style-1 {
+
+    font-family: 'Quicksand', sans-serif;
+
+    font-size: 0.82rem;
+
+    font-weight: 600;
+
+    line-height: 1.4;
+
+    letter-spacing: 0.5px;
+
+}
+
+
+.typing-style-2 {
+
+    font-family: 'Outfit', sans-serif;
+
+    font-size: 0.85rem;
+
+    font-weight: 600;
+
+    line-height: 1.4;
+
+    letter-spacing: 0.5px;
+
+}
+
+
+.typing-style-3 {
+
+    font-family: 'Orbitron', sans-serif;
+
+    font-size: 0.68rem;
+
+    font-weight: 700;
+
+    line-height: 1.4;
+
+    letter-spacing: 0.5px;
+
+}
+
+
+.typing-style-4 {
+
+    font-family: 'Montserrat', sans-serif;
+
+    font-size: 0.68rem;
+
+    font-weight: 700;
+
+    line-height: 1.4;
+
+    letter-spacing: 0.2px;
+
+}
+
+
+.typing-style-5 {
+
+    font-family: 'Quicksand', sans-serif;
+
+    font-size: 0.82rem;
+
+    font-weight: 500;
+
+    line-height: 1.4;
+
+    letter-spacing: 0.8px;
+
+}
+
+
+.typing-style-6 {
+
+    font-family: 'Outfit', sans-serif;
+
+    font-size: 0.82rem;
+
+    font-weight: 700;
+
+    line-height: 1.4;
+
+    letter-spacing: 0.5px;
+
+}
+
+
+/* =========================================================
+   PROFILE TEXT
+========================================================= */
+
+.user-info {
+
+    flex: 1 1 auto;
+
+    min-width: 0;
+
+    box-sizing: border-box;
+
+}
+
+
+.profile-name {
+
+    font-family: 'Quicksand', sans-serif;
+
+    font-size: 3rem;
+
+    margin: 0;
+
+    line-height: 1.25;
+
+    padding: 0 0 8px;
+
+    overflow: visible;
+
+    white-space: nowrap;
+
+    box-sizing: border-box;
+
+}
+
+
+.profile-name span {
+
+    background: inherit;
+
+    background-size: inherit;
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+
+    color: transparent;
+
+}
+
+
+.profile-subtitle {
+
+    font-family: 'Quicksand', sans-serif;
+
+    font-size: 1.1rem;
+
+    margin: 10px 0;
+
+    font-weight: 600;
+
+    line-height: 1.4;
+
+}
+
+
+.profile-tag {
+
+    font-family: 'Quicksand', sans-serif;
+
+    font-size: 0.8rem;
+
+    opacity: 0.8;
+
+    letter-spacing: 1px;
+
+    line-height: 1.4;
+
+}
+
+
+/* =========================================================
+   SOCIAL
+========================================================= */
+
+.social-links {
+
+    display: flex;
+
+    gap: 12px;
+
+    margin-top: 20px;
+
+    flex-wrap: wrap;
+
+}
+
+
+.social-item {
+
+    width: 44px;
+    height: 44px;
+
+    background: rgba(255, 255, 255, 0.12);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    color: #fff;
+
+    border: 1px solid var(--glass-border);
+
+    transition: 0.4s;
+
+    text-decoration: none;
+
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+
+    flex-shrink: 0;
+
+}
+
+
+.social-item:hover {
+
+    background: rgba(255, 255, 255, 0.25);
+
+    transform: translateY(-5px);
+
+    color: #fff;
+
+}
+
+
+/* =========================================================
+   CONTRIBUTION
+========================================================= */
+
+.jd-music-container {
+
+    margin: 30px 0 10px;
+
+    padding: 20px;
+
+    background: rgba(0, 0, 0, 0.3);
+
+    border-radius: 20px;
+
+    border: 1px solid var(--glass-border);
+
+    box-sizing: border-box;
+
+}
+
+
+#contribution-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(52, 1fr);
+
+    grid-template-rows: repeat(7, 1fr);
+
+    gap: 3px;
+
+    width: 100%;
+
+}
+
+
+.dot {
+
+    aspect-ratio: 1 / 1;
+
+    border-radius: 2px;
+
+    background: rgba(255, 255, 255, 0.05);
+
+}
+
+
+.dot.jd-active {
+
+    background-image: var(--jd-gradient);
+
+    background-size: 800% 800%;
+
+    animation: jd_glow 2s linear infinite;
+
+}
+
+
+@keyframes jd_glow {
+
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+
+}
+
+
+/* =========================================================
+   ABOUT
+========================================================= */
+
+.section-title {
+
+    margin-bottom: 24px;
+
+    line-height: 1.4;
+
+}
+
+
+.info-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 15px;
+
+}
+
+
+.info-item {
+
+    font-size: 0.9rem;
+
+    font-weight: 700;
+
+    padding: 5px 0;
+
+    line-height: 1.5;
+
+}
+
+
+.info-item i {
+
+    width: 25px;
+
+    color: #4facfe;
+
+    margin-right: 5px;
+
+}
+
+
+/* =========================================================
+   SKILLS
+========================================================= */
+
+.skill-list {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 20px;
+
+}
+
+
+.progress-box {
+
+    height: 10px;
+
+    background: rgba(255, 255, 255, 0.1);
+
+    border-radius: 10px;
+
+    overflow: hidden;
+
+    margin-top: 8px;
+
+    border: 1px solid rgba(255, 255, 255, 0.05);
+
+}
+
+
+.progress-bar {
+
+    height: 100%;
+
+    background: var(--rainbow);
+
+    background-size: 200% auto;
+
+    animation: rainbow_move 4s linear infinite;
+
+}
+
+
+/* =========================================================
+   CONTACT JOBS
+========================================================= */
+
+.job-image {
+
+    text-align: center;
+
+    width: 100%;
+
+}
+
+
+.job-image img {
+
+    width: 100%;
+
+    max-width: 800px;
+
+    height: auto;
+
+    border-radius: 15px;
+
+    display: block;
+
+    margin: 0 auto;
+
+    border: 1px solid var(--glass-border);
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.4);
+
+    -webkit-user-drag: none;
+
+    user-drag: none;
+
+}
+
+
+/* =========================================================
+   CONTACT METHODS
+========================================================= */
+
+.contact-methods {
+
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 12px;
+
+    margin-top: 20px;
+
+    padding: 15px;
+
+    background: rgba(255, 255, 255, 0.05);
+
+    border: 1px solid var(--glass-border);
+
+    border-radius: 15px;
+
+    box-sizing: border-box;
+
+}
+
+
+.contact-method {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 12px 8px;
+
+    background: rgba(255, 255, 255, 0.08);
+
+    border-radius: 10px;
+
+    color: #fff;
+
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition: 0.3s;
+
+    min-width: 0;
+
+}
+
+
+.contact-method i {
+
+    font-size: 20px;
+
+    flex-shrink: 0;
+
+}
+
+
+.contact-method:hover {
+
+    background: rgba(255, 255, 255, 0.18);
+
+    transform: translateY(-3px);
+
+    color: #fff;
+
+}
+
+
+/* =========================================================
+   MUSIC BUTTON
+========================================================= */
+
+.music-btn {
+
+    position: fixed;
+
+    right: 20px;
+    bottom: 20px;
+
+    width: 55px;
+    height: 55px;
+
+    border: 1px solid rgba(255, 255, 255, 0.25);
+
+    border-radius: 50%;
+
+    background: rgba(20, 20, 20, 0.75);
+
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    color: #fff;
+
+    font-size: 20px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    z-index: 9999;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.5);
+
+    transition: 0.3s;
+
+    padding: 0;
+
+}
+
+
+.music-btn:hover {
+
+    transform: scale(1.1);
+
+    background: rgba(255, 255, 255, 0.18);
+
+}
+
+
+.music-btn.playing {
+
+    animation: musicRotate 2s linear infinite;
+
+}
+
+
+@keyframes musicRotate {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+
+/* =========================================================
+   IMAGE
+========================================================= */
+
+img {
+
+    -webkit-user-drag: none;
+
+    user-drag: none;
+
+    max-width: 100%;
+
+}
+
+
+/* =========================================================
+   SELECTABLE
+========================================================= */
+
+input,
+textarea,
+.selectable {
+
+    user-select: text;
+
+    -webkit-user-select: text;
+
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+
+    text-align: center;
+
+    padding: 20px;
+
+    line-height: 1.5;
+
+}
+
+
+/* =========================================================
+   SAKURA
+========================================================= */
+
+#sakura-container {
+
+    position: fixed;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100vh;
+
+    pointer-events: none;
+
+    overflow: hidden;
+
+    z-index: 9998;
+
+}
+
+
+.sakura {
+
+    position: absolute;
+
+    top: -35px;
+
+    background-image:
+        url("https://files.catbox.moe/k5h1qm.png");
+
+    background-size: contain;
+
+    background-repeat: no-repeat;
+
+    background-position: center;
+
+    opacity: 0.9;
+
+    filter:
+        drop-shadow(
+            0 1px 2px rgba(255, 105, 180, 0.25)
         );
 
-    const percent =
-        document.getElementById(
-            "pbl-loading-percent"
-        );
+    animation-name: sakuraFall;
 
-    const message =
-        document.getElementById(
-            "pbl-toast-message"
-        );
+    animation-timing-function: linear;
 
-    toast.classList.add("show");
+    animation-fill-mode: forwards;
 
-    let loadingPercent = 0;
+    will-change: transform;
 
-    const loadingInterval =
-        setInterval(() => {
+    transform-origin: center;
 
-            loadingPercent +=
-                Math.floor(
-                    Math.random() * 8
-                ) + 2;
-
-            if (
-                loadingPercent >= 100
-            ) {
-
-                loadingPercent = 100;
-
-                clearInterval(
-                    loadingInterval
-                );
-
-                if (progress) {
-
-                    progress.style.width =
-                        "100%";
-
-                }
-
-                if (percent) {
-
-                    percent.textContent =
-                        "100%";
-
-                }
-
-                setTimeout(
-                    showMusicQuestion,
-                    400
-                );
-
-                return;
-
-            }
-
-            if (progress) {
-
-                progress.style.width =
-                    loadingPercent + "%";
-
-            }
-
-            if (percent) {
-
-                percent.textContent =
-                    loadingPercent + "%";
-
-            }
-
-        }, 80);
+}
 
 
-    /* =====================================================
-       MUSIC QUESTION
-    ===================================================== */
+@keyframes sakuraFall {
 
-    function showMusicQuestion() {
+    0% {
 
-        const musicIcon =
-            document.querySelector(
-                "#pbl-loading-toast .pbl-toast-title i"
-            );
+        transform:
+            translate3d(0, -35px, 0)
+            rotate(0deg);
 
-        if (musicIcon) {
+        opacity: 0;
 
-            musicIcon.className =
-                "fa-solid fa-circle-check";
+    }
 
-        }
+    10% {
+        opacity: 0.9;
+    }
 
-        if (message) {
+    25% {
 
-            message.innerHTML =
-                "Load web thành công! 🎉<br>" +
-                "Bạn có muốn bật nhạc không?";
-
-        }
-
-        const loadingBar =
-            document.querySelector(
-                ".pbl-loading-bar"
-            );
-
-        if (loadingBar) {
-
-            loadingBar.style.display =
-                "none";
-
-        }
-
-        if (percent) {
-
-            percent.style.display =
-                "none";
-
-        }
-
-        /*
-         * Không tạo button lần 2
-         */
-        if (
-            document.querySelector(
-                ".pbl-music-buttons"
+        transform:
+            translate3d(
+                calc(var(--wind) * 0.25),
+                25vh,
+                0
             )
-        ) {
-
-            return;
-
-        }
-
-        const buttons =
-            document.createElement("div");
-
-        buttons.className =
-            "pbl-music-buttons";
-
-        buttons.innerHTML = `
-
-            <button
-                class="pbl-music-btn yes"
-                id="pbl-music-yes">
-
-                <i class="fa-solid fa-volume-high"></i>
-
-                Có
-
-            </button>
-
-            <button
-                class="pbl-music-btn no"
-                id="pbl-music-no">
-
-                <i class="fa-solid fa-volume-xmark"></i>
-
-                Không
-
-            </button>
-
-        `;
-
-        toast.appendChild(buttons);
-
-
-        /* =================================================
-           CÓ
-        ================================================= */
-
-        const yesBtn =
-            document.getElementById(
-                "pbl-music-yes"
+            rotate(
+                calc(var(--rotate) * 0.25)
             );
 
-        if (yesBtn) {
+    }
 
-            yesBtn.addEventListener(
-                "click",
-                async () => {
+    50% {
 
-                    await playMusic();
-
-                    closeToast();
-
-                }
+        transform:
+            translate3d(
+                calc(var(--wind) * -0.2),
+                50vh,
+                0
+            )
+            rotate(
+                calc(var(--rotate) * 0.5)
             );
 
-        }
+    }
 
+    75% {
 
-        /* =================================================
-           KHÔNG
-        ================================================= */
-
-        const noBtn =
-            document.getElementById(
-                "pbl-music-no"
+        transform:
+            translate3d(
+                calc(var(--wind) * 0.7),
+                75vh,
+                0
+            )
+            rotate(
+                calc(var(--rotate) * 0.75)
             );
 
-        if (noBtn) {
+    }
 
-            noBtn.addEventListener(
-                "click",
-                () => {
+    100% {
 
-                    closeToast();
+        transform:
+            translate3d(
+                var(--wind),
+                110vh,
+                0
+            )
+            rotate(var(--rotate));
 
-                }
-            );
+        opacity: 0;
 
-        }
+    }
+
+}
+
+
+/* =========================================================
+   LOADING TOAST
+========================================================= */
+
+#pbl-loading-toast {
+
+    position: fixed;
+
+    left: 50%;
+
+    bottom: 25px;
+
+    transform:
+        translate(-50%, 130%);
+
+    width: min(390px, calc(100vw - 30px));
+
+    padding: 20px;
+
+    background: rgba(15, 15, 15, 0.92);
+
+    border: 1px solid rgba(255, 255, 255, 0.18);
+
+    border-radius: 18px;
+
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.6);
+
+    z-index: 10000;
+
+    box-sizing: border-box;
+
+    transition:
+        transform 0.4s ease,
+        opacity 0.4s ease;
+
+    opacity: 0;
+
+}
+
+
+#pbl-loading-toast.show {
+
+    transform:
+        translate(-50%, 0);
+
+    opacity: 1;
+
+}
+
+
+.pbl-toast-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    font-family: 'Orbitron', sans-serif;
+
+    font-size: 0.9rem;
+
+    font-weight: 700;
+
+    margin-bottom: 10px;
+
+    background: var(--rainbow);
+
+    background-size: 200% auto;
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+
+    animation: rainbow_move 4s linear infinite;
+
+}
+
+
+.pbl-toast-title i {
+
+    font-size: 16px;
+
+}
+
+
+.pbl-toast-message {
+
+    color: #fff;
+
+    font-size: 0.85rem;
+
+    line-height: 1.5;
+
+    margin-bottom: 12px;
+
+}
+
+
+.pbl-loading-bar {
+
+    width: 100%;
+
+    height: 7px;
+
+    background: rgba(255, 255, 255, 0.1);
+
+    border-radius: 10px;
+
+    overflow: hidden;
+
+}
+
+
+#pbl-loading-progress {
+
+    width: 0%;
+
+    height: 100%;
+
+    background: var(--rainbow);
+
+    background-size: 200% auto;
+
+    animation: rainbow_move 3s linear infinite;
+
+    transition: width 0.15s linear;
+
+}
+
+
+#pbl-loading-percent {
+
+    display: block;
+
+    text-align: right;
+
+    margin-top: 5px;
+
+    color: rgba(255, 255, 255, 0.65);
+
+    font-size: 0.75rem;
+
+}
+
+
+.pbl-music-buttons {
+
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 15px;
+
+}
+
+
+.pbl-music-btn {
+
+    flex: 1;
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+
+    border-radius: 10px;
+
+    padding: 10px;
+
+    color: #fff;
+
+    background: rgba(255, 255, 255, 0.08);
+
+    cursor: pointer;
+
+    font-family: 'Quicksand', sans-serif;
+
+    font-weight: 700;
+
+    transition: 0.25s;
+
+}
+
+
+.pbl-music-btn:hover {
+
+    background: rgba(255, 255, 255, 0.18);
+
+    transform: translateY(-2px);
+
+}
+
+
+.pbl-music-btn i {
+
+    margin-right: 5px;
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .main-wrapper {
+
+        width: 100%;
+
+        padding: 15px;
+
+        margin: 25px auto;
 
     }
 
 
-    /* =====================================================
-       CLOSE TOAST
-    ===================================================== */
+    .glass-card {
 
-    function closeToast() {
+        padding: 28px 22px;
 
-        if (!toast) return;
+        border-radius: 22px;
 
-        toast.classList.remove(
-            "show"
-        );
-
-        setTimeout(() => {
-
-            if (toast) {
-                toast.remove();
-            }
-
-        }, 400);
+        overflow: visible;
 
     }
 
-});
+
+    .profile-header {
+
+        flex-direction: column;
+
+        text-align: center;
+
+        gap: 20px;
+
+        overflow: visible;
+
+    }
+
+
+    .avatar-section {
+
+        flex: 0 0 auto;
+
+        width: 145px;
+
+        min-width: 145px;
+
+        max-width: 145px;
+
+    }
+
+
+    .user-info {
+
+        width: 100%;
+
+        min-width: 0;
+
+    }
+
+
+    .info-grid,
+    .skill-list {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    #contribution-grid {
+
+        grid-template-columns: repeat(26, 1fr);
+
+        gap: 2px;
+
+    }
+
+
+    .avatar-wrap {
+
+        width: 125px;
+
+        height: 125px;
+
+        flex-basis: 125px;
+
+        margin-bottom: 10px;
+
+    }
+
+
+    .contact-methods {
+
+        grid-template-columns: repeat(2, 1fr);
+
+    }
+
+
+    .profile-name {
+
+        font-size: 2.2rem;
+
+        line-height: 1.25;
+
+        padding-bottom: 7px;
+
+        overflow: visible;
+
+    }
+
+
+    .henry-gaming {
+
+        width: 145px;
+
+        max-width: 145px;
+
+        min-width: 145px;
+
+        height: 52px;
+
+        min-height: 52px;
+
+        max-height: 52px;
+
+        margin: 10px auto 0;
+
+    }
+
+
+    #typing-text {
+
+        max-width: 135px;
+
+        white-space: normal;
+
+        overflow: hidden;
+
+        overflow-wrap: anywhere;
+
+        word-break: normal;
+
+    }
+
+
+    .music-btn {
+
+        width: 50px;
+
+        height: 50px;
+
+        right: 15px;
+
+        bottom: 15px;
+
+        font-size: 18px;
+
+    }
+
+
+    .sakura {
+
+        filter: none;
+
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .main-wrapper {
+
+        padding: 10px;
+
+        margin: 20px auto;
+
+    }
+
+
+    .glass-card {
+
+        padding: 22px;
+
+        border-radius: 20px;
+
+    }
+
+
+    .avatar-section {
+
+        width: 135px;
+
+        min-width: 135px;
+
+        max-width: 135px;
+
+    }
+
+
+    .avatar-wrap {
+
+        width: 130px;
+
+        height: 130px;
+
+        flex-basis: 130px;
+
+    }
+
+
+    .profile-name {
+
+        font-size: 2rem;
+
+        line-height: 1.3;
+
+        padding-bottom: 8px;
+
+        white-space: nowrap;
+
+    }
+
+
+    .henry-gaming {
+
+        width: 145px;
+
+        min-width: 145px;
+
+        max-width: 145px;
+
+        height: 52px;
+
+        min-height: 52px;
+
+        max-height: 52px;
+
+    }
+
+
+    .typing-style-1,
+    .typing-style-2,
+    .typing-style-5,
+    .typing-style-6 {
+
+        font-size: 0.8rem;
+
+    }
+
+
+    .typing-style-3 {
+
+        font-size: 0.68rem;
+
+    }
+
+
+    .typing-style-4 {
+
+        font-size: 0.7rem;
+
+    }
+
+
+    .contact-methods {
+
+        grid-template-columns: 1fr 1fr;
+
+        padding: 10px;
+
+    }
+
+
+    .contact-method {
+
+        font-size: 0.8rem;
+
+        padding: 10px 6px;
+
+    }
+
+
+    .contact-method i {
+
+        font-size: 18px;
+
+    }
+
+
+    .music-btn {
+
+        width: 50px;
+
+        height: 50px;
+
+        right: 15px;
+
+        bottom: 15px;
+
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 360px) {
+
+    .glass-card {
+
+        padding: 18px;
+
+    }
+
+
+    .avatar-section {
+
+        width: 125px;
+
+        min-width: 125px;
+
+        max-width: 125px;
+
+    }
+
+
+    .avatar-wrap {
+
+        width: 120px;
+
+        height: 120px;
+
+        flex-basis: 120px;
+
+    }
+
+
+    .profile-name {
+
+        font-size: 1.8rem;
+
+    }
+
+
+    .henry-gaming {
+
+        width: 140px;
+
+        min-width: 140px;
+
+        max-width: 140px;
+
+        height: 52px;
+
+        min-height: 52px;
+
+        max-height: 52px;
+
+    }
+
+
+    #typing-text {
+
+        max-width: 130px;
+
+    }
+
+
+    .social-links {
+
+        gap: 8px;
+
+    }
+
+
+    .social-item {
+
+        width: 40px;
+
+        height: 40px;
+
+    }
+
+}
+
+
+/* =========================================================
+   SAFARI / IOS
+========================================================= */
+
+@supports (-webkit-touch-callout: none) {
+
+    .profile-name,
+    #typing-text,
+    .typing-style-1,
+    .typing-style-2,
+    .typing-style-3,
+    .typing-style-4,
+    .typing-style-5,
+    .typing-style-6 {
+
+        -webkit-font-smoothing: antialiased;
+
+        text-rendering: optimizeLegibility;
+
+    }
+
+
+    .profile-name {
+
+        padding-bottom: 10px;
+
+    }
+
+
+    #typing-text {
+
+        padding-bottom: 2px;
+
+    }
+
+}
+
+
+/* =========================================================
+   FINAL LAYOUT PROTECTION
+========================================================= */
+
+.avatar-section,
+.avatar-wrap,
+.henry-gaming {
+
+    flex-shrink: 0;
+
+}
+
+
+.avatar-section {
+
+    overflow: visible;
+
+}
+
+
+.henry-gaming {
+
+    contain: layout paint;
+
+}
+
+
+#typing-text {
+
+    contain: layout;
+
+}
