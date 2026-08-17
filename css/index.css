@@ -235,8 +235,6 @@ body {
 }
 
 
-/* Avatar */
-
 .avatar-img {
     position: absolute;
 
@@ -266,8 +264,6 @@ body {
 }
 
 
-/* Khung vương miện */
-
 .avatar-frame {
     position: absolute;
 
@@ -289,8 +285,6 @@ body {
 
 /* =========================================================
    TYPING AREA
-   QUAN TRỌNG:
-   KÍCH THƯỚC ĐƯỢC KHÓA, KHÔNG CHẠY THEO CHỮ
 ========================================================= */
 
 .henry-gaming {
@@ -352,8 +346,6 @@ body {
 }
 
 
-/* Cursor */
-
 .typing-cursor {
     display: inline-block;
 
@@ -399,78 +391,49 @@ body {
 
 .typing-style-1 {
     font-family: 'Quicksand', sans-serif;
-
     font-size: 0.82rem;
-
     font-weight: 600;
-
     line-height: 1.4;
-
     letter-spacing: 0.5px;
 }
-
 
 .typing-style-2 {
     font-family: 'Outfit', sans-serif;
-
     font-size: 0.85rem;
-
     font-weight: 600;
-
     line-height: 1.4;
-
     letter-spacing: 0.5px;
 }
-
 
 .typing-style-3 {
     font-family: 'Orbitron', sans-serif;
-
     font-size: 0.68rem;
-
     font-weight: 700;
-
     line-height: 1.4;
-
     letter-spacing: 0.5px;
 }
 
-
 .typing-style-4 {
     font-family: 'Montserrat', sans-serif;
-
     font-size: 0.68rem;
-
     font-weight: 700;
-
     line-height: 1.4;
-
     letter-spacing: 0.2px;
 }
 
-
 .typing-style-5 {
     font-family: 'Quicksand', sans-serif;
-
     font-size: 0.82rem;
-
     font-weight: 500;
-
     line-height: 1.4;
-
     letter-spacing: 0.8px;
 }
 
-
 .typing-style-6 {
     font-family: 'Outfit', sans-serif;
-
     font-size: 0.82rem;
-
     font-weight: 700;
-
     line-height: 1.4;
-
     letter-spacing: 0.5px;
 }
 
@@ -506,11 +469,6 @@ body {
     box-sizing: border-box;
 }
 
-
-/*
-   Long cũng rainbow
-   Không dùng màu riêng nữa
-*/
 
 .profile-name span {
     background: inherit;
@@ -957,6 +915,128 @@ footer {
 
 
 /* =========================================================
+   SAKURA / FALLING IMAGE
+========================================================= */
+
+#sakura-container {
+    position: fixed;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100vh;
+
+    pointer-events: none;
+
+    overflow: hidden;
+
+    z-index: 9998;
+}
+
+
+.sakura {
+    position: absolute;
+
+    top: -35px;
+
+    background-image:
+        url("https://files.catbox.moe/k5h1qm.png");
+
+    background-size: contain;
+
+    background-repeat: no-repeat;
+
+    background-position: center;
+
+    opacity: 0.9;
+
+    filter:
+        drop-shadow(
+            0 1px 2px rgba(255, 105, 180, 0.25)
+        );
+
+    animation-name: sakuraFall;
+
+    animation-timing-function: linear;
+
+    animation-fill-mode: forwards;
+
+    will-change: transform;
+
+    transform-origin: center;
+}
+
+
+@keyframes sakuraFall {
+
+    0% {
+        transform:
+            translate3d(0, -35px, 0)
+            rotate(0deg);
+
+        opacity: 0;
+    }
+
+
+    10% {
+        opacity: 0.9;
+    }
+
+
+    25% {
+        transform:
+            translate3d(
+                calc(var(--wind) * 0.25),
+                25vh,
+                0
+            )
+            rotate(
+                calc(var(--rotate) * 0.25)
+            );
+    }
+
+
+    50% {
+        transform:
+            translate3d(
+                calc(var(--wind) * -0.2),
+                50vh,
+                0
+            )
+            rotate(
+                calc(var(--rotate) * 0.5)
+            );
+    }
+
+
+    75% {
+        transform:
+            translate3d(
+                calc(var(--wind) * 0.7),
+                75vh,
+                0
+            )
+            rotate(
+                calc(var(--rotate) * 0.75)
+            );
+    }
+
+
+    100% {
+        transform:
+            translate3d(
+                var(--wind),
+                110vh,
+                0
+            )
+            rotate(var(--rotate));
+
+        opacity: 0;
+    }
+}
+
+
+/* =========================================================
    TABLET
 ========================================================= */
 
@@ -1064,12 +1144,6 @@ footer {
     }
 
 
-    /*
-       QUAN TRỌNG:
-       Không dùng width: 100% cho vùng typing
-       vì nó có thể làm layout thay đổi.
-    */
-
     .henry-gaming {
         width: 145px;
 
@@ -1125,6 +1199,11 @@ footer {
 
         font-size: 18px;
     }
+
+
+    .sakura {
+        filter: none;
+    }
 }
 
 
@@ -1165,10 +1244,6 @@ footer {
         flex-basis: 130px;
     }
 
-
-    /*
-       Avatar lớn hơn bản 125px trước đó một chút
-    */
 
     .avatar-img {
         width: 92%;
@@ -1380,11 +1455,6 @@ footer {
    FINAL LAYOUT PROTECTION
 ========================================================= */
 
-/*
-   Các phần này đảm bảo typing không thể
-   làm thay đổi kích thước avatar/card.
-*/
-
 .avatar-section,
 .avatar-wrap,
 .henry-gaming {
@@ -1404,113 +1474,4 @@ footer {
 
 #typing-text {
     contain: layout;
-}
-/* =========================================================
-   SAKURA FALLING
-========================================================= */
-
-#sakura-container {
-    position: fixed;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    overflow: hidden;
-    z-index: 9999;
-}
-
-.sakura {
-    position: absolute;
-    top: -50px;
-
-    width: 28px;
-    height: 28px;
-
-    background-image: url("https://files.catbox.moe/k5h1qm.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-
-    opacity: 0.9;
-
-    animation-name: sakuraFall;
-    animation-timing-function: linear;
-    animation-fill-mode: forwards;
-
-    pointer-events: none;
-
-    will-change: transform;
-}
-
-@keyframes sakuraFall {
-
-    0% {
-        transform:
-            translate3d(0, -30px, 0)
-            rotate(0deg);
-        opacity: 0;
-    }
-
-    10% {
-        opacity: 0.9;
-    }
-
-    25% {
-        transform:
-            translate3d(
-                calc(var(--wind) * 0.25),
-                25vh,
-                0
-            )
-            rotate(
-                calc(var(--rotate) * 0.25)
-            );
-    }
-
-    50% {
-        transform:
-            translate3d(
-                calc(var(--wind) * -0.2),
-                50vh,
-                0
-            )
-            rotate(
-                calc(var(--rotate) * 0.5)
-            );
-    }
-
-    75% {
-        transform:
-            translate3d(
-                calc(var(--wind) * 0.7),
-                75vh,
-                0
-            )
-            rotate(
-                calc(var(--rotate) * 0.75)
-            );
-    }
-
-    100% {
-        transform:
-            translate3d(
-                var(--wind),
-                110vh,
-                0
-            )
-            rotate(var(--rotate));
-
-        opacity: 0;
-    }
-}
-
-
-/* Mobile: giảm số lượng hiệu ứng để nhẹ máy */
-
-@media (max-width: 600px) {
-
-    .sakura {
-        filter: none;
-    }
-
 }
