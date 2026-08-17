@@ -1,86 +1,1327 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Orbitron:wght@600;700;800&family=Outfit:wght@400;500;600;700;800&family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+/* =========================================================
+ROOT
+========================================================= */
+
+ {
+--glass: rgba(20, 20, 20, 0.75);
+--glass-border: rgba(255, 255, 255, 0.2);
+
+--rainbow: linear-gradient(
+    90deg,
+    #a8edea,
+    #fed6e3,
+    #fac1ff,
+    #d4fc79,
+    #96e6a1,
+    #a8edea
+);
+
+--jd-gradient: linear-gradient(
+    45deg,
+    #ff0000,
+    #ff7300,
+    #fffb00,
+    #48ff00,
+    #00ffd5,
+    #002bff,
+    #7a00ff,
+    #ff00c8,
+    #ff0000
+);
+
+}
+
+/* =========================================================
+BODY
+========================================================= */
+
+body {
+margin: 0;
+padding: 0;
+
+background: #000;
+
+font-family: 'Quicksand', sans-serif;
+
+color: #fff;
+
+overflow-x: hidden;
+
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+
+}
+
+/* =========================================================
+BACKGROUND
+========================================================= */
+
+#jsi-flying-fish-container {
+position: fixed;
+
+top: 0;
+left: 0;
+
+width: 100%;
+height: 100%;
+
+z-index: -1;
+
+background: #050505;
+
+overflow: hidden;
+
+}
+
+/* =========================================================
+MAIN
+========================================================= */
+
+.main-wrapper {
+width: 100%;
+max-width: 900px;
+
+margin: 40px auto;
+
+padding: 20px;
+
+position: relative;
+
+z-index: 1;
+
+box-sizing: border-box;
+
+}
+
+/* =========================================================
+GLASS CARD
+========================================================= */
+
+.glass-card {
+position: relative;
+
+background: var(--glass);
+
+backdrop-filter: blur(20px);
+-webkit-backdrop-filter: blur(20px);
+
+border: 1px solid var(--glass-border);
+
+border-radius: 25px;
+
+padding: 35px;
+
+margin-bottom: 25px;
+
+box-shadow:
+    0 15px 35px rgba(0, 0, 0, 0.6);
+
+box-sizing: border-box;
+
+}
+
+/* =========================================================
+RAINBOW TEXT
+========================================================= */
+
+.rainbow-text {
+background: var(--rainbow);
+
+background-size: 200% auto;
+
+-webkit-background-clip: text;
+background-clip: text;
+
+-webkit-text-fill-color: transparent;
+
+animation: rainbow_move 4s linear infinite;
+
+font-weight: 800;
+
+}
+
+@keyframes rainbow_move {
+0% {
+background-position: 0% center;
+}
+
+100% {
+    background-position: 200% center;
+}
+
+}
+
+/* =========================================================
+PROFILE
+========================================================= */
+
+.profile-header {
+display: flex;
+
+align-items: center;
+
+gap: 40px;
+
+}
+
+.avatar-section {
+display: flex;
+
+flex-direction: column;
+
+align-items: center;
+
+flex-shrink: 0;
+
+}
+
+.avatar-wrap {
+position: relative;
+
+width: 150px;
+height: 150px;
+
+flex-shrink: 0;
+
+}
+
+.avatar-img {
+width: 110px;
+height: 110px;
+
+border-radius: 50%;
+
+border: 3px solid #fff;
+
+position: absolute;
+
+top: 20px;
+left: 20px;
+
+z-index: 2;
+
+box-shadow:
+    0 0 20px rgba(255, 255, 255, 0.2);
+
+object-fit: cover;
+
+}
+
+.avatar-frame {
+position: absolute;
+
+width: 170px;
+height: 170px;
+
+top: -10px;
+left: -10px;
+
+z-index: 3;
+
+pointer-events: none;
+
+object-fit: contain;
+
+}
+
+/* =========================================================
+TYPING CONTAINER
+========================================================= */
+
+.henry-gaming {
+margin-top: 10px;
+
+width: 300px;
+min-width: 300px;
+height: 32px;
+
+display: flex;
+
+align-items: center;
+justify-content: center;
+
+font-family: 'Quicksand', sans-serif;
+
+font-size: 0.9rem;
+
+line-height: 1;
+
+letter-spacing: 1px;
+
+text-shadow:
+    0 0 8px rgba(255, 255, 255, 0.5);
+
+white-space: nowrap;
+
+overflow: hidden;
+
+box-sizing: border-box;
+
+}
+
+/* =========================================================
+TYPING TEXT
+========================================================= */
+
+#typing-text {
+display: inline-block;
+
+vertical-align: middle;
+
+white-space: nowrap;
+
+line-height: 1;
+
+height: 1em;
+
+overflow: visible;
+
+transition: none;
+
+/* Quan trọng để chữ g không bị cắt */
+padding-bottom: 3px;
+
+box-sizing: content-box;
+
+}
+
+/* =========================================================
+TYPING CURSOR
+========================================================= */
+
+.typing-cursor {
+display: inline-block;
+
+flex-shrink: 0;
+
+margin-left: 3px;
+
+font-family: 'Quicksand', sans-serif;
+
+font-size: 0.9rem;
+
+line-height: 1;
+
+font-weight: 700;
+
+background: var(--rainbow);
+
+background-size: 200% auto;
+
+-webkit-background-clip: text;
+background-clip: text;
+
+-webkit-text-fill-color: transparent;
+
+animation:
+    cursor-blink 0.7s infinite,
+    rainbow_move 4s linear infinite;
+
+}
+
+@keyframes cursor-blink {
+0%,
+45% {
+opacity: 1;
+}
+
+46%,
+100% {
+    opacity: 0;
+}
+
+}
+
+/* =========================================================
+TYPING STYLES
+Tất cả cùng kích thước + line-height
+để không bị nhảy căn
+========================================================= */
+
+.typing-style-1 {
+font-family: 'Quicksand', sans-serif;
+
+font-size: 0.9rem;
+font-weight: 600;
+
+line-height: 1;
+
+letter-spacing: 1px;
+
+}
+
+.typing-style-2 {
+font-family: 'Outfit', sans-serif;
+
+font-size: 0.9rem;
+font-weight: 600;
+
+line-height: 1;
+
+letter-spacing: 1px;
+
+}
+
+.typing-style-3 {
+font-family: 'Orbitron', sans-serif;
+
+font-size: 0.78rem;
+font-weight: 700;
+
+line-height: 1;
+
+letter-spacing: 1px;
+
+}
+
+.typing-style-4 {
+font-family: 'Montserrat', sans-serif;
+
+font-size: 0.82rem;
+font-weight: 700;
+
+line-height: 1;
+
+letter-spacing: 0.4px;
+
+}
+
+.typing-style-5 {
+font-family: 'Quicksand', sans-serif;
+
+font-size: 0.9rem;
+font-weight: 500;
+
+line-height: 1;
+
+letter-spacing: 1.5px;
+
+}
+
+.typing-style-6 {
+font-family: 'Outfit', sans-serif;
+
+font-size: 0.9rem;
+font-weight: 700;
+
+line-height: 1;
+
+letter-spacing: 1px;
+
+}
+
+/* =========================================================
+PROFILE TEXT
+========================================================= */
+
+.profile-name {
+font-family: 'Quicksand', sans-serif;
+
+font-size: 3rem;
+
+margin: 0;
+
+line-height: 1.25;
+
+padding-bottom: 8px;
+
+overflow: visible;
+
+white-space: nowrap;
+
+box-sizing: content-box;
+
+}
+
+.profile-name span {
+color: #ff416c;
+
+-webkit-text-fill-color: #ff416c;
+
+}
+
+.profile-subtitle {
+font-family: 'Quicksand', sans-serif;
+
+font-size: 1.1rem;
+
+margin: 10px 0;
+
+font-weight: 600;
+
+line-height: 1.4;
+
+}
+
+.profile-tag {
+font-family: 'Quicksand', sans-serif;
+
+font-size: 0.8rem;
+
+opacity: 0.8;
+
+letter-spacing: 1px;
+
+line-height: 1.4;
+
+}
+
+/* =========================================================
+SOCIAL
+========================================================= */
+
+.social-links {
+display: flex;
+
+gap: 12px;
+
+margin-top: 20px;
+
+}
+
+.social-item {
+width: 44px;
+height: 44px;
+
+background: rgba(255, 255, 255, 0.12);
+
+display: flex;
+
+align-items: center;
+justify-content: center;
+
+border-radius: 12px;
+
+color: #fff;
+
+border: 1px solid var(--glass-border);
+
+transition: 0.4s;
+
+text-decoration: none;
+
+backdrop-filter: blur(5px);
+-webkit-backdrop-filter: blur(5px);
+
+flex-shrink: 0;
+
+}
+
+.social-item {
+background: rgba(255, 255, 255, 0.25);
+
+transform: translateY(-5px);
+
+color: #fff;
+
+}
+
+/* =========================================================
+CONTRIBUTION
+========================================================= */
+
+.jd-music-container {
+margin: 30px 0 10px 0;
+
+padding: 20px;
+
+background: rgba(0, 0, 0, 0.3);
+
+border-radius: 20px;
+
+border: 1px solid var(--glass-border);
+
+box-sizing: border-box;
+
+}
+
+#contribution-grid {
+display: grid;
+
+grid-template-columns: repeat(52, 1fr);
+
+grid-template-rows: repeat(7, 1fr);
+
+gap: 3px;
+
+width: 100%;
+
+}
+
+.dot {
+aspect-ratio: 1 / 1;
+
+border-radius: 2px;
+
+background: rgba(255, 255, 255, 0.05);
+
+}
+
+.dot.jd-active {
+background-image: var(--jd-gradient);
+
+background-size: 800% 800%;
+
+animation: jd_glow 2s linear infinite;
+
+}
+
+@keyframes jd_glow {
+0% {
+background-position: 0% 50%;
+}
+
+50% {
+    background-position: 100% 50%;
+}
+
+100% {
+    background-position: 0% 50%;
+}
+
+}
+
+/* =========================================================
+ABOUT
+========================================================= */
+
+.section-title {
+margin-bottom: 24px;
+
+line-height: 1.4;
+
+}
+
+.info-grid {
+display: grid;
+
+grid-template-columns: repeat(2, 1fr);
+
+gap: 15px;
+
+}
+
+.info-item {
+font-size: 0.9rem;
+
+font-weight: 700;
+
+padding: 5px 0;
+
+line-height: 1.5;
+
+}
+
+.info-item i {
+width: 25px;
+
+color: #4facfe;
+
+margin-right: 5px;
+
+}
+
+/* =========================================================
+SKILLS
+========================================================= */
+
+.skill-list {
+display: grid;
+
+grid-template-columns: 1fr 1fr;
+
+gap: 20px;
+
+}
+
+.progress-box {
+height: 10px;
+
+background: rgba(255, 255, 255, 0.1);
+
+border-radius: 10px;
+
+overflow: hidden;
+
+margin-top: 8px;
+
+border: 1px solid rgba(255, 255, 255, 0.05);
+
+}
+
+.progress-bar {
+height: 100%;
+
+background: var(--rainbow);
+
+background-size: 200% auto;
+
+animation: rainbow_move 4s linear infinite;
+
+}
+
+/* =========================================================
+CONTACT MY JOBS
+========================================================= */
+
+.job-image {
+text-align: center;
+}
+
+.job-image img {
+width: 100%;
+
+max-width: 800px;
+
+height: auto;
+
+border-radius: 15px;
+
+display: block;
+
+margin: 0 auto;
+
+border: 1px solid var(--glass-border);
+
+box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.4);
+
+-webkit-user-drag: none;
+
+user-drag: none;
+
+}
+
+/* =========================================================
+CONTACT METHODS
+========================================================= */
+
+.contact-methods {
+display: grid;
+
+grid-template-columns: repeat(4, 1fr);
+
+gap: 12px;
+
+margin-top: 20px;
+
+padding: 15px;
+
+background: rgba(255, 255, 255, 0.05);
+
+border: 1px solid var(--glass-border);
+
+border-radius: 15px;
+
+box-sizing: border-box;
+
+}
+
+.contact-method {
+display: flex;
+
+align-items: center;
+justify-content: center;
+
+gap: 8px;
+
+padding: 12px 8px;
+
+background: rgba(255, 255, 255, 0.08);
+
+border-radius: 10px;
+
+color: #fff;
+
+font-weight: 700;
+
+text-decoration: none;
+
+transition: 0.3s;
+
+min-width: 0;
+
+}
+
+.contact-method i {
+font-size: 20px;
+
+flex-shrink: 0;
+
+}
+
+.contact-method {
+background: rgba(255, 255, 255, 0.18);
+
+transform: translateY(-3px);
+
+color: #fff;
+
+}
+
+/* =========================================================
+MUSIC BUTTON
+========================================================= */
+
+.music-btn {
+position: fixed;
+
+right: 20px;
+bottom: 20px;
+
+width: 55px;
+height: 55px;
+
+border: 1px solid rgba(255, 255, 255, 0.25);
+
+border-radius: 50%;
+
+background: rgba(20, 20, 20, 0.75);
+
+backdrop-filter: blur(15px);
+-webkit-backdrop-filter: blur(15px);
+
+color: #fff;
+
+font-size: 20px;
+
+display: flex;
+
+align-items: center;
+justify-content: center;
+
+cursor: pointer;
+
+z-index: 9999;
+
+box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.5);
+
+transition: 0.3s;
+
+padding: 0;
+
+}
+
+.music-btn {
+transform: scale(1.1);
+
+background: rgba(255, 255, 255, 0.18);
+
+}
+
+.music-btn.playing {
+animation: musicRotate 2s linear infinite;
+}
+
+@keyframes musicRotate {
+from {
+transform: rotate(0deg);
+}
+
+to {
+    transform: rotate(360deg);
+}
+
+}
+
+/* =========================================================
+IMAGE
+========================================================= */
+
+img {
+-webkit-user-drag: none;
+
+user-drag: none;
+
+max-width: 100%;
+
+}
+
+/* =========================================================
+SELECTABLE
+========================================================= */
+
+input,
+textarea,
+.selectable {
+user-select: text;
+
+-webkit-user-select: text;
+
+}
+
+/* =========================================================
+FOOTER
+========================================================= */
+
+footer {
+text-align: center;
+
+padding: 20px;
+
+line-height: 1.5;
+
+}
+
+/* =========================================================
+TABLET / MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+.main-wrapper {
+    width: 100%;
+
+    padding: 15px;
+
+    margin: 25px auto;
+}
+
+
+.glass-card {
+    padding: 28px 22px;
+
+    border-radius: 22px;
+}
+
+
+.profile-header {
+    flex-direction: column;
+
+    text-align: center;
+
+    gap: 20px;
+}
+
+
+.user-info {
+    width: 100%;
+}
+
+
+.info-grid,
+.skill-list {
+    grid-template-columns: 1fr;
+}
+
+
+#contribution-grid {
+    grid-template-columns: repeat(26, 1fr);
+
+    gap: 2px;
+}
+
+
+.avatar-wrap {
+    margin-bottom: 10px;
+}
+
+
+.contact-methods {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+
+.profile-name {
+    font-size: 2.2rem;
+
+    line-height: 1.25;
+
+    padding-bottom: 7px;
+}
+
+
+.henry-gaming {
+    width: 300px;
+    min-width: 300px;
+
+    height: 32px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    white-space: nowrap;
+}
+
+
+#typing-text {
+    max-width: 270px;
+
+    overflow: hidden;
+
+    text-overflow: clip;
+}
+
+
+.music-btn {
+    width: 50px;
+    height: 50px;
+
+    right: 15px;
+    bottom: 15px;
+
+    font-size: 18px;
+}
+
+}
+
+/* =========================================================
+SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+.main-wrapper {
+    padding: 10px;
+
+    margin: 20px auto;
+}
+
+
+.glass-card {
+    padding: 22px;
+
+    border-radius: 20px;
+}
+
+
+.profile-name {
+    font-size: 2rem;
+
+    line-height: 1.3;
+
+    padding-bottom: 8px;
+
+    white-space: nowrap;
+}
+
+
+.henry-gaming {
+    width: 280px;
+    min-width: 280px;
+
+    height: 32px;
+
+    font-size: 0.85rem;
+}
+
+
+#typing-text {
+    max-width: 250px;
+}
+
+
+.typing-style-1,
+.typing-style-2,
+.typing-style-5,
+.typing-style-6 {
+    font-size: 0.85rem;
+}
+
+
+.typing-style-3 {
+    font-size: 0.7rem;
+}
+
+
+.typing-style-4 {
+    font-size: 0.75rem;
+}
+
+
+.typing-cursor {
+    font-size: 0.85rem;
+}
+
+
+.contact-methods {
+    grid-template-columns: 1fr 1fr;
+
+    padding: 10px;
+}
+
+
+.contact-method {
+    font-size: 0.8rem;
+
+    padding: 10px 6px;
+}
+
+
+.contact-method i {
+    font-size: 18px;
+}
+
+
+.music-btn {
+    width: 50px;
+    height: 50px;
+
+    right: 15px;
+    bottom: 15px;
+}
+
+}
+
+/* =========================================================
+VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 360px) {
+
+.glass-card {
+    padding: 18px;
+}
+
+
+.profile-name {
+    font-size: 1.8rem;
+}
+
+
+.henry-gaming {
+    width: 260px;
+    min-width: 260px;
+}
+
+
+#typing-text {
+    max-width: 230px;
+}
+
+
+.social-links {
+    gap: 8px;
+}
+
+
+.social-item {
+    width: 40px;
+    height: 40px;
+}
+
+}
+
+/* =========================================================
+SAFARI / IOS FIX
+========================================================= */
+
+@supports (-webkit-touch-callout: none) {
+
+.profile-name,
+#typing-text,
+.typing-style-1,
+.typing-style-2,
+.typing-style-3,
+.typing-style-4,
+.typing-style-5,
+.typing-style-6 {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+
+.profile-name {
+    padding-bottom: 10px;
+}
+
+
+#typing-text {
+    padding-bottom: 4px;
+}
+
+}
 /* =========================================
-   FIX AVATAR + TYPING MOBILE
+FIX AVATAR + TYPING MOBILE
 ========================================= */
 
 /* ---------- AVATAR ---------- */
 
 .avatar-wrap {
-    position: relative;
-    width: 145px;
-    height: 145px;
-    flex: 0 0 145px;
+position: relative;
+width: 145px;
+height: 145px;
+flex: 0 0 145px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+display: flex;
+align-items: center;
+justify-content: center;
 
-    margin: 0 auto;
-    overflow: visible;
+margin: 0 auto;
+overflow: visible;
+
 }
 
 .avatar-img {
-    position: absolute;
-    inset: 0;
+position: absolute;
+inset: 0;
 
-    width: 100%;
-    height: 100%;
+width: 100%;
+height: 100%;
 
-    object-fit: cover;
-    object-position: center;
+object-fit: cover;
+object-position: center;
 
-    border-radius: 50%;
+border-radius: 50%;
 
-    display: block;
-    z-index: 1;
+display: block;
+z-index: 1;
+
 }
 
 .avatar-frame {
-    position: absolute;
-    inset: -2px;
+position: absolute;
+inset: -2px;
 
-    width: calc(100% + 4px);
-    height: calc(100% + 4px);
+width: calc(100% + 4px);
+height: calc(100% + 4px);
 
-    object-fit: contain;
-    object-position: center;
+object-fit: contain;
+object-position: center;
 
-    display: block;
-    z-index: 2;
+display: block;
+z-index: 2;
 
-    pointer-events: none;
+pointer-events: none;
+
 }
-
 
 /* ---------- TYPING ---------- */
 
 .henry-gaming {
-    position: relative;
+position: relative;
 
+width: 100%;
+max-width: 260px;
+
+min-height: 26px;
+
+margin: 12px auto 0;
+
+display: flex;
+align-items: flex-start;
+justify-content: center;
+
+text-align: center;
+
+line-height: 1.5;
+
+overflow: visible;
+
+padding: 0 4px;
+
+box-sizing: border-box;
+
+}
+
+#typing-text {
+display: inline;
+
+max-width: 100%;
+
+white-space: normal;
+
+overflow: visible;
+
+overflow-wrap: break-word;
+word-break: normal;
+
+text-align: center;
+
+line-height: 1.5;
+
+}
+
+.typing-cursor {
+display: inline-block;
+
+margin-left: 2px;
+
+flex-shrink: 0;
+
+line-height: 1.5;
+
+animation: typingCursor 0.7s infinite;
+
+}
+
+@keyframes typingCursor {
+0%,
+49% {
+opacity: 1;
+}
+
+50%,
+100% {
+    opacity: 0;
+}
+
+}
+
+/* =========================================
+DESKTOP
+========================================= */
+
+@media (min-width: 769px) {
+
+.avatar-wrap {
+    width: 145px;
+    height: 145px;
+    flex-basis: 145px;
+}
+
+.henry-gaming {
+    max-width: 280px;
+}
+
+}
+
+/* =========================================
+MOBILE
+========================================= */
+
+@media (max-width: 768px) {
+
+.avatar-wrap {
+    width: 125px;
+    height: 125px;
+    flex-basis: 125px;
+}
+
+.avatar-frame {
+    inset: -2px;
+
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+}
+
+.henry-gaming {
     width: 100%;
-    max-width: 260px;
+    max-width: 290px;
 
-    min-height: 26px;
+    min-height: 48px;
 
-    margin: 12px auto 0;
+    margin-top: 10px;
 
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
+    padding-left: 8px;
+    padding-right: 8px;
 
-    text-align: center;
+    font-size: 14px;
 
     line-height: 1.5;
 
     overflow: visible;
-
-    padding: 0 4px;
-
-    box-sizing: border-box;
 }
 
 #typing-text {
-    display: inline;
-
     max-width: 100%;
 
     white-space: normal;
@@ -90,154 +1331,59 @@
     overflow-wrap: break-word;
     word-break: normal;
 
-    text-align: center;
-
     line-height: 1.5;
 }
 
 .typing-cursor {
-    display: inline-block;
-
-    margin-left: 2px;
-
-    flex-shrink: 0;
-
     line-height: 1.5;
-
-    animation: typingCursor 0.7s infinite;
 }
 
-@keyframes typingCursor {
-    0%,
-    49% {
-        opacity: 1;
-    }
-
-    50%,
-    100% {
-        opacity: 0;
-    }
 }
-
 
 /* =========================================
-   DESKTOP
-========================================= */
-
-@media (min-width: 769px) {
-
-    .avatar-wrap {
-        width: 145px;
-        height: 145px;
-        flex-basis: 145px;
-    }
-
-    .henry-gaming {
-        max-width: 280px;
-    }
-}
-
-
-/* =========================================
-   MOBILE
-========================================= */
-
-@media (max-width: 768px) {
-
-    .avatar-wrap {
-        width: 125px;
-        height: 125px;
-        flex-basis: 125px;
-    }
-
-    .avatar-frame {
-        inset: -2px;
-
-        width: calc(100% + 4px);
-        height: calc(100% + 4px);
-    }
-
-    .henry-gaming {
-        width: 100%;
-        max-width: 290px;
-
-        min-height: 48px;
-
-        margin-top: 10px;
-
-        padding-left: 8px;
-        padding-right: 8px;
-
-        font-size: 14px;
-
-        line-height: 1.5;
-
-        overflow: visible;
-    }
-
-    #typing-text {
-        max-width: 100%;
-
-        white-space: normal;
-
-        overflow: visible;
-
-        overflow-wrap: break-word;
-        word-break: normal;
-
-        line-height: 1.5;
-    }
-
-    .typing-cursor {
-        line-height: 1.5;
-    }
-}
-
-
-/* =========================================
-   MOBILE NHỎ
+MOBILE NHỎ
 ========================================= */
 
 @media (max-width: 400px) {
 
-    .avatar-wrap {
-        width: 115px;
-        height: 115px;
-        flex-basis: 115px;
-    }
-
-    .henry-gaming {
-        max-width: 280px;
-
-        font-size: 13px;
-
-        min-height: 44px;
-    }
+.avatar-wrap {
+    width: 115px;
+    height: 115px;
+    flex-basis: 115px;
 }
 
+.henry-gaming {
+    max-width: 280px;
+
+    font-size: 13px;
+
+    min-height: 44px;
+}
+
+}
 
 /* =========================================
-   TRÁNH AVATAR BỊ CO / LỆCH
+TRÁNH AVATAR BỊ CO / LỆCH
 ========================================= */
 
 .avatar-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+display: flex;
+flex-direction: column;
+align-items: center;
 
-    min-width: 0;
+min-width: 0;
+
 }
 
 .avatar-section,
 .avatar-wrap,
 .henry-gaming {
-    box-sizing: border-box;
+box-sizing: border-box;
 }
-
 
 /* Không để parent cắt crown */
 .avatar-section,
 .profile-header,
 .glass-card {
-    overflow: visible;
+overflow: visible;
 }
