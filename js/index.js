@@ -5,6 +5,252 @@
     View source đi trước khi bị đóng :>
 =========================================================
 */
+
+/* =========================================================
+   PBL LOADING + MUSIC TOAST
+========================================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* Tạo Toast */
+
+    const toast = document.createElement("div");
+
+    toast.id = "pbl-loading-toast";
+
+    toast.innerHTML = `
+        <div class="pbl-toast-title">
+            <i class="fa-solid fa-spinner"></i>
+            PBL | HOME
+        </div>
+
+        <div class="pbl-toast-message" id="pbl-toast-message">
+            Đang tải website...
+        </div>
+
+        <div class="pbl-loading-bar">
+            <div id="pbl-loading-progress"></div>
+        </div>
+
+        <span id="pbl-loading-percent">
+            0%
+        </span>
+    `;
+
+    document.body.appendChild(toast);
+
+
+    const progress =
+        document.getElementById(
+            "pbl-loading-progress"
+        );
+
+    const percent =
+        document.getElementById(
+            "pbl-loading-percent"
+        );
+
+    const message =
+        document.getElementById(
+            "pbl-toast-message"
+        );
+
+
+    /* Hiện Toast */
+
+    toast.classList.add("show");
+
+
+    /* Loading */
+
+    let loadingPercent = 0;
+
+    const loadingInterval =
+        setInterval(function () {
+
+            loadingPercent +=
+                Math.floor(
+                    Math.random() * 8
+                ) + 2;
+
+            if (loadingPercent >= 100) {
+
+                loadingPercent = 100;
+
+                clearInterval(
+                    loadingInterval
+                );
+
+                progress.style.width =
+                    "100%";
+
+                percent.textContent =
+                    "100%";
+
+
+                /* Đợi thanh chạy xong */
+
+                setTimeout(function () {
+
+                    showMusicQuestion();
+
+                }, 400);
+
+                return;
+            }
+
+
+            progress.style.width =
+                loadingPercent + "%";
+
+            percent.textContent =
+                loadingPercent + "%";
+
+        }, 80);
+
+
+    /* =====================================================
+       MUSIC QUESTION
+    ===================================================== */
+
+    function showMusicQuestion() {
+
+        const musicIcon =
+            document.querySelector(
+                "#pbl-loading-toast .pbl-toast-title i"
+            );
+
+        if (musicIcon) {
+
+            musicIcon.className =
+                "fa-solid fa-circle-check";
+
+        }
+
+
+        message.innerHTML =
+            "Load web thành công! 🎉<br>" +
+            "Bạn có muốn bật nhạc không?";
+
+
+        const loadingBar =
+            document.querySelector(
+                ".pbl-loading-bar"
+            );
+
+        const loadingPercentText =
+            document.getElementById(
+                "pbl-loading-percent"
+            );
+
+
+        if (loadingBar) {
+
+            loadingBar.style.display =
+                "none";
+
+        }
+
+        if (loadingPercentText) {
+
+            loadingPercentText.style.display =
+                "none";
+
+        }
+
+
+        /* Tạo nút */
+
+        const buttons =
+            document.createElement("div");
+
+        buttons.className =
+            "pbl-music-buttons";
+
+        buttons.innerHTML = `
+
+            <button
+                class="pbl-music-btn yes"
+                id="pbl-music-yes">
+
+                <i class="fa-solid fa-volume-high"></i>
+                Có
+            </button>
+
+            <button
+                class="pbl-music-btn no"
+                id="pbl-music-no">
+
+                <i class="fa-solid fa-volume-xmark"></i>
+                Không
+            </button>
+
+        `;
+
+        toast.appendChild(buttons);
+
+
+        /* =================================================
+           NÚT CÓ
+        ================================================= */
+
+        document
+            .getElementById("pbl-music-yes")
+            .addEventListener(
+                "click",
+                function () {
+
+                    const musicBtn =
+                        document.getElementById(
+                            "music-btn"
+                        );
+
+                    if (musicBtn) {
+
+                        musicBtn.click();
+
+                    }
+
+                    closeToast();
+
+                }
+            );
+
+
+        /* =================================================
+           NÚT KHÔNG
+        ================================================= */
+
+        document
+            .getElementById("pbl-music-no")
+            .addEventListener(
+                "click",
+                function () {
+
+                    closeToast();
+
+                }
+            );
+    }
+
+
+    /* =====================================================
+       ĐÓNG TOAST
+    ===================================================== */
+
+    function closeToast() {
+
+        toast.classList.remove("show");
+
+        setTimeout(function () {
+
+            toast.remove();
+
+        }, 400);
+
+    }
+
+});
 document.addEventListener("DOMContentLoaded", function () {
 
     /* =========================================================
