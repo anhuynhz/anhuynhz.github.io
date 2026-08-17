@@ -270,292 +270,448 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* =========================================================
-       MUSIC PLAYER
-    ========================================================= */
+   /* =========================================================
+   MUSIC PLAYER
+   - Lần đầu bấm: random bài
+   - Đang phát: pause
+   - Bấm lại sau pause: next bài
+   - Hết bài cuối: quay lại bài đầu
+   - File lỗi: tự chuyển bài tiếp theo
+========================================================= */
 
-    const playlist = [
+const playlist = [
 
-        {
-            name: "Về bên anh",
+    {
+        name: "Về bên anh",
+        url: "//thanhdieu.com/files/Về-Bên-Anh.mp3"
+    },
 
-            url:
-                "//thanhdieu.com/files/Về-Bên-Anh.mp3"
-        },
+    {
+        name: "Anh đã quen với cô đơn",
+        url: "//thanhdieu.com/files/Anh-Đã-Quen-Với-Cô-Đơn.mp3"
+    },
 
-        {
-            name:
-                "Anh đã quen với cô đơn",
+    {
+        name: "Em nào có tội",
+        url: "//thanhdieu.com/files/Em-Nào-Có-Tội.mp3"
+    },
 
-            url:
-                "//thanhdieu.com/files/Anh-Đã-Quen-Với-Cô-Đơn.mp3"
-        },
+    {
+        name: "Anh Nhớ Em",
+        url: "https://files.catbox.moe/ihobra.mp3"
+    },
 
-        {
-            name:
-                "Em nào có tội",
+    {
+        name: "Rồi mùa yêu thương dần đang đến",
+        url: "https://files.catbox.moe/bgwso3.mp3"
+    },
 
-            url:
-                "//thanhdieu.com/files/Em-Nào-Có-Tội.mp3"
-        },
+    {
+        name: "Chỉ bằng cái gật đầu",
+        url: "https://files.catbox.moe/s1hyzo.mp3"
+    },
 
-        {
-            name:
-                "Anh Nhớ Em",
+    {
+        name: "Đừng quên tên anh",
+        url: "https://files.catbox.moe/h43f1s.mp3"
+    },
 
-            url:
-                "https://files.catbox.moe/ihobra.mp3"
-        },
+    {
+        name: "Hối hận trong anh",
+        url: "https://files.catbox.moe/aebu0g.mp3"
+    },
 
-        {
-            name:
-                "Rồi mùa yêu thương dần đang đến",
+    {
+        name: "Anh từng cố gắng",
+        url: "https://files.catbox.moe/mm085n.mp3"
+    },
 
-            url:
-                "https://files.catbox.moe/bgwso3.mp3"
-        },
+    {
+        name: "Hình bóng em",
+        url: "https://files.catbox.moe/21c1fl.mp3"
+    },
 
-        {
-            name:
-                "Chỉ bằng cái gật đầu",
+    {
+        name: "Lời chúc không thật",
+        url: "https://files.catbox.moe/v6sqz2.mp3"
+    },
 
-            url:
-                "https://files.catbox.moe/s1hyzo.mp3"
-        },
+    {
+        name: "Quên anh trong từng cơn đau",
+        url: "https://files.catbox.moe/crphp2.mp3"
+    }
 
-        {
-            name:
-                "Đừng quên tên anh",
+];
 
-            url:
-                "https://files.catbox.moe/h43f1s.mp3"
-        },
 
-        {
-            name:
-                "Hối hận trong anh",
+const musicBtn = document.getElementById("music-btn");
+const bgMusic = document.getElementById("bg-music");
 
-            url:
-                "https://files.catbox.moe/aebu0g.mp3"
-        },
 
-        {
-            name:
-                "Anh từng cố gắng",
+if (
+    musicBtn &&
+    bgMusic &&
+    playlist.length > 0
+) {
 
-            url:
-                "https://files.catbox.moe/mm085n.mp3"
-        },
+    let currentSong = 0;
 
-        {
-            name:
-                "Hình bóng em",
+    let hasStarted = false;
 
-            url:
-                "https://files.catbox.moe/21c1fl.mp3"
-        },
+    let isLoading = false;
 
-        {
-            name:
-                "Lời chúc không thật",
 
-            url:
-                "https://files.catbox.moe/v6sqz2.mp3"
-        },
+    /* =====================================================
+       LOAD SONG
+    ===================================================== */
 
-        {
-            name:
-                "Quên anh trong từng cơn đau",
+    function loadSong(index) {
 
-            url:
-                "https://files.catbox.moe/crphp2.mp3"
+        if (index < 0) {
+            index = playlist.length - 1;
         }
 
-    ];
+        if (index >= playlist.length) {
+            index = 0;
+        }
 
+        currentSong = index;
 
-    const musicBtn =
-        document.getElementById(
-            "music-btn"
+        bgMusic.pause();
+
+        bgMusic.currentTime = 0;
+
+        bgMusic.src = playlist[currentSong].url;
+
+        bgMusic.load();
+
+        console.log(
+            "Đang tải:",
+            playlist[currentSong].name
         );
+    }
 
 
-    const bgMusic =
-        document.getElementById(
-            "bg-music"
-        );
+    /* =====================================================
+       PLAYING STATE
+    ===================================================== */
+
+    function setPlayingState() {
+
+        musicBtn.classList.add("playing");
+
+        musicBtn.innerHTML =
+            '<i class="fa-solid fa-pause"></i>';
+    }
 
 
-    if (
-        musicBtn &&
-        bgMusic &&
-        playlist.length > 0
-    ) {
+    /* =====================================================
+       PAUSED STATE
+    ===================================================== */
 
-        let currentSong = 0;
+    function setPausedState() {
 
-        let hasStarted = false;
+        musicBtn.classList.remove("playing");
+
+        musicBtn.innerHTML =
+            '<i class="fa-solid fa-music"></i>';
+    }
 
 
-        function loadSong(index) {
+    /* =====================================================
+       PLAY MUSIC
+    ===================================================== */
 
-            currentSong = index;
+    function playMusic() {
 
-            bgMusic.src =
-                playlist[
-                    currentSong
-                ].url;
-
-            bgMusic.load();
+        if (isLoading) {
+            return;
         }
 
+        isLoading = true;
 
-        function setPlayingState() {
+        const promise = bgMusic.play();
 
-            musicBtn.classList.add(
-                "playing"
-            );
+        if (promise !== undefined) {
 
-            musicBtn.innerHTML =
-                '<i class="fa-solid fa-pause"></i>';
-        }
+            promise
+                .then(function () {
 
+                    isLoading = false;
 
-        function setPausedState() {
+                    setPlayingState();
 
-            musicBtn.classList.remove(
-                "playing"
-            );
-
-            musicBtn.innerHTML =
-                '<i class="fa-solid fa-music"></i>';
-        }
-
-
-        function playMusic() {
-
-            const promise =
-                bgMusic.play();
-
-
-            if (
-                promise !== undefined
-            ) {
-
-                promise
-                    .then(
-                        function () {
-
-                            setPlayingState();
-
-                        }
-                    )
-                    .catch(
-                        function (error) {
-
-                            console.log(
-                                "Không thể phát nhạc:",
-                                error
-                            );
-
-                            setPausedState();
-                        }
+                    console.log(
+                        "Đang phát:",
+                        playlist[currentSong].name
                     );
 
-            } else {
+                })
+                .catch(function (error) {
 
-                setPlayingState();
-            }
-        }
+                    isLoading = false;
 
-
-        function nextSong() {
-
-            currentSong++;
-
-
-            if (
-                currentSong >=
-                playlist.length
-            ) {
-
-                currentSong = 0;
-            }
-
-
-            loadSong(currentSong);
-
-            playMusic();
-        }
-
-
-        musicBtn.addEventListener(
-            "click",
-            function () {
-
-                if (
-                    !bgMusic.paused
-                ) {
-
-                    bgMusic.pause();
+                    console.log(
+                        "Không thể phát:",
+                        playlist[currentSong].name,
+                        error
+                    );
 
                     setPausedState();
 
-                    return;
-                }
+                });
+
+        } else {
+
+            isLoading = false;
+
+            setPlayingState();
+
+        }
+    }
 
 
-                if (!hasStarted) {
+    /* =====================================================
+       NEXT SONG
+    ===================================================== */
 
-                    hasStarted = true;
+    function nextSong() {
+
+        currentSong++;
+
+        /*
+         * Hết playlist
+         * → quay lại bài đầu
+         */
+
+        if (currentSong >= playlist.length) {
+
+            currentSong = 0;
+
+            console.log(
+                "Đã hết playlist → phát lại từ đầu"
+            );
+        }
 
 
-                    currentSong =
-                        Math.floor(
-                            Math.random() *
-                            playlist.length
-                        );
+        loadSong(currentSong);
 
-
-                    loadSong(
-                        currentSong
-                    );
-
-
-                    playMusic();
-
-                    return;
-                }
-
-
-                nextSong();
-            }
-        );
-
+        /*
+         * Chờ audio load xong rồi phát
+         */
 
         bgMusic.addEventListener(
-            "ended",
-            function () {
+            "canplay",
+            function playWhenReady() {
 
-                nextSong();
-
-            }
-        );
-
-
-        bgMusic.addEventListener(
-            "error",
-            function () {
-
-                console.log(
-                    "Không tải được file nhạc."
+                bgMusic.removeEventListener(
+                    "canplay",
+                    playWhenReady
                 );
+
+                playMusic();
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       MUSIC BUTTON
+    ===================================================== */
+
+    musicBtn.addEventListener(
+        "click",
+        function () {
+
+            /*
+             * Đang phát
+             * → PAUSE
+             */
+
+            if (!bgMusic.paused) {
+
+                bgMusic.pause();
 
                 setPausedState();
 
+                console.log(
+                    "Đã pause:",
+                    playlist[currentSong].name
+                );
+
+                return;
             }
-        );
-    }
+
+
+            /*
+             * Lần đầu bấm
+             * → RANDOM
+             */
+
+            if (!hasStarted) {
+
+                hasStarted = true;
+
+                currentSong =
+                    Math.floor(
+                        Math.random() *
+                        playlist.length
+                    );
+
+                loadSong(currentSong);
+
+                /*
+                 * Phát khi audio sẵn sàng
+                 */
+
+                bgMusic.addEventListener(
+                    "canplay",
+                    function playFirstSong() {
+
+                        bgMusic.removeEventListener(
+                            "canplay",
+                            playFirstSong
+                        );
+
+                        playMusic();
+
+                    }
+                );
+
+                return;
+            }
+
+
+            /*
+             * Đã từng phát
+             * → NEXT
+             */
+
+            nextSong();
+
+        }
+    );
+
+
+    /* =====================================================
+       HẾT BÀI
+       → NEXT
+    ===================================================== */
+
+    bgMusic.addEventListener(
+        "ended",
+        function () {
+
+            console.log(
+                "Hết bài:",
+                playlist[currentSong].name
+            );
+
+            /*
+             * Nếu đây là bài cuối
+             * → quay lại bài đầu
+             */
+
+            if (
+                currentSong >=
+                playlist.length - 1
+            ) {
+
+                currentSong = 0;
+
+                loadSong(currentSong);
+
+            } else {
+
+                currentSong++;
+
+                loadSong(currentSong);
+
+            }
+
+
+            /*
+             * Chờ bài mới load
+             */
+
+            bgMusic.addEventListener(
+                "canplay",
+                function playNextSong() {
+
+                    bgMusic.removeEventListener(
+                        "canplay",
+                        playNextSong
+                    );
+
+                    playMusic();
+
+                }
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       AUDIO ERROR
+       → TỰ BỎ QUA BÀI LỖI
+    ===================================================== */
+
+    bgMusic.addEventListener(
+        "error",
+        function () {
+
+            console.log(
+                "Không tải được:",
+                playlist[currentSong].name
+            );
+
+            /*
+             * Chuyển bài sau 500ms
+             */
+
+            setTimeout(function () {
+
+                currentSong++;
+
+                /*
+                 * Nếu hết danh sách
+                 * → quay lại đầu
+                 */
+
+                if (
+                    currentSong >=
+                    playlist.length
+                ) {
+
+                    currentSong = 0;
+
+                }
+
+                loadSong(currentSong);
+
+                bgMusic.addEventListener(
+                    "canplay",
+                    function retrySong() {
+
+                        bgMusic.removeEventListener(
+                            "canplay",
+                            retrySong
+                        );
+
+                        playMusic();
+
+                    }
+                );
+
+            }, 500);
+
+        }
+    );
+
+}
 
 
     /* =========================================================
