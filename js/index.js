@@ -1291,12 +1291,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
 (function () {
 
-    const sakuraContainer = document.createElement("div");
+    const icon = document.createElement("img");
 
-    sakuraContainer.id = "sakura-container";
+    icon.src = "https://files.catbox.moe/k5h1qm.png";
 
-    document.body.appendChild(sakuraContainer);
-
+    icon.className = "falling-icon";
 
     function createSakura() {
 
@@ -1386,19 +1385,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
         createSakura();
 
-    }, 350);
+    }, 120);
 
 
     /*
      * Tạo sẵn một số lá khi mở trang
      */
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < 20; i++) {
 
         setTimeout(function () {
 
             createSakura();
 
-        }, i * 180);
+        }, i * 100);
 
     }
 
