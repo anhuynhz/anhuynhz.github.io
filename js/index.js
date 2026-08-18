@@ -578,6 +578,10 @@ const playlist = [
         name: "Anh từng cố gắng",
         url: "https://files.catbox.moe/mm085n.mp3"
     },
+    {
+        name: "Người đã yêu ai",
+        url: "https://files.catbox.moe/y8ch48.mp3"
+    },
 
     {
         name: "Hình bóng em",
