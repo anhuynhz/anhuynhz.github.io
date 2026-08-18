@@ -2,205 +2,600 @@
 =========================================================
     Source by PBL
     PBL | HOME Source v1.0
-    Main JavaScript
 =========================================================
 */
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    /* =====================================================
-       CONFIG
-    ===================================================== */
+    /* =========================================================
+       GLOBAL
+    ========================================================= */
 
-    const musicList = [
+    const musicBtn = document.getElementById("music-btn");
+    const bgMusic = document.getElementById("bg-music");
+    const grid = document.getElementById("contribution-grid");
+    const typingText = document.getElementById("typing-text");
+
+
+    /* =========================================================
+       PLAYLIST
+    ========================================================= */
+
+    const playlist = [
+
         {
             name: "Anh Nhớ Em",
             url: "https://files.catbox.moe/ihobra.mp3"
         },
+
         {
             name: "Rồi mùa yêu thương dần đang đến",
             url: "https://files.catbox.moe/bgwso3.mp3"
         },
+
         {
             name: "Chỉ bằng cái gật đầu",
             url: "https://files.catbox.moe/s1hyzo.mp3"
         },
+
         {
             name: "Đừng quên tên anh",
             url: "https://files.catbox.moe/h43f1s.mp3"
         },
+
         {
             name: "Hối hận trong anh",
             url: "https://files.catbox.moe/aebu0g.mp3"
         },
+
         {
             name: "Anh từng cố gắng",
             url: "https://files.catbox.moe/mm085n.mp3"
         },
+
         {
             name: "Hình bóng em",
             url: "https://files.catbox.moe/21c1fl.mp3"
         },
+
         {
             name: "Lời chúc không thật",
             url: "https://files.catbox.moe/v6sqz2.mp3"
         },
+
         {
             name: "Quên anh trong từng cơn đau",
             url: "https://files.catbox.moe/crphp2.mp3"
         },
+
         {
             name: "Em nào có tội",
             url: "https://thanhdieu.com/files/Em-Nào-Có-Tội.mp3"
         },
+
         {
             name: "Anh đã quen với cô đơn",
             url: "https://thanhdieu.com/files/Anh-Đã-Quen-Với-Cô-Đơn.mp3"
         },
+
         {
             name: "Về bên anh",
             url: "https://thanhdieu.com/files/Về-Bên-Anh.mp3"
         }
+
     ];
 
 
-    /* =====================================================
-       ELEMENTS
-    ===================================================== */
+    /* =========================================================
+       MUSIC VARIABLES
+    ========================================================= */
 
-    const musicBtn = document.getElementById("music-btn");
-    const audio = document.getElementById("bg-music");
-    const contributionGrid =
-        document.getElementById("contribution-grid");
+    let currentSong = -1;
+    let hasStarted = false;
+
+    let audioContext = null;
+    let analyser = null;
+    let audioSource = null;
+    let audioData = null;
+
+    let visualizerStarted = false;
 
 
-    /* =====================================================
-       TYPING EFFECT
-    ===================================================== */
+    /* =========================================================
+       CREATE AUDIO ANALYSER
+    ========================================================= */
 
-    const typingText =
-        document.getElementById("typing-text");
+    function setupAudioAnalyser() {
 
-    const typingMessages = [
-        "Welcome to PBL | HOME",
-        "Pham Bao Long",
-        "HTML | CSS | JavaScript",
-        "Developer",
-        "Student",
-        "Hưng Yên, Việt Nam",
-        "Always learning..."
-    ];
-
-    let typingMessageIndex = 0;
-    let typingCharIndex = 0;
-    let typingDeleting = false;
-
-    const typingSpeed = 75;
-    const deletingSpeed = 40;
-    const typingDelay = 1500;
-
-    function typingEffect() {
-
-        if (!typingText) {
+        if (!bgMusic) {
             return;
         }
 
-        const currentMessage =
-            typingMessages[typingMessageIndex];
+        if (audioContext) {
+            return;
+        }
 
+        try {
 
-        if (!typingDeleting) {
+            audioContext =
+                new (
+                    window.AudioContext ||
+                    window.webkitAudioContext
+                )();
 
-            typingText.textContent =
-                currentMessage.substring(
-                    0,
-                    typingCharIndex + 1
+            analyser =
+                audioContext.createAnalyser();
+
+            analyser.fftSize = 256;
+
+            analyser.smoothingTimeConstant = 0.82;
+
+            audioData =
+                new Uint8Array(
+                    analyser.frequencyBinCount
                 );
 
-            typingCharIndex++;
-
-
-            if (
-                typingCharIndex >=
-                currentMessage.length
-            ) {
-
-                typingDeleting = true;
-
-                setTimeout(
-                    typingEffect,
-                    typingDelay
+            audioSource =
+                audioContext.createMediaElementSource(
+                    bgMusic
                 );
 
-                return;
-            }
+            audioSource.connect(analyser);
 
-
-            setTimeout(
-                typingEffect,
-                typingSpeed
+            analyser.connect(
+                audioContext.destination
             );
 
-        } else {
+        } catch (error) {
 
-            typingText.textContent =
-                currentMessage.substring(
-                    0,
-                    typingCharIndex - 1
-                );
-
-            typingCharIndex--;
-
-
-            if (typingCharIndex <= 0) {
-
-                typingDeleting = false;
-
-                typingMessageIndex =
-                    (typingMessageIndex + 1) %
-                    typingMessages.length;
-
-                setTimeout(
-                    typingEffect,
-                    400
-                );
-
-                return;
-            }
-
-
-            setTimeout(
-                typingEffect,
-                deletingSpeed
+            console.error(
+                "Không thể tạo Audio Analyser:",
+                error
             );
+
         }
     }
 
-    typingEffect();
+
+    /* =========================================================
+       RESUME AUDIO CONTEXT
+    ========================================================= */
+
+    async function resumeAudioContext() {
+
+        if (
+            audioContext &&
+            audioContext.state === "suspended"
+        ) {
+
+            try {
+
+                await audioContext.resume();
+
+            } catch (error) {
+
+                console.log(
+                    "AudioContext resume error:",
+                    error
+                );
+
+            }
+
+        }
+
+    }
 
 
-    /* =====================================================
-       LED / CONTRIBUTION GRID
-    ===================================================== */
+    /* =========================================================
+       LOAD SONG
+    ========================================================= */
 
-    function createContributionGrid() {
+    function loadSong(index) {
 
-        if (!contributionGrid) {
+        if (!bgMusic || playlist.length === 0) {
             return;
         }
 
-        contributionGrid.innerHTML = "";
+        if (index < 0) {
+            index = playlist.length - 1;
+        }
 
+        if (index >= playlist.length) {
+            index = 0;
+        }
+
+        currentSong = index;
+
+        bgMusic.pause();
+
+        bgMusic.currentTime = 0;
+
+        bgMusic.src =
+            playlist[currentSong].url;
+
+        bgMusic.load();
+
+        console.log(
+            "Đang tải:",
+            playlist[currentSong].name
+        );
+
+    }
+
+
+    /* =========================================================
+       PLAYING STATE
+    ========================================================= */
+
+    function setPlayingState() {
+
+        if (!musicBtn) {
+            return;
+        }
+
+        musicBtn.classList.add("playing");
+
+        musicBtn.innerHTML =
+            '<i class="fa-solid fa-music"></i>';
+
+    }
+
+
+    /* =========================================================
+       PAUSED STATE
+    ========================================================= */
+
+    function setPausedState() {
+
+        if (!musicBtn) {
+            return;
+        }
+
+        musicBtn.classList.remove("playing");
+
+        musicBtn.innerHTML =
+            '<i class="fa-solid fa-music"></i>';
+
+    }
+
+
+    /* =========================================================
+       PLAY MUSIC
+    ========================================================= */
+
+    async function playMusic() {
+
+        if (!bgMusic) {
+            return false;
+        }
+
+        try {
+
+            await resumeAudioContext();
+
+            await bgMusic.play();
+
+            setPlayingState();
+
+            console.log(
+                "Đang phát:",
+                playlist[currentSong].name
+            );
+
+            return true;
+
+        } catch (error) {
+
+            console.error(
+                "Không thể phát nhạc:",
+                error
+            );
+
+            setPausedState();
+
+            return false;
+
+        }
+
+    }
+
+
+    /* =========================================================
+       FIRST PLAY
+    ========================================================= */
+
+    async function startMusic() {
+
+        if (!bgMusic || playlist.length === 0) {
+            return;
+        }
+
+        setupAudioAnalyser();
+
+        await resumeAudioContext();
+
+        if (!hasStarted) {
+
+            hasStarted = true;
+
+            currentSong =
+                Math.floor(
+                    Math.random() *
+                    playlist.length
+                );
+
+            loadSong(currentSong);
+
+        }
 
         /*
-            52 tuần x 7 ngày
-        */
+         * Vì đây được gọi trực tiếp từ
+         * click nút "Có", trình duyệt cho phép
+         * phát audio.
+         */
 
-        const totalDots = 52 * 7;
+        const success =
+            await playMusic();
+
+        if (!success) {
+
+            nextSong();
+
+        }
+
+    }
+
+
+    /*
+     * Cho Toast gọi hàm này
+     */
+
+    window.pblStartMusic =
+        startMusic;
+
+
+    /* =========================================================
+       NEXT SONG
+    ========================================================= */
+
+    async function nextSong() {
+
+        if (!bgMusic || playlist.length === 0) {
+            return;
+        }
+
+        hasStarted = true;
+
+        currentSong++;
+
+        if (
+            currentSong >=
+            playlist.length
+        ) {
+
+            currentSong = 0;
+
+        }
+
+        loadSong(currentSong);
+
+        /*
+         * Đợi browser load audio
+         */
+
+        try {
+
+            await new Promise(
+                function (resolve, reject) {
+
+                    let finished = false;
+
+                    function ready() {
+
+                        if (finished) {
+                            return;
+                        }
+
+                        finished = true;
+
+                        bgMusic.removeEventListener(
+                            "canplay",
+                            ready
+                        );
+
+                        bgMusic.removeEventListener(
+                            "error",
+                            failed
+                        );
+
+                        resolve();
+
+                    }
+
+                    function failed() {
+
+                        if (finished) {
+                            return;
+                        }
+
+                        finished = true;
+
+                        bgMusic.removeEventListener(
+                            "canplay",
+                            ready
+                        );
+
+                        bgMusic.removeEventListener(
+                            "error",
+                            failed
+                        );
+
+                        reject();
+
+                    }
+
+                    bgMusic.addEventListener(
+                        "canplay",
+                        ready
+                    );
+
+                    bgMusic.addEventListener(
+                        "error",
+                        failed
+                    );
+
+                    /*
+                     * Một số browser đã load sẵn
+                     */
+
+                    if (
+                        bgMusic.readyState >= 3
+                    ) {
+
+                        ready();
+
+                    }
+
+                }
+            );
+
+            await playMusic();
+
+        } catch (error) {
+
+            console.log(
+                "Bài lỗi, chuyển bài tiếp theo..."
+            );
+
+            setTimeout(
+                nextSong,
+                300
+            );
+
+        }
+
+    }
+
+
+    /* =========================================================
+       MUSIC BUTTON
+       
+       Lần đầu:
+       RANDOM + PLAY
+
+       Những lần sau:
+       NEXT SONG
+    ========================================================= */
+
+    if (musicBtn && bgMusic) {
+
+        musicBtn.addEventListener(
+            "click",
+            async function () {
+
+                setupAudioAnalyser();
+
+                await resumeAudioContext();
+
+                /*
+                 * Lần đầu bấm
+                 */
+
+                if (!hasStarted) {
+
+                    await startMusic();
+
+                    return;
+
+                }
+
+                /*
+                 * Những lần sau
+                 * → NEXT BÀI
+                 */
+
+                await nextSong();
+
+            }
+        );
+
+
+        /* =====================================================
+           HẾT BÀI
+        ===================================================== */
+
+        bgMusic.addEventListener(
+            "ended",
+            function () {
+
+                console.log(
+                    "Hết bài:",
+                    playlist[currentSong].name
+                );
+
+                nextSong();
+
+            }
+        );
+
+
+        /* =====================================================
+           AUDIO ERROR
+        ===================================================== */
+
+        bgMusic.addEventListener(
+            "error",
+            function () {
+
+                if (!hasStarted) {
+                    return;
+                }
+
+                console.log(
+                    "Không tải được:",
+                    playlist[currentSong]
+                        ? playlist[currentSong].name
+                        : "Unknown"
+                );
+
+                setTimeout(
+                    function () {
+
+                        nextSong();
+
+                    },
+                    500
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =========================================================
+       LED CONTRIBUTION GRID
+       
+       7 ROWS
+       52 COLUMNS
+       
+       Không random nhấp nháy.
+       Tạo hiệu ứng sóng chạy ngang.
+    ========================================================= */
+
+    let dots = [];
+
+    const rows = 7;
+    const cols = 52;
+
+
+    if (grid) {
+
+        grid.innerHTML = "";
 
         for (
             let i = 0;
-            i < totalDots;
+            i < rows * cols;
             i++
         ) {
 
@@ -209,901 +604,388 @@ document.addEventListener("DOMContentLoaded", function () {
 
             dot.className = "dot";
 
+            grid.appendChild(dot);
 
-            /*
-                Tạo pattern ngẫu nhiên
-            */
+            dots.push(dot);
 
-            const random =
-                Math.random();
-
-
-            if (random > 0.58) {
-
-                dot.classList.add(
-                    "jd-active"
-                );
-
-            }
-
-
-            contributionGrid.appendChild(dot);
         }
+
     }
 
-    createContributionGrid();
 
+    /* =========================================================
+       LED WAVE
+    ========================================================= */
 
-    /* =====================================================
-       LED ANIMATION
-    ===================================================== */
+    function renderLEDWave(time) {
 
-    function animateLED() {
-
-        if (!contributionGrid) {
+        if (!grid || dots.length === 0) {
             return;
         }
 
-        const dots =
-            contributionGrid.querySelectorAll(
-                ".dot"
-            );
-
-        if (!dots.length) {
-            return;
-        }
-
-
-        /*
-            Một vài LED ngẫu nhiên sáng lên
-        */
-
-        const amount =
-            Math.floor(
-                Math.random() * 10
-            ) + 4;
+        const audioValues =
+            analyser && audioData
+                ? getAudioValues()
+                : null;
 
 
         for (
-            let i = 0;
-            i < amount;
-            i++
+            let column = 0;
+            column < cols;
+            column++
         ) {
 
-            const randomIndex =
+            /*
+             * Sóng chính
+             */
+
+            const wave =
+                (
+                    Math.sin(
+                        column * 0.42 -
+                        time * 0.005
+                    ) + 1
+                ) / 2;
+
+
+            /*
+             * Sóng phụ
+             */
+
+            const wave2 =
+                (
+                    Math.sin(
+                        column * 0.19 -
+                        time * 0.0025
+                    ) + 1
+                ) / 2;
+
+
+            let height =
+                1 +
                 Math.floor(
-                    Math.random() *
-                    dots.length
+                    wave * 3.5 +
+                    wave2 * 1.5
                 );
 
-            const dot =
-                dots[randomIndex];
+
+            /*
+             * Nếu đang phát nhạc
+             * → lấy bass/frequency
+             */
+
+            if (audioValues) {
+
+                const frequency =
+                    audioValues[
+                        Math.floor(
+                            column /
+                            cols *
+                            audioValues.length
+                        )
+                    ] || 0;
 
 
-            dot.classList.add(
-                "jd-active"
-            );
+                const audioBoost =
+                    frequency / 255;
 
 
-            setTimeout(
-                function () {
-
-                    /*
-                        Chỉ tắt một số LED,
-                        giữ hiệu ứng tự nhiên
-                    */
-
-                    if (
-                        Math.random() > 0.35
-                    ) {
-
-                        dot.classList.remove(
-                            "jd-active"
-                        );
-
-                    }
-
-                },
-                400 + Math.random() * 1200
-            );
-        }
-    }
-
-
-    setInterval(
-        animateLED,
-        250
-    );
-
-
-    /* =====================================================
-       MUSIC SYSTEM
-    ===================================================== */
-
-    let currentSong = 0;
-    let musicStarted = false;
-
-
-    function loadSong(index, autoplay = false) {
-
-        if (!audio || !musicList.length) {
-            return;
-        }
-
-        currentSong =
-            (index + musicList.length) %
-            musicList.length;
-
-
-        const song =
-            musicList[currentSong];
-
-
-        audio.src = song.url;
-
-        audio.load();
-
-
-        /*
-            Lưu tên bài hiện tại
-        */
-
-        audio.dataset.songName =
-            song.name;
-
-
-        if (autoplay) {
-
-            const playPromise =
-                audio.play();
-
-
-            if (
-                playPromise !== undefined
-            ) {
-
-                playPromise
-                    .then(function () {
-
-                        musicStarted = true;
-
-                        setMusicPlayingState(
-                            true
-                        );
-
-                    })
-                    .catch(function (error) {
-
-                        console.log(
-                            "Không thể phát nhạc:",
-                            error
-                        );
-
-                        setMusicPlayingState(
-                            false
-                        );
-
-                    });
-            }
-        }
-    }
-
-
-    function playMusic() {
-
-        if (!audio) {
-            return;
-        }
-
-
-        /*
-            Nếu chưa có bài thì load bài đầu
-        */
-
-        if (!audio.src) {
-
-            loadSong(
-                currentSong,
-                false
-            );
-
-        }
-
-
-        const promise =
-            audio.play();
-
-
-        if (
-            promise !== undefined
-        ) {
-
-            promise
-                .then(function () {
-
-                    musicStarted = true;
-
-                    setMusicPlayingState(
-                        true
+                height +=
+                    Math.floor(
+                        audioBoost * 3
                     );
 
-                })
-                .catch(function (error) {
-
-                    console.log(
-                        "Browser chặn phát nhạc:",
-                        error
-                    );
-
-                });
-        }
-    }
-
-
-    function pauseMusic() {
-
-        if (!audio) {
-            return;
-        }
-
-        audio.pause();
-
-        musicStarted = false;
-
-        setMusicPlayingState(
-            false
-        );
-    }
-
-
-    function setMusicPlayingState(
-        playing
-    ) {
-
-        if (!musicBtn) {
-            return;
-        }
-
-        if (playing) {
-
-            musicBtn.classList.add(
-                "playing"
-            );
-
-            musicBtn.innerHTML =
-                '<i class="fa-solid fa-volume-high"></i>';
-
-        } else {
-
-            musicBtn.classList.remove(
-                "playing"
-            );
-
-            musicBtn.innerHTML =
-                '<i class="fa-solid fa-music"></i>';
-        }
-    }
-
-
-    /*
-        Nút nhạc
-    */
-
-    if (musicBtn) {
-
-        musicBtn.addEventListener(
-            "click",
-            function () {
-
-                if (
-                    audio &&
-                    !audio.paused
-                ) {
-
-                    pauseMusic();
-
-                } else {
-
-                    playMusic();
-
-                }
-
-            }
-        );
-
-    }
-
-
-    /*
-        Tự động chuyển bài
-    */
-
-    if (audio) {
-
-        audio.addEventListener(
-            "ended",
-            function () {
-
-                currentSong++;
-
-                if (
-                    currentSong >=
-                    musicList.length
-                ) {
-
-                    currentSong = 0;
-
-                }
-
-
-                loadSong(
-                    currentSong,
-                    true
-                );
-
-            }
-        );
-
-
-        /*
-            Nếu file nhạc lỗi thì
-            chuyển bài tiếp theo
-        */
-
-        audio.addEventListener(
-            "error",
-            function () {
-
-                console.log(
-                    "Không tải được bài:",
-                    musicList[currentSong]
-                        ?.name
-                );
-
-
-                setTimeout(
-                    function () {
-
-                        currentSong++;
-
-                        if (
-                            currentSong >=
-                            musicList.length
-                        ) {
-
-                            currentSong = 0;
-
-                        }
-
-
-                        loadSong(
-                            currentSong,
-                            true
-                        );
-
-                    },
-                    1000
-                );
-
-            }
-        );
-
-    }
-
-
-    /*
-        Load bài đầu tiên
-    */
-
-    if (audio) {
-
-        loadSong(
-            0,
-            false
-        );
-
-    }
-
-
-    /* =====================================================
-       TOAST OVERLAY
-    ===================================================== */
-
-    function createToastStyles() {
-
-        if (
-            document.getElementById(
-                "pbl-toast-style"
-            )
-        ) {
-            return;
-        }
-
-
-        const style =
-            document.createElement("style");
-
-        style.id =
-            "pbl-toast-style";
-
-
-        style.textContent = `
-
-            /* ================================
-               OVERLAY
-            ================================= */
-
-            #pbl-loading-overlay {
-                position: fixed;
-                inset: 0;
-
-                width: 100%;
-                height: 100%;
-
-                background:
-                    rgba(0, 0, 0, 0.62);
-
-                backdrop-filter:
-                    blur(8px);
-
-                -webkit-backdrop-filter:
-                    blur(8px);
-
-                z-index: 99998;
-
-                opacity: 1;
-
-                transition:
-                    opacity 0.45s ease;
-
-                pointer-events:
-                    auto;
-            }
-
-
-            #pbl-loading-overlay.hide {
-                opacity: 0;
-
-                pointer-events:
-                    none;
-            }
-
-
-            /* ================================
-               TOAST
-            ================================= */
-
-            #pbl-loading-toast {
-                position: fixed;
-
-                top: 50%;
-                left: 50%;
-
-                transform:
-                    translate(-50%, -50%)
-                    scale(0.92);
-
-                width:
-                    min(430px, calc(100vw - 40px));
-
-                padding: 30px 28px;
-
-                background:
-                    rgba(15, 15, 15, 0.92);
-
-                border:
-                    1px solid
-                    rgba(255, 255, 255, 0.22);
-
-                border-radius:
-                    24px;
-
-                box-shadow:
-                    0 25px 80px
-                    rgba(0, 0, 0, 0.7);
-
-                backdrop-filter:
-                    blur(25px);
-
-                -webkit-backdrop-filter:
-                    blur(25px);
-
-                color: #fff;
-
-                z-index: 99999;
-
-                box-sizing:
-                    border-box;
-
-                text-align:
-                    center;
-
-                opacity: 0;
-
-                transition:
-                    opacity 0.35s ease,
-                    transform 0.35s ease;
-
-                font-family:
-                    'Quicksand',
-                    sans-serif;
-            }
-
-
-            #pbl-loading-toast.show {
-                opacity: 1;
-
-                transform:
-                    translate(-50%, -50%)
-                    scale(1);
-            }
-
-
-            #pbl-loading-toast.hide {
-                opacity: 0;
-
-                transform:
-                    translate(-50%, -50%)
-                    scale(0.92);
-
-                pointer-events:
-                    none;
-            }
-
-
-            /* ================================
-               TITLE
-            ================================= */
-
-            .pbl-toast-title {
-                display:
-                    flex;
-
-                align-items:
-                    center;
-
-                justify-content:
-                    center;
-
-                gap: 11px;
-
-                font-size:
-                    1.3rem;
-
-                font-weight:
-                    800;
-
-                margin-bottom:
-                    14px;
-
-                color:
-                    #fff;
-            }
-
-
-            .pbl-toast-title i {
-                font-size:
-                    20px;
             }
 
 
             /*
-                Icon loading xoay
-            */
+             * Giới hạn chiều cao
+             */
 
-            .pbl-toast-title
-            .pbl-spinner {
-                animation:
-                    pblSpinner
-                    0.9s
-                    linear
-                    infinite;
-            }
+            height =
+                Math.max(
+                    1,
+                    Math.min(
+                        rows,
+                        height
+                    )
+                );
 
 
-            @keyframes pblSpinner {
+            /*
+             * Render từng cột
+             */
 
-                from {
-                    transform:
-                        rotate(0deg);
+            for (
+                let row = 0;
+                row < rows;
+                row++
+            ) {
+
+                const index =
+                    row * cols +
+                    column;
+
+                const dot =
+                    dots[index];
+
+                if (!dot) {
+                    continue;
                 }
 
-                to {
-                    transform:
-                        rotate(360deg);
-                }
 
-            }
+                /*
+                 * Từ dưới lên
+                 */
+
+                const active =
+                    row >=
+                    rows - height;
 
 
-            /* ================================
-               MESSAGE
-            ================================= */
+                if (active) {
 
-            .pbl-toast-message {
-                font-size:
-                    0.95rem;
-
-                font-weight:
-                    600;
-
-                line-height:
-                    1.6;
-
-                color:
-                    rgba(
-                        255,
-                        255,
-                        255,
-                        0.9
+                    dot.classList.add(
+                        "jd-active"
                     );
 
-                margin-bottom:
-                    18px;
-            }
+                } else {
 
-
-            /* ================================
-               LOADING BAR
-            ================================= */
-
-            .pbl-loading-bar {
-                width:
-                    100%;
-
-                height:
-                    10px;
-
-                background:
-                    rgba(
-                        255,
-                        255,
-                        255,
-                        0.1
+                    dot.classList.remove(
+                        "jd-active"
                     );
 
-                border-radius:
-                    20px;
-
-                overflow:
-                    hidden;
-
-                margin-top:
-                    8px;
-            }
-
-
-            #pbl-loading-progress {
-                width:
-                    0%;
-
-                height:
-                    100%;
-
-                border-radius:
-                    inherit;
-
-                background:
-                    linear-gradient(
-                        90deg,
-                        #a8edea,
-                        #fed6e3,
-                        #fac1ff,
-                        #d4fc79,
-                        #96e6a1,
-                        #a8edea
-                    );
-
-                background-size:
-                    200% auto;
-
-                animation:
-                    pblRainbow
-                    2s
-                    linear
-                    infinite;
-
-                transition:
-                    width 0.12s linear;
-            }
-
-
-            @keyframes pblRainbow {
-
-                0% {
-                    background-position:
-                        0% center;
-                }
-
-                100% {
-                    background-position:
-                        200% center;
                 }
 
             }
 
-
-            /* ================================
-               PERCENT
-            ================================= */
-
-            #pbl-loading-percent {
-                display:
-                    block;
-
-                margin-top:
-                    10px;
-
-                font-size:
-                    0.82rem;
-
-                font-weight:
-                    700;
-
-                opacity:
-                    0.75;
-            }
+        }
 
 
-            /* ================================
-               MUSIC BUTTONS
-            ================================= */
-
-            .pbl-music-buttons {
-                display:
-                    flex;
-
-                justify-content:
-                    center;
-
-                gap:
-                    12px;
-
-                margin-top:
-                    22px;
-            }
-
-
-            .pbl-music-btn {
-                border:
-                    1px solid
-                    rgba(
-                        255,
-                        255,
-                        255,
-                        0.2
-                    );
-
-                border-radius:
-                    12px;
-
-                padding:
-                    12px 24px;
-
-                min-width:
-                    110px;
-
-                color:
-                    #fff;
-
-                background:
-                    rgba(
-                        255,
-                        255,
-                        255,
-                        0.1
-                    );
-
-                font-family:
-                    'Quicksand',
-                    sans-serif;
-
-                font-size:
-                    0.9rem;
-
-                font-weight:
-                    700;
-
-                cursor:
-                    pointer;
-
-                transition:
-                    0.25s ease;
-            }
-
-
-            .pbl-music-btn:hover {
-                transform:
-                    translateY(-3px);
-
-                background:
-                    rgba(
-                        255,
-                        255,
-                        255,
-                        0.2
-                    );
-            }
-
-
-            .pbl-music-btn:active {
-                transform:
-                    scale(0.96);
-            }
-
-
-            .pbl-music-btn i {
-                margin-right:
-                    6px;
-            }
-
-
-            /* ================================
-               MOBILE
-            ================================= */
-
-            @media (max-width: 480px) {
-
-                #pbl-loading-toast {
-
-                    width:
-                        calc(100vw - 30px);
-
-                    padding:
-                        26px 20px;
-
-                    border-radius:
-                        21px;
-                }
-
-
-                .pbl-toast-title {
-
-                    font-size:
-                        1.15rem;
-                }
-
-
-                .pbl-toast-message {
-
-                    font-size:
-                        0.88rem;
-                }
-
-
-                .pbl-music-buttons {
-
-                    gap:
-                        9px;
-                }
-
-
-                .pbl-music-btn {
-
-                    min-width:
-                        95px;
-
-                    padding:
-                        11px 15px;
-                }
-
-            }
-
-        `;
-
-
-        document.head.appendChild(
-            style
+        requestAnimationFrame(
+            renderLEDWave
         );
+
     }
 
 
-    createToastStyles();
+    /* =========================================================
+       AUDIO DATA
+    ========================================================= */
+
+    function getAudioValues() {
+
+        if (
+            !analyser ||
+            !audioData
+        ) {
+
+            return null;
+
+        }
+
+        analyser.getByteFrequencyData(
+            audioData
+        );
+
+        return audioData;
+
+    }
 
 
-    /* =====================================================
-       CREATE TOAST
-    ===================================================== */
+    /*
+     * Chạy visualizer
+     */
+
+    if (!visualizerStarted) {
+
+        visualizerStarted = true;
+
+        requestAnimationFrame(
+            renderLEDWave
+        );
+
+    }
+
+
+    /* =========================================================
+       TYPING EFFECT
+    ========================================================= */
+
+    if (typingText) {
+
+        const typingMessages = [
+
+            {
+                text:
+                    "Hello everyone. I'm Phạm Bảo Long",
+                className:
+                    "typing-style-1"
+            },
+
+            {
+                text:
+                    "I'm a Developer",
+                className:
+                    "typing-style-2"
+            },
+
+            {
+                text:
+                    "Welcome to my website",
+                className:
+                    "typing-style-3"
+            },
+
+            {
+                text:
+                    "Cần lên Locket Gold vĩnh viễn ib nha",
+                className:
+                    "typing-style-4"
+            },
+
+            {
+                text:
+                    "Have a nice day ✨",
+                className:
+                    "typing-style-5"
+            },
+
+            {
+                text:
+                    "Thank you for visiting!",
+                className:
+                    "typing-style-6"
+            }
+
+        ];
+
+
+        let messageIndex = 0;
+
+        let charIndex = 0;
+
+        let deleting = false;
+
+
+        const typingSpeed = 75;
+
+        const deletingSpeed = 40;
+
+        const pauseAfterTyping = 1800;
+
+        const pauseAfterDeleting = 500;
+
+
+        function typingEffect() {
+
+            const current =
+                typingMessages[
+                    messageIndex
+                ];
+
+
+            typingText.className =
+                current.className;
+
+
+            if (!deleting) {
+
+                typingText.textContent =
+                    current.text.substring(
+                        0,
+                        charIndex + 1
+                    );
+
+                charIndex++;
+
+
+                if (
+                    charIndex >=
+                    current.text.length
+                ) {
+
+                    setTimeout(
+                        function () {
+
+                            deleting = true;
+
+                            typingEffect();
+
+                        },
+                        pauseAfterTyping
+                    );
+
+                    return;
+
+                }
+
+
+                setTimeout(
+                    typingEffect,
+                    typingSpeed
+                );
+
+
+            } else {
+
+                charIndex--;
+
+
+                typingText.textContent =
+                    current.text.substring(
+                        0,
+                        charIndex
+                    );
+
+
+                if (charIndex <= 0) {
+
+                    charIndex = 0;
+
+                    deleting = false;
+
+                    messageIndex++;
+
+
+                    if (
+                        messageIndex >=
+                        typingMessages.length
+                    ) {
+
+                        messageIndex = 0;
+
+                    }
+
+
+                    setTimeout(
+                        typingEffect,
+                        pauseAfterDeleting
+                    );
+
+                    return;
+
+                }
+
+
+                setTimeout(
+                    typingEffect,
+                    deletingSpeed
+                );
+
+            }
+
+        }
+
+
+        typingEffect();
+
+    }
+
+
+    /* =========================================================
+       LOADING OVERLAY + TOAST
+    ========================================================= */
 
     const overlay =
         document.createElement("div");
@@ -1112,8 +994,58 @@ document.addEventListener("DOMContentLoaded", function () {
         "pbl-loading-overlay";
 
 
+    /*
+     * Inline CSS để không cần sửa CSS cũ
+     */
+
+    Object.assign(
+        overlay.style,
+        {
+
+            position: "fixed",
+
+            inset: "0",
+
+            width: "100%",
+
+            height: "100%",
+
+            background:
+                "rgba(0,0,0,0.58)",
+
+            backdropFilter:
+                "blur(7px)",
+
+            WebkitBackdropFilter:
+                "blur(7px)",
+
+            zIndex: "99998",
+
+            opacity: "0",
+
+            visibility: "hidden",
+
+            transition:
+                "opacity .35s ease",
+
+            pointerEvents: "all"
+
+        }
+    );
+
+
+    document.body.appendChild(
+        overlay
+    );
+
+
+    /* =========================================================
+       TOAST
+    ========================================================= */
+
     const toast =
         document.createElement("div");
+
 
     toast.id =
         "pbl-loading-toast";
@@ -1124,16 +1056,10 @@ document.addEventListener("DOMContentLoaded", function () {
         <div class="pbl-toast-title">
 
             <i
-                class="
-                    fa-solid
-                    fa-spinner
-                    pbl-spinner
-                ">
+                class="fa-solid fa-spinner fa-spin">
             </i>
 
-            <span>
-                PBL | HOME
-            </span>
+            PBL | HOME
 
         </div>
 
@@ -1147,7 +1073,8 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
 
 
-        <div class="pbl-loading-bar">
+        <div
+            class="pbl-loading-bar">
 
             <div
                 id="pbl-loading-progress">
@@ -1166,37 +1093,73 @@ document.addEventListener("DOMContentLoaded", function () {
     `;
 
 
-    document.body.appendChild(
-        overlay
+    /*
+     * Ép toast ra giữa màn hình
+     * và lớn hơn CSS cũ một chút
+     */
+
+    Object.assign(
+        toast.style,
+        {
+
+            position: "fixed",
+
+            top: "50%",
+
+            left: "50%",
+
+            transform:
+                "translate(-50%, -50%) scale(.95)",
+
+            width:
+                "min(480px, calc(100% - 30px))",
+
+            padding:
+                "28px 30px",
+
+            background:
+                "rgba(12,12,12,.94)",
+
+            border:
+                "1px solid rgba(255,255,255,.22)",
+
+            borderRadius:
+                "24px",
+
+            backdropFilter:
+                "blur(22px)",
+
+            WebkitBackdropFilter:
+                "blur(22px)",
+
+            boxShadow:
+                "0 25px 80px rgba(0,0,0,.75)",
+
+            zIndex: "99999",
+
+            opacity: "0",
+
+            visibility: "hidden",
+
+            transition:
+                "opacity .35s ease, transform .35s ease",
+
+            boxSizing: "border-box",
+
+            textAlign: "center"
+
+        }
     );
+
 
     document.body.appendChild(
         toast
     );
 
 
-    /*
-        Hiện overlay + toast
-    */
-
-    requestAnimationFrame(
-        function () {
-
-            overlay.classList.remove(
-                "hide"
-            );
-
-            toast.classList.add(
-                "show"
-            );
-
-        }
-    );
-
-
-    /* =====================================================
+    /* =========================================================
        TOAST ELEMENTS
-    ===================================================== */
+    ========================================================= */
 
     const progress =
         document.getElementById(
@@ -1214,9 +1177,144 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
 
-    /* =====================================================
+    /*
+     * Toast title
+     */
+
+    const toastTitle =
+        toast.querySelector(
+            ".pbl-toast-title"
+        );
+
+
+    if (toastTitle) {
+
+        toastTitle.style.fontSize =
+            "1.25rem";
+
+        toastTitle.style.marginBottom =
+            "12px";
+
+    }
+
+
+    /*
+     * Message
+     */
+
+    if (message) {
+
+        message.style.fontSize =
+            "1rem";
+
+        message.style.lineHeight =
+            "1.7";
+
+        message.style.marginBottom =
+            "18px";
+
+    }
+
+
+    /*
+     * Loading bar
+     */
+
+    const loadingBar =
+        toast.querySelector(
+            ".pbl-loading-bar"
+        );
+
+
+    if (loadingBar) {
+
+        loadingBar.style.height =
+            "8px";
+
+        loadingBar.style.marginTop =
+            "15px";
+
+        loadingBar.style.borderRadius =
+            "20px";
+
+    }
+
+
+    /*
+     * Progress
+     */
+
+    if (progress) {
+
+        progress.style.width =
+            "0%";
+
+        progress.style.height =
+            "100%";
+
+        progress.style.background =
+            "linear-gradient(90deg,#a8edea,#fed6e3,#fac1ff,#d4fc79,#96e6a1)";
+
+        progress.style.backgroundSize =
+            "200% auto";
+
+        progress.style.animation =
+            "rainbow_move 3s linear infinite";
+
+        progress.style.transition =
+            "width .12s linear";
+
+    }
+
+
+    /*
+     * Percent
+     */
+
+    if (percent) {
+
+        percent.style.display =
+            "block";
+
+        percent.style.marginTop =
+            "10px";
+
+        percent.style.fontWeight =
+            "700";
+
+    }
+
+
+    /* =========================================================
+       SHOW TOAST
+    ========================================================= */
+
+    requestAnimationFrame(
+        function () {
+
+            overlay.style.opacity =
+                "1";
+
+            overlay.style.visibility =
+                "visible";
+
+
+            toast.style.opacity =
+                "1";
+
+            toast.style.visibility =
+                "visible";
+
+            toast.style.transform =
+                "translate(-50%, -50%) scale(1)";
+
+        }
+    );
+
+
+    /* =========================================================
        LOADING
-    ===================================================== */
+    ========================================================= */
 
     let loadingPercent = 0;
 
@@ -1232,11 +1330,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                 if (
-                    loadingPercent >= 100
+                    loadingPercent >=
+                    100
                 ) {
 
-                    loadingPercent =
-                        100;
+                    loadingPercent = 100;
 
                     clearInterval(
                         loadingInterval
@@ -1248,8 +1346,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (progress) {
 
                     progress.style.width =
-                        loadingPercent +
-                        "%";
+                        loadingPercent + "%";
 
                 }
 
@@ -1257,8 +1354,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (percent) {
 
                     percent.textContent =
-                        loadingPercent +
-                        "%";
+                        loadingPercent + "%";
 
                 }
 
@@ -1270,7 +1366,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     setTimeout(
                         showMusicQuestion,
-                        500
+                        450
                     );
 
                 }
@@ -1280,39 +1376,29 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
 
-    /* =====================================================
-       MUSIC QUESTION
-    ===================================================== */
+    /* =========================================================
+       SHOW MUSIC QUESTION
+    ========================================================= */
 
     function showMusicQuestion() {
 
-        const icon =
+        const musicIcon =
             toast.querySelector(
                 ".pbl-toast-title i"
             );
 
 
-        if (icon) {
+        if (musicIcon) {
 
-            icon.className =
+            musicIcon.className =
                 "fa-solid fa-circle-check";
 
         }
 
 
-        if (message) {
-
-            message.innerHTML =
-                "Load web thành công! 🎉<br>" +
-                "Bạn có muốn bật nhạc không?";
-
-        }
-
-
-        const loadingBar =
-            toast.querySelector(
-                ".pbl-loading-bar"
-            );
+        message.innerHTML =
+            "Load web thành công! 🎉<br>" +
+            "Bạn có muốn bật nhạc không?";
 
 
         if (loadingBar) {
@@ -1331,22 +1417,40 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
+        /*
+         * Buttons
+         */
+
         const buttons =
             document.createElement("div");
+
 
         buttons.className =
             "pbl-music-buttons";
 
 
+        buttons.style.display =
+            "flex";
+
+        buttons.style.justifyContent =
+            "center";
+
+        buttons.style.gap =
+            "14px";
+
+        buttons.style.marginTop =
+            "22px";
+
+
         buttons.innerHTML = `
 
             <button
+                type="button"
                 class="pbl-music-btn yes"
                 id="pbl-music-yes">
 
                 <i
-                    class="fa-solid
-                           fa-volume-high">
+                    class="fa-solid fa-volume-high">
                 </i>
 
                 Có
@@ -1355,12 +1459,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
             <button
+                type="button"
                 class="pbl-music-btn no"
                 id="pbl-music-no">
 
                 <i
-                    class="fa-solid
-                           fa-volume-xmark">
+                    class="fa-solid fa-volume-xmark">
                 </i>
 
                 Không
@@ -1370,33 +1474,115 @@ document.addEventListener("DOMContentLoaded", function () {
         `;
 
 
+        /*
+         * Style buttons
+         */
+
+        const allButtons =
+            buttons.querySelectorAll(
+                ".pbl-music-btn"
+            );
+
+
+        allButtons.forEach(
+            function (button) {
+
+                Object.assign(
+                    button.style,
+                    {
+
+                        border: "0",
+
+                        padding:
+                            "12px 24px",
+
+                        borderRadius:
+                            "12px",
+
+                        color: "#fff",
+
+                        fontFamily:
+                            "Quicksand, sans-serif",
+
+                        fontSize:
+                            "15px",
+
+                        fontWeight:
+                            "700",
+
+                        cursor:
+                            "pointer",
+
+                        transition:
+                            ".25s ease",
+
+                        background:
+                            "rgba(255,255,255,.12)"
+
+                    }
+                );
+
+
+                button.addEventListener(
+                    "mouseenter",
+                    function () {
+
+                        button.style.transform =
+                            "translateY(-3px)";
+
+                        button.style.background =
+                            "rgba(255,255,255,.22)";
+
+                    }
+                );
+
+
+                button.addEventListener(
+                    "mouseleave",
+                    function () {
+
+                        button.style.transform =
+                            "translateY(0)";
+
+                        button.style.background =
+                            "rgba(255,255,255,.12)";
+
+                    }
+                );
+
+            }
+        );
+
+
         toast.appendChild(
             buttons
         );
 
 
-        /* ===============================================
+        /* =====================================================
            CÓ
-        =============================================== */
+        ===================================================== */
 
-        const yesBtn =
+        const yes =
             document.getElementById(
                 "pbl-music-yes"
             );
 
 
-        if (yesBtn) {
+        if (yes) {
 
-            yesBtn.addEventListener(
+            yes.addEventListener(
                 "click",
-                function () {
+                async function () {
+
+                    yes.disabled = true;
 
                     /*
-                        Vì đây là click của người dùng,
-                        browser cho phép audio.play()
-                    */
+                     * Phát trực tiếp trong
+                     * user gesture
+                     */
 
-                    playMusic();
+                    await startMusic();
 
                     closeToast();
 
@@ -1406,19 +1592,19 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
-        /* ===============================================
+        /* =====================================================
            KHÔNG
-        =============================================== */
+        ===================================================== */
 
-        const noBtn =
+        const no =
             document.getElementById(
                 "pbl-music-no"
             );
 
 
-        if (noBtn) {
+        if (no) {
 
-            noBtn.addEventListener(
+            no.addEventListener(
                 "click",
                 function () {
 
@@ -1432,29 +1618,28 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* =====================================================
+    /* =========================================================
        CLOSE TOAST
-    ===================================================== */
+    ========================================================= */
 
     function closeToast() {
 
-        toast.classList.remove(
-            "show"
-        );
+        toast.style.opacity =
+            "0";
 
-        toast.classList.add(
-            "hide"
-        );
+        toast.style.visibility =
+            "hidden";
 
-
-        overlay.classList.add(
-            "hide"
-        );
+        toast.style.transform =
+            "translate(-50%, -50%) scale(.95)";
 
 
-        /*
-            Sau animation mới xóa
-        */
+        overlay.style.opacity =
+            "0";
+
+        overlay.style.visibility =
+            "hidden";
+
 
         setTimeout(
             function () {
@@ -1468,190 +1653,319 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
             },
-            500
+            400
         );
+
     }
 
 
-    /* =====================================================
-       SAKURA / FALLING IMAGE
-    ===================================================== */
+    /* =========================================================
+       FLYING FISH BACKGROUND
+    ========================================================= */
 
-    const sakuraContainer =
+    if (
+        typeof jQuery !== "undefined" &&
         document.getElementById(
-            "sakura-container"
+            "jsi-flying-fish-container"
+        )
+    ) {
+
+        const $ =
+            jQuery;
+
+
+        const container =
+            document.getElementById(
+                "jsi-flying-fish-container"
+            );
+
+
+        const canvas =
+            document.createElement(
+                "canvas"
+            );
+
+
+        container.appendChild(
+            canvas
         );
 
 
-    function createSakura() {
+        const ctx =
+            canvas.getContext(
+                "2d"
+            );
 
-        if (!sakuraContainer) {
-            return;
+
+        let width =
+            window.innerWidth;
+
+        let height =
+            window.innerHeight;
+
+
+        function resizeCanvas() {
+
+            width =
+                window.innerWidth;
+
+            height =
+                window.innerHeight;
+
+
+            canvas.width =
+                width;
+
+            canvas.height =
+                height;
+
         }
 
 
-        const sakura =
-            document.createElement("div");
-
-        sakura.className =
-            "sakura";
+        resizeCanvas();
 
 
-        /*
-            Random size
-        */
-
-        const size =
-            Math.floor(
-                Math.random() * 18
-            ) + 15;
-
-
-        sakura.style.width =
-            size + "px";
-
-        sakura.style.height =
-            size + "px";
-
-
-        /*
-            Random position
-        */
-
-        sakura.style.left =
-            Math.random() * 100 +
-            "vw";
-
-
-        /*
-            Random wind
-        */
-
-        const wind =
-            Math.floor(
-                Math.random() * 300
-            ) - 150;
-
-
-        const rotate =
-            Math.floor(
-                Math.random() * 720
-            ) - 360;
-
-
-        sakura.style.setProperty(
-            "--wind",
-            wind + "px"
+        window.addEventListener(
+            "resize",
+            resizeCanvas
         );
 
 
-        sakura.style.setProperty(
-            "--rotate",
-            rotate + "deg"
-        );
+        const fish = [];
 
 
-        /*
-            Random duration
-        */
+        const fishCount =
+            Math.max(
+                3,
+                Math.floor(
+                    width / 500
+                )
+            );
 
-        const duration =
-            Math.floor(
-                Math.random() * 5
-            ) + 7;
-
-
-        sakura.style.animationDuration =
-            duration + "s";
-
-
-        sakuraContainer.appendChild(
-            sakura
-        );
-
-
-        /*
-            Xóa sau khi rơi
-        */
-
-        setTimeout(
-            function () {
-
-                sakura.remove();
-
-            },
-            (duration + 1) * 1000
-        );
-    }
-
-
-    /*
-        Tạo hoa liên tục
-    */
-
-    if (sakuraContainer) {
-
-        setInterval(
-            createSakura,
-            550
-        );
-
-
-        /*
-            Tạo sẵn vài bông
-        */
 
         for (
             let i = 0;
-            i < 8;
+            i < fishCount;
             i++
         ) {
 
-            setTimeout(
-                createSakura,
-                i * 250
-            );
+            fish.push({
+
+                x:
+                    Math.random() *
+                    width,
+
+                y:
+                    height *
+                    (
+                        0.25 +
+                        Math.random() *
+                        0.5
+                    ),
+
+                size:
+                    18 +
+                    Math.random() *
+                    30,
+
+                speed:
+                    0.2 +
+                    Math.random() *
+                    0.45,
+
+                wave:
+                    Math.random() *
+                    Math.PI *
+                    2,
+
+                alpha:
+                    0.12 +
+                    Math.random() *
+                    0.15
+
+            });
 
         }
 
-    }
+
+        function drawFish(f) {
+
+            ctx.save();
 
 
-    /* =====================================================
-       DISABLE IMAGE DRAG
-    ===================================================== */
+            ctx.translate(
+                f.x,
+                f.y
+            );
 
-    document
-        .querySelectorAll("img")
-        .forEach(function (img) {
 
-            img.addEventListener(
-                "dragstart",
-                function (event) {
+            ctx.globalAlpha =
+                f.alpha;
 
-                    event.preventDefault();
+
+            ctx.fillStyle =
+                "#ffffff";
+
+
+            ctx.beginPath();
+
+
+            /*
+             * Body
+             */
+
+            ctx.ellipse(
+                0,
+                0,
+                f.size,
+                f.size * 0.45,
+                0,
+                0,
+                Math.PI * 2
+            );
+
+
+            ctx.fill();
+
+
+            /*
+             * Tail
+             */
+
+            ctx.beginPath();
+
+            ctx.moveTo(
+                -f.size,
+                0
+            );
+
+            ctx.lineTo(
+                -f.size * 1.65,
+                -f.size * 0.55
+            );
+
+            ctx.lineTo(
+                -f.size * 1.65,
+                f.size * 0.55
+            );
+
+            ctx.closePath();
+
+            ctx.fill();
+
+
+            /*
+             * Fin
+             */
+
+            ctx.beginPath();
+
+            ctx.moveTo(
+                0,
+                -f.size * 0.3
+            );
+
+            ctx.lineTo(
+                f.size * 0.4,
+                -f.size * 0.8
+            );
+
+            ctx.lineTo(
+                f.size * 0.65,
+                -f.size * 0.15
+            );
+
+            ctx.closePath();
+
+            ctx.fill();
+
+
+            ctx.restore();
+
+        }
+
+
+        function animateFish() {
+
+            ctx.clearRect(
+                0,
+                0,
+                width,
+                height
+            );
+
+
+            fish.forEach(
+                function (f) {
+
+                    f.x +=
+                        f.speed;
+
+                    f.wave +=
+                        0.015;
+
+                    f.y +=
+                        Math.sin(
+                            f.wave
+                        ) * 0.25;
+
+
+                    if (
+                        f.x >
+                        width +
+                        f.size * 3
+                    ) {
+
+                        f.x =
+                            -f.size * 3;
+
+                        f.y =
+                            height *
+                            (
+                                0.25 +
+                                Math.random() *
+                                0.5
+                            );
+
+                    }
+
+
+                    drawFish(f);
 
                 }
             );
 
-        });
+
+            requestAnimationFrame(
+                animateFish
+            );
+
+        }
 
 
-    /* =====================================================
-       CONSOLE
-    ===================================================== */
+        animateFish();
 
-    console.log(
-        "%c PBL | HOME ",
-        "color:#fff;" +
-        "background:#111;" +
-        "padding:8px 15px;" +
-        "border-radius:8px;" +
-        "font-weight:bold;"
-    );
+    }
 
-    console.log(
-        "Welcome to PBL | HOME ❤️"
+
+    /* =========================================================
+       PREVENT RIGHT CLICK ON IMAGES
+    ========================================================= */
+
+    document.addEventListener(
+        "contextmenu",
+        function (event) {
+
+            if (
+                event.target.tagName ===
+                "IMG"
+            ) {
+
+                event.preventDefault();
+
+            }
+
+        }
     );
 
 });
