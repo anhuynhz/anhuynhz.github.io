@@ -588,6 +588,10 @@ const playlist = [
         name: "Lời chúc không thật",
         url: "https://files.catbox.moe/v6sqz2.mp3"
     },
+    {
+        name: "Người yêu ai rồi",
+        url: "https://files.catbox.moe/y8ch48.mp3"
+    },
 
     {
         name: "Quên anh trong từng cơn đau",
