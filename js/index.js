@@ -2,40 +2,1141 @@
 =========================================================
     Source by PBL
     PBL | HOME Source v1.0
-    View source đi trước khi bị đóng :>
+    Main JavaScript
 =========================================================
 */
-
-/* =========================================================
-   PBL LOADING + MUSIC TOAST
-========================================================= */
 
 document.addEventListener("DOMContentLoaded", function () {
 
     /* =====================================================
-       TẠO LỚP PHỦ
+       CONFIG
     ===================================================== */
 
-    const overlay = document.createElement("div");
-
-    overlay.id = "pbl-loading-overlay";
-
-    document.body.appendChild(overlay);
+    const musicList = [
+        {
+            name: "Anh Nhớ Em",
+            url: "https://files.catbox.moe/ihobra.mp3"
+        },
+        {
+            name: "Rồi mùa yêu thương dần đang đến",
+            url: "https://files.catbox.moe/bgwso3.mp3"
+        },
+        {
+            name: "Chỉ bằng cái gật đầu",
+            url: "https://files.catbox.moe/s1hyzo.mp3"
+        },
+        {
+            name: "Đừng quên tên anh",
+            url: "https://files.catbox.moe/h43f1s.mp3"
+        },
+        {
+            name: "Hối hận trong anh",
+            url: "https://files.catbox.moe/aebu0g.mp3"
+        },
+        {
+            name: "Anh từng cố gắng",
+            url: "https://files.catbox.moe/mm085n.mp3"
+        },
+        {
+            name: "Hình bóng em",
+            url: "https://files.catbox.moe/21c1fl.mp3"
+        },
+        {
+            name: "Lời chúc không thật",
+            url: "https://files.catbox.moe/v6sqz2.mp3"
+        },
+        {
+            name: "Quên anh trong từng cơn đau",
+            url: "https://files.catbox.moe/crphp2.mp3"
+        },
+        {
+            name: "Em nào có tội",
+            url: "https://thanhdieu.com/files/Em-Nào-Có-Tội.mp3"
+        },
+        {
+            name: "Anh đã quen với cô đơn",
+            url: "https://thanhdieu.com/files/Anh-Đã-Quen-Với-Cô-Đơn.mp3"
+        },
+        {
+            name: "Về bên anh",
+            url: "https://thanhdieu.com/files/Về-Bên-Anh.mp3"
+        }
+    ];
 
 
     /* =====================================================
-       TẠO TOAST
+       ELEMENTS
     ===================================================== */
 
-    const toast = document.createElement("div");
+    const musicBtn = document.getElementById("music-btn");
+    const audio = document.getElementById("bg-music");
+    const contributionGrid =
+        document.getElementById("contribution-grid");
 
-    toast.id = "pbl-loading-toast";
+
+    /* =====================================================
+       TYPING EFFECT
+    ===================================================== */
+
+    const typingText =
+        document.getElementById("typing-text");
+
+    const typingMessages = [
+        "Welcome to PBL | HOME",
+        "Pham Bao Long",
+        "HTML | CSS | JavaScript",
+        "Developer",
+        "Student",
+        "Hưng Yên, Việt Nam",
+        "Always learning..."
+    ];
+
+    let typingMessageIndex = 0;
+    let typingCharIndex = 0;
+    let typingDeleting = false;
+
+    const typingSpeed = 75;
+    const deletingSpeed = 40;
+    const typingDelay = 1500;
+
+    function typingEffect() {
+
+        if (!typingText) {
+            return;
+        }
+
+        const currentMessage =
+            typingMessages[typingMessageIndex];
+
+
+        if (!typingDeleting) {
+
+            typingText.textContent =
+                currentMessage.substring(
+                    0,
+                    typingCharIndex + 1
+                );
+
+            typingCharIndex++;
+
+
+            if (
+                typingCharIndex >=
+                currentMessage.length
+            ) {
+
+                typingDeleting = true;
+
+                setTimeout(
+                    typingEffect,
+                    typingDelay
+                );
+
+                return;
+            }
+
+
+            setTimeout(
+                typingEffect,
+                typingSpeed
+            );
+
+        } else {
+
+            typingText.textContent =
+                currentMessage.substring(
+                    0,
+                    typingCharIndex - 1
+                );
+
+            typingCharIndex--;
+
+
+            if (typingCharIndex <= 0) {
+
+                typingDeleting = false;
+
+                typingMessageIndex =
+                    (typingMessageIndex + 1) %
+                    typingMessages.length;
+
+                setTimeout(
+                    typingEffect,
+                    400
+                );
+
+                return;
+            }
+
+
+            setTimeout(
+                typingEffect,
+                deletingSpeed
+            );
+        }
+    }
+
+    typingEffect();
+
+
+    /* =====================================================
+       LED / CONTRIBUTION GRID
+    ===================================================== */
+
+    function createContributionGrid() {
+
+        if (!contributionGrid) {
+            return;
+        }
+
+        contributionGrid.innerHTML = "";
+
+
+        /*
+            52 tuần x 7 ngày
+        */
+
+        const totalDots = 52 * 7;
+
+        for (
+            let i = 0;
+            i < totalDots;
+            i++
+        ) {
+
+            const dot =
+                document.createElement("div");
+
+            dot.className = "dot";
+
+
+            /*
+                Tạo pattern ngẫu nhiên
+            */
+
+            const random =
+                Math.random();
+
+
+            if (random > 0.58) {
+
+                dot.classList.add(
+                    "jd-active"
+                );
+
+            }
+
+
+            contributionGrid.appendChild(dot);
+        }
+    }
+
+    createContributionGrid();
+
+
+    /* =====================================================
+       LED ANIMATION
+    ===================================================== */
+
+    function animateLED() {
+
+        if (!contributionGrid) {
+            return;
+        }
+
+        const dots =
+            contributionGrid.querySelectorAll(
+                ".dot"
+            );
+
+        if (!dots.length) {
+            return;
+        }
+
+
+        /*
+            Một vài LED ngẫu nhiên sáng lên
+        */
+
+        const amount =
+            Math.floor(
+                Math.random() * 10
+            ) + 4;
+
+
+        for (
+            let i = 0;
+            i < amount;
+            i++
+        ) {
+
+            const randomIndex =
+                Math.floor(
+                    Math.random() *
+                    dots.length
+                );
+
+            const dot =
+                dots[randomIndex];
+
+
+            dot.classList.add(
+                "jd-active"
+            );
+
+
+            setTimeout(
+                function () {
+
+                    /*
+                        Chỉ tắt một số LED,
+                        giữ hiệu ứng tự nhiên
+                    */
+
+                    if (
+                        Math.random() > 0.35
+                    ) {
+
+                        dot.classList.remove(
+                            "jd-active"
+                        );
+
+                    }
+
+                },
+                400 + Math.random() * 1200
+            );
+        }
+    }
+
+
+    setInterval(
+        animateLED,
+        250
+    );
+
+
+    /* =====================================================
+       MUSIC SYSTEM
+    ===================================================== */
+
+    let currentSong = 0;
+    let musicStarted = false;
+
+
+    function loadSong(index, autoplay = false) {
+
+        if (!audio || !musicList.length) {
+            return;
+        }
+
+        currentSong =
+            (index + musicList.length) %
+            musicList.length;
+
+
+        const song =
+            musicList[currentSong];
+
+
+        audio.src = song.url;
+
+        audio.load();
+
+
+        /*
+            Lưu tên bài hiện tại
+        */
+
+        audio.dataset.songName =
+            song.name;
+
+
+        if (autoplay) {
+
+            const playPromise =
+                audio.play();
+
+
+            if (
+                playPromise !== undefined
+            ) {
+
+                playPromise
+                    .then(function () {
+
+                        musicStarted = true;
+
+                        setMusicPlayingState(
+                            true
+                        );
+
+                    })
+                    .catch(function (error) {
+
+                        console.log(
+                            "Không thể phát nhạc:",
+                            error
+                        );
+
+                        setMusicPlayingState(
+                            false
+                        );
+
+                    });
+            }
+        }
+    }
+
+
+    function playMusic() {
+
+        if (!audio) {
+            return;
+        }
+
+
+        /*
+            Nếu chưa có bài thì load bài đầu
+        */
+
+        if (!audio.src) {
+
+            loadSong(
+                currentSong,
+                false
+            );
+
+        }
+
+
+        const promise =
+            audio.play();
+
+
+        if (
+            promise !== undefined
+        ) {
+
+            promise
+                .then(function () {
+
+                    musicStarted = true;
+
+                    setMusicPlayingState(
+                        true
+                    );
+
+                })
+                .catch(function (error) {
+
+                    console.log(
+                        "Browser chặn phát nhạc:",
+                        error
+                    );
+
+                });
+        }
+    }
+
+
+    function pauseMusic() {
+
+        if (!audio) {
+            return;
+        }
+
+        audio.pause();
+
+        musicStarted = false;
+
+        setMusicPlayingState(
+            false
+        );
+    }
+
+
+    function setMusicPlayingState(
+        playing
+    ) {
+
+        if (!musicBtn) {
+            return;
+        }
+
+        if (playing) {
+
+            musicBtn.classList.add(
+                "playing"
+            );
+
+            musicBtn.innerHTML =
+                '<i class="fa-solid fa-volume-high"></i>';
+
+        } else {
+
+            musicBtn.classList.remove(
+                "playing"
+            );
+
+            musicBtn.innerHTML =
+                '<i class="fa-solid fa-music"></i>';
+        }
+    }
+
+
+    /*
+        Nút nhạc
+    */
+
+    if (musicBtn) {
+
+        musicBtn.addEventListener(
+            "click",
+            function () {
+
+                if (
+                    audio &&
+                    !audio.paused
+                ) {
+
+                    pauseMusic();
+
+                } else {
+
+                    playMusic();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /*
+        Tự động chuyển bài
+    */
+
+    if (audio) {
+
+        audio.addEventListener(
+            "ended",
+            function () {
+
+                currentSong++;
+
+                if (
+                    currentSong >=
+                    musicList.length
+                ) {
+
+                    currentSong = 0;
+
+                }
+
+
+                loadSong(
+                    currentSong,
+                    true
+                );
+
+            }
+        );
+
+
+        /*
+            Nếu file nhạc lỗi thì
+            chuyển bài tiếp theo
+        */
+
+        audio.addEventListener(
+            "error",
+            function () {
+
+                console.log(
+                    "Không tải được bài:",
+                    musicList[currentSong]
+                        ?.name
+                );
+
+
+                setTimeout(
+                    function () {
+
+                        currentSong++;
+
+                        if (
+                            currentSong >=
+                            musicList.length
+                        ) {
+
+                            currentSong = 0;
+
+                        }
+
+
+                        loadSong(
+                            currentSong,
+                            true
+                        );
+
+                    },
+                    1000
+                );
+
+            }
+        );
+
+    }
+
+
+    /*
+        Load bài đầu tiên
+    */
+
+    if (audio) {
+
+        loadSong(
+            0,
+            false
+        );
+
+    }
+
+
+    /* =====================================================
+       TOAST OVERLAY
+    ===================================================== */
+
+    function createToastStyles() {
+
+        if (
+            document.getElementById(
+                "pbl-toast-style"
+            )
+        ) {
+            return;
+        }
+
+
+        const style =
+            document.createElement("style");
+
+        style.id =
+            "pbl-toast-style";
+
+
+        style.textContent = `
+
+            /* ================================
+               OVERLAY
+            ================================= */
+
+            #pbl-loading-overlay {
+                position: fixed;
+                inset: 0;
+
+                width: 100%;
+                height: 100%;
+
+                background:
+                    rgba(0, 0, 0, 0.62);
+
+                backdrop-filter:
+                    blur(8px);
+
+                -webkit-backdrop-filter:
+                    blur(8px);
+
+                z-index: 99998;
+
+                opacity: 1;
+
+                transition:
+                    opacity 0.45s ease;
+
+                pointer-events:
+                    auto;
+            }
+
+
+            #pbl-loading-overlay.hide {
+                opacity: 0;
+
+                pointer-events:
+                    none;
+            }
+
+
+            /* ================================
+               TOAST
+            ================================= */
+
+            #pbl-loading-toast {
+                position: fixed;
+
+                top: 50%;
+                left: 50%;
+
+                transform:
+                    translate(-50%, -50%)
+                    scale(0.92);
+
+                width:
+                    min(430px, calc(100vw - 40px));
+
+                padding: 30px 28px;
+
+                background:
+                    rgba(15, 15, 15, 0.92);
+
+                border:
+                    1px solid
+                    rgba(255, 255, 255, 0.22);
+
+                border-radius:
+                    24px;
+
+                box-shadow:
+                    0 25px 80px
+                    rgba(0, 0, 0, 0.7);
+
+                backdrop-filter:
+                    blur(25px);
+
+                -webkit-backdrop-filter:
+                    blur(25px);
+
+                color: #fff;
+
+                z-index: 99999;
+
+                box-sizing:
+                    border-box;
+
+                text-align:
+                    center;
+
+                opacity: 0;
+
+                transition:
+                    opacity 0.35s ease,
+                    transform 0.35s ease;
+
+                font-family:
+                    'Quicksand',
+                    sans-serif;
+            }
+
+
+            #pbl-loading-toast.show {
+                opacity: 1;
+
+                transform:
+                    translate(-50%, -50%)
+                    scale(1);
+            }
+
+
+            #pbl-loading-toast.hide {
+                opacity: 0;
+
+                transform:
+                    translate(-50%, -50%)
+                    scale(0.92);
+
+                pointer-events:
+                    none;
+            }
+
+
+            /* ================================
+               TITLE
+            ================================= */
+
+            .pbl-toast-title {
+                display:
+                    flex;
+
+                align-items:
+                    center;
+
+                justify-content:
+                    center;
+
+                gap: 11px;
+
+                font-size:
+                    1.3rem;
+
+                font-weight:
+                    800;
+
+                margin-bottom:
+                    14px;
+
+                color:
+                    #fff;
+            }
+
+
+            .pbl-toast-title i {
+                font-size:
+                    20px;
+            }
+
+
+            /*
+                Icon loading xoay
+            */
+
+            .pbl-toast-title
+            .pbl-spinner {
+                animation:
+                    pblSpinner
+                    0.9s
+                    linear
+                    infinite;
+            }
+
+
+            @keyframes pblSpinner {
+
+                from {
+                    transform:
+                        rotate(0deg);
+                }
+
+                to {
+                    transform:
+                        rotate(360deg);
+                }
+
+            }
+
+
+            /* ================================
+               MESSAGE
+            ================================= */
+
+            .pbl-toast-message {
+                font-size:
+                    0.95rem;
+
+                font-weight:
+                    600;
+
+                line-height:
+                    1.6;
+
+                color:
+                    rgba(
+                        255,
+                        255,
+                        255,
+                        0.9
+                    );
+
+                margin-bottom:
+                    18px;
+            }
+
+
+            /* ================================
+               LOADING BAR
+            ================================= */
+
+            .pbl-loading-bar {
+                width:
+                    100%;
+
+                height:
+                    10px;
+
+                background:
+                    rgba(
+                        255,
+                        255,
+                        255,
+                        0.1
+                    );
+
+                border-radius:
+                    20px;
+
+                overflow:
+                    hidden;
+
+                margin-top:
+                    8px;
+            }
+
+
+            #pbl-loading-progress {
+                width:
+                    0%;
+
+                height:
+                    100%;
+
+                border-radius:
+                    inherit;
+
+                background:
+                    linear-gradient(
+                        90deg,
+                        #a8edea,
+                        #fed6e3,
+                        #fac1ff,
+                        #d4fc79,
+                        #96e6a1,
+                        #a8edea
+                    );
+
+                background-size:
+                    200% auto;
+
+                animation:
+                    pblRainbow
+                    2s
+                    linear
+                    infinite;
+
+                transition:
+                    width 0.12s linear;
+            }
+
+
+            @keyframes pblRainbow {
+
+                0% {
+                    background-position:
+                        0% center;
+                }
+
+                100% {
+                    background-position:
+                        200% center;
+                }
+
+            }
+
+
+            /* ================================
+               PERCENT
+            ================================= */
+
+            #pbl-loading-percent {
+                display:
+                    block;
+
+                margin-top:
+                    10px;
+
+                font-size:
+                    0.82rem;
+
+                font-weight:
+                    700;
+
+                opacity:
+                    0.75;
+            }
+
+
+            /* ================================
+               MUSIC BUTTONS
+            ================================= */
+
+            .pbl-music-buttons {
+                display:
+                    flex;
+
+                justify-content:
+                    center;
+
+                gap:
+                    12px;
+
+                margin-top:
+                    22px;
+            }
+
+
+            .pbl-music-btn {
+                border:
+                    1px solid
+                    rgba(
+                        255,
+                        255,
+                        255,
+                        0.2
+                    );
+
+                border-radius:
+                    12px;
+
+                padding:
+                    12px 24px;
+
+                min-width:
+                    110px;
+
+                color:
+                    #fff;
+
+                background:
+                    rgba(
+                        255,
+                        255,
+                        255,
+                        0.1
+                    );
+
+                font-family:
+                    'Quicksand',
+                    sans-serif;
+
+                font-size:
+                    0.9rem;
+
+                font-weight:
+                    700;
+
+                cursor:
+                    pointer;
+
+                transition:
+                    0.25s ease;
+            }
+
+
+            .pbl-music-btn:hover {
+                transform:
+                    translateY(-3px);
+
+                background:
+                    rgba(
+                        255,
+                        255,
+                        255,
+                        0.2
+                    );
+            }
+
+
+            .pbl-music-btn:active {
+                transform:
+                    scale(0.96);
+            }
+
+
+            .pbl-music-btn i {
+                margin-right:
+                    6px;
+            }
+
+
+            /* ================================
+               MOBILE
+            ================================= */
+
+            @media (max-width: 480px) {
+
+                #pbl-loading-toast {
+
+                    width:
+                        calc(100vw - 30px);
+
+                    padding:
+                        26px 20px;
+
+                    border-radius:
+                        21px;
+                }
+
+
+                .pbl-toast-title {
+
+                    font-size:
+                        1.15rem;
+                }
+
+
+                .pbl-toast-message {
+
+                    font-size:
+                        0.88rem;
+                }
+
+
+                .pbl-music-buttons {
+
+                    gap:
+                        9px;
+                }
+
+
+                .pbl-music-btn {
+
+                    min-width:
+                        95px;
+
+                    padding:
+                        11px 15px;
+                }
+
+            }
+
+        `;
+
+
+        document.head.appendChild(
+            style
+        );
+    }
+
+
+    createToastStyles();
+
+
+    /* =====================================================
+       CREATE TOAST
+    ===================================================== */
+
+    const overlay =
+        document.createElement("div");
+
+    overlay.id =
+        "pbl-loading-overlay";
+
+
+    const toast =
+        document.createElement("div");
+
+    toast.id =
+        "pbl-loading-toast";
+
 
     toast.innerHTML = `
+
         <div class="pbl-toast-title">
-            <i class="fa-solid fa-spinner"></i>
-            PBL | HOME
+
+            <i
+                class="
+                    fa-solid
+                    fa-spinner
+                    pbl-spinner
+                ">
+            </i>
+
+            <span>
+                PBL | HOME
+            </span>
+
         </div>
+
 
         <div
             class="pbl-toast-message"
@@ -45,49 +1146,72 @@ document.addEventListener("DOMContentLoaded", function () {
 
         </div>
 
+
         <div class="pbl-loading-bar">
 
-            <div id="pbl-loading-progress"></div>
+            <div
+                id="pbl-loading-progress">
+            </div>
 
         </div>
 
-        <span id="pbl-loading-percent">
+
+        <span
+            id="pbl-loading-percent">
+
             0%
+
         </span>
+
     `;
 
-    document.body.appendChild(toast);
 
+    document.body.appendChild(
+        overlay
+    );
+
+    document.body.appendChild(
+        toast
+    );
+
+
+    /*
+        Hiện overlay + toast
+    */
+
+    requestAnimationFrame(
+        function () {
+
+            overlay.classList.remove(
+                "hide"
+            );
+
+            toast.classList.add(
+                "show"
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       TOAST ELEMENTS
+    ===================================================== */
 
     const progress =
         document.getElementById(
             "pbl-loading-progress"
         );
 
-
     const percent =
         document.getElementById(
             "pbl-loading-percent"
         );
 
-
     const message =
         document.getElementById(
             "pbl-toast-message"
         );
-
-
-    /* =====================================================
-       HIỆN TOAST + LỚP PHỦ NGAY LẬP TỨC
-    ===================================================== */
-
-    requestAnimationFrame(function () {
-
-        overlay.classList.add("show");
-
-        toast.classList.add("show");
-
-    });
 
 
     /* =====================================================
@@ -98,52 +1222,62 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     const loadingInterval =
-        setInterval(function () {
+        setInterval(
+            function () {
 
-            loadingPercent +=
-                Math.floor(
-                    Math.random() * 8
-                ) + 2;
-
-
-            if (loadingPercent >= 100) {
-
-                loadingPercent = 100;
+                loadingPercent +=
+                    Math.floor(
+                        Math.random() * 7
+                    ) + 2;
 
 
-                clearInterval(
-                    loadingInterval
-                );
+                if (
+                    loadingPercent >= 100
+                ) {
+
+                    loadingPercent =
+                        100;
+
+                    clearInterval(
+                        loadingInterval
+                    );
+
+                }
 
 
-                progress.style.width =
-                    "100%";
+                if (progress) {
+
+                    progress.style.width =
+                        loadingPercent +
+                        "%";
+
+                }
 
 
-                percent.textContent =
-                    "100%";
+                if (percent) {
+
+                    percent.textContent =
+                        loadingPercent +
+                        "%";
+
+                }
 
 
-                setTimeout(function () {
+                if (
+                    loadingPercent >=
+                    100
+                ) {
 
-                    showMusicQuestion();
+                    setTimeout(
+                        showMusicQuestion,
+                        500
+                    );
 
-                }, 400);
+                }
 
-
-                return;
-            }
-
-
-            progress.style.width =
-                loadingPercent + "%";
-
-
-            percent.textContent =
-                loadingPercent + "%";
-
-
-        }, 80);
+            },
+            80
+        );
 
 
     /* =====================================================
@@ -152,34 +1286,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function showMusicQuestion() {
 
-        const musicIcon =
-            document.querySelector(
-                "#pbl-loading-toast .pbl-toast-title i"
+        const icon =
+            toast.querySelector(
+                ".pbl-toast-title i"
             );
 
 
-        if (musicIcon) {
+        if (icon) {
 
-            musicIcon.className =
+            icon.className =
                 "fa-solid fa-circle-check";
 
         }
 
 
-        message.innerHTML =
-            "Load web thành công! 🎉<br>" +
-            "Bạn có muốn bật nhạc không?";
+        if (message) {
+
+            message.innerHTML =
+                "Load web thành công! 🎉<br>" +
+                "Bạn có muốn bật nhạc không?";
+
+        }
 
 
         const loadingBar =
-            document.querySelector(
+            toast.querySelector(
                 ".pbl-loading-bar"
-            );
-
-
-        const loadingPercentText =
-            document.getElementById(
-                "pbl-loading-percent"
             );
 
 
@@ -191,36 +1323,16 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
-        if (loadingPercentText) {
+        if (percent) {
 
-            loadingPercentText.style.display =
+            percent.style.display =
                 "none";
 
         }
 
 
-        /* Xóa nút cũ nếu có */
-
-        const oldButtons =
-            toast.querySelector(
-                ".pbl-music-buttons"
-            );
-
-
-        if (oldButtons) {
-
-            oldButtons.remove();
-
-        }
-
-
-        /* =================================================
-           TẠO NÚT
-        ================================================= */
-
         const buttons =
             document.createElement("div");
-
 
         buttons.className =
             "pbl-music-buttons";
@@ -232,7 +1344,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 class="pbl-music-btn yes"
                 id="pbl-music-yes">
 
-                <i class="fa-solid fa-volume-high"></i>
+                <i
+                    class="fa-solid
+                           fa-volume-high">
+                </i>
 
                 Có
 
@@ -243,7 +1358,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 class="pbl-music-btn no"
                 id="pbl-music-no">
 
-                <i class="fa-solid fa-volume-xmark"></i>
+                <i
+                    class="fa-solid
+                           fa-volume-xmark">
+                </i>
 
                 Không
 
@@ -252,52 +1370,55 @@ document.addEventListener("DOMContentLoaded", function () {
         `;
 
 
-        toast.appendChild(buttons);
+        toast.appendChild(
+            buttons
+        );
 
 
-        /* =================================================
-           NÚT CÓ
-        ================================================= */
+        /* ===============================================
+           CÓ
+        =============================================== */
 
-        document
-            .getElementById("pbl-music-yes")
-            .addEventListener(
+        const yesBtn =
+            document.getElementById(
+                "pbl-music-yes"
+            );
+
+
+        if (yesBtn) {
+
+            yesBtn.addEventListener(
                 "click",
                 function () {
 
                     /*
-                     * Gọi trực tiếp hàm phát nhạc.
-                     *
-                     * Không dùng:
-                     * musicBtn.click()
-                     *
-                     * vì một số trình duyệt sẽ coi
-                     * đó không phải user gesture.
-                     */
+                        Vì đây là click của người dùng,
+                        browser cho phép audio.play()
+                    */
 
-                    if (
-                        typeof window.pblStartMusic ===
-                        "function"
-                    ) {
-
-                        window.pblStartMusic();
-
-                    }
-
+                    playMusic();
 
                     closeToast();
 
                 }
             );
 
+        }
 
-        /* =================================================
-           NÚT KHÔNG
-        ================================================= */
 
-        document
-            .getElementById("pbl-music-no")
-            .addEventListener(
+        /* ===============================================
+           KHÔNG
+        =============================================== */
+
+        const noBtn =
+            document.getElementById(
+                "pbl-music-no"
+            );
+
+
+        if (noBtn) {
+
+            noBtn.addEventListener(
                 "click",
                 function () {
 
@@ -305,2436 +1426,232 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 }
             );
+
+        }
+
     }
 
 
     /* =====================================================
-       ĐÓNG TOAST
+       CLOSE TOAST
     ===================================================== */
 
     function closeToast() {
 
-        toast.classList.remove("show");
+        toast.classList.remove(
+            "show"
+        );
 
-        overlay.classList.remove("show");
-
-
-        setTimeout(function () {
-
-            toast.remove();
-
-            overlay.remove();
-
-        }, 400);
-
-    }
-
-});
-
-
-/* =========================================================
-   CONTRIBUTION GRID / LED VISUALIZER
-========================================================= */
-
-document.addEventListener("DOMContentLoaded", function () {
-
-    const grid =
-        document.getElementById(
-            "contribution-grid"
+        toast.classList.add(
+            "hide"
         );
 
 
-    if (!grid) {
-        return;
-    }
+        overlay.classList.add(
+            "hide"
+        );
 
 
-    const dots = [];
+        /*
+            Sau animation mới xóa
+        */
 
-    const rows = 7;
+        setTimeout(
+            function () {
 
-    const cols = 52;
-
-
-    for (
-        let i = 0;
-        i < rows * cols;
-        i++
-    ) {
-
-        const dot =
-            document.createElement("div");
-
-
-        dot.className = "dot";
-
-
-        grid.appendChild(dot);
-
-
-        dots.push(dot);
-
-    }
-
-
-    function jdVisualizer() {
-
-        for (
-            let i = 0;
-            i < dots.length;
-            i++
-        ) {
-
-            dots[i]
-                .classList
-                .remove("jd-active");
-
-        }
-
-
-        for (
-            let c = 0;
-            c < cols;
-            c++
-        ) {
-
-            const height =
-                Math.floor(
-                    Math.random() * rows
-                );
-
-
-            for (
-                let r = 0;
-                r <= height;
-                r++
-            ) {
-
-                const index =
-                    (rows - 1 - r) *
-                    cols +
-                    c;
-
-
-                if (dots[index]) {
-
-                    dots[index]
-                        .classList
-                        .add("jd-active");
-
+                if (toast) {
+                    toast.remove();
                 }
 
-            }
-
-        }
-
-    }
-
-
-    jdVisualizer();
-
-
-    setInterval(
-        jdVisualizer,
-        180
-    );
-
-});
-
-
-/* =========================================================
-   MUSIC PLAYER
-========================================================= */
-
-document.addEventListener("DOMContentLoaded", function () {
-
-    const playlist = [
-
-        {
-            name: "Về bên anh",
-            url: "https://thanhdieu.com/files/Về-Bên-Anh.mp3"
-        },
-
-        {
-            name: "Anh đã quen với cô đơn",
-            url: "https://thanhdieu.com/files/Anh-Đã-Quen-Với-Cô-Đơn.mp3"
-        },
-
-        {
-            name: "Em nào có tội",
-            url: "https://thanhdieu.com/files/Em-Nào-Có-Tội.mp3"
-        },
-
-        {
-            name: "Anh Nhớ Em",
-            url: "https://files.catbox.moe/ihobra.mp3"
-        },
-
-        {
-            name: "Rồi mùa yêu thương dần đang đến",
-            url: "https://files.catbox.moe/bgwso3.mp3"
-        },
-
-        {
-            name: "Chỉ bằng cái gật đầu",
-            url: "https://files.catbox.moe/s1hyzo.mp3"
-        },
-
-        {
-            name: "Đừng quên tên anh",
-            url: "https://files.catbox.moe/h43f1s.mp3"
-        },
-
-        {
-            name: "Hối hận trong anh",
-            url: "https://files.catbox.moe/aebu0g.mp3"
-        },
-       {
-            name: "Người đã yêu ai",
-            url: "https://files.catbox.moe/y8ch48.mp3"
-        },
-        {
-            name: "Anh từng cố gắng",
-            url: "https://files.catbox.moe/mm085n.mp3"
-        },
-
-        {
-            name: "Hình bóng em",
-            url: "https://files.catbox.moe/21c1fl.mp3"
-        },
-
-        {
-            name: "Lời chúc không thật",
-            url: "https://files.catbox.moe/v6sqz2.mp3"
-        },
-
-        {
-            name: "Quên anh trong từng cơn đau",
-            url: "https://files.catbox.moe/crphp2.mp3"
-        }
-
-    ];
-
-
-    const musicBtn =
-        document.getElementById(
-            "music-btn"
-        );
-
-
-    const bgMusic =
-        document.getElementById(
-            "bg-music"
-        );
-
-
-    if (
-        !musicBtn ||
-        !bgMusic ||
-        playlist.length === 0
-    ) {
-        return;
-    }
-
-
-    let currentSong = 0;
-
-    let hasStarted = false;
-
-    let isPlaying = false;
-
-
-    /* =====================================================
-       LOAD SONG
-    ===================================================== */
-
-    function loadSong(index) {
-
-        if (index < 0) {
-
-            index =
-                playlist.length - 1;
-
-        }
-
-
-        if (
-            index >=
-            playlist.length
-        ) {
-
-            index = 0;
-
-        }
-
-
-        currentSong = index;
-
-
-        bgMusic.pause();
-
-        bgMusic.currentTime = 0;
-
-
-        bgMusic.src =
-            playlist[currentSong].url;
-
-
-        bgMusic.load();
-
-
-        console.log(
-            "Đang tải:",
-            playlist[currentSong].name
-        );
-
-    }
-
-
-    /* =====================================================
-       PLAYING STATE
-    ===================================================== */
-
-    function setPlayingState() {
-
-        isPlaying = true;
-
-
-        musicBtn.classList.add(
-            "playing"
-        );
-
-
-        musicBtn.innerHTML =
-            '<i class="fa-solid fa-pause"></i>';
-
-    }
-
-
-    /* =====================================================
-       PAUSED STATE
-    ===================================================== */
-
-    function setPausedState() {
-
-        isPlaying = false;
-
-
-        musicBtn.classList.remove(
-            "playing"
-        );
-
-
-        musicBtn.innerHTML =
-            '<i class="fa-solid fa-music"></i>';
-
-    }
-
-
-    /* =====================================================
-       PHÁT NHẠC
-    ===================================================== */
-
-    async function playMusic() {
-
-        try {
-
-            /*
-             * Nếu chưa có source
-             * thì chọn random bài.
-             */
-
-            if (!bgMusic.src) {
-
-                currentSong =
-                    Math.floor(
-                        Math.random() *
-                        playlist.length
-                    );
-
-
-                loadSong(currentSong);
-
-            }
-
-
-            await bgMusic.play();
-
-
-            setPlayingState();
-
-
-            console.log(
-                "Đang phát:",
-                playlist[currentSong].name
-            );
-
-
-        } catch (error) {
-
-            console.error(
-                "Không thể phát nhạc:",
-                error
-            );
-
-
-            setPausedState();
-
-
-            /*
-             * Nếu bài hiện tại lỗi,
-             * thử bài tiếp theo.
-             */
-
-            nextSong(false);
-
-        }
-
-    }
-
-
-    /* =====================================================
-       HÀM PHÁT NHẠC CHO TOAST
-       → user gesture trực tiếp từ nút "Có"
-    ===================================================== */
-
-    window.pblStartMusic =
-        function () {
-
-            if (!hasStarted) {
-
-                hasStarted = true;
-
-
-                currentSong =
-                    Math.floor(
-                        Math.random() *
-                        playlist.length
-                    );
-
-
-                loadSong(currentSong);
-
-            }
-
-
-            /*
-             * Gọi play ngay trong
-             * chuỗi click của người dùng.
-             */
-
-            playMusic();
-
-        };
-
-
-    /* =====================================================
-       NEXT SONG
-    ===================================================== */
-
-    function nextSong(autoPlay = true) {
-
-        currentSong++;
-
-
-        if (
-            currentSong >=
-            playlist.length
-        ) {
-
-            currentSong = 0;
-
-        }
-
-
-        loadSong(currentSong);
-
-
-        if (autoPlay) {
-
-            playMusic();
-
-        }
-
-    }
-
-
-    /* =====================================================
-       MUSIC BUTTON
-    ===================================================== */
-
-    musicBtn.addEventListener(
-        "click",
-        function () {
-
-            /*
-             * Đang phát
-             * → PAUSE
-             */
-
-            if (!bgMusic.paused) {
-
-                bgMusic.pause();
-
-                setPausedState();
-
-                return;
-
-            }
-
-
-            /*
-             * Chưa từng phát
-             * → RANDOM
-             */
-
-            if (!hasStarted) {
-
-                hasStarted = true;
-
-
-                currentSong =
-                    Math.floor(
-                        Math.random() *
-                        playlist.length
-                    );
-
-
-                loadSong(currentSong);
-
-            }
-
-
-            /*
-             * Nếu đã pause
-             * → phát tiếp bài hiện tại
-             */
-
-            playMusic();
-
-        }
-    );
-
-
-    /* =====================================================
-       HẾT BÀI
-    ===================================================== */
-
-    bgMusic.addEventListener(
-        "ended",
-        function () {
-
-            nextSong(true);
-
-        }
-    );
-
-
-    /* =====================================================
-       AUDIO ERROR
-    ===================================================== */
-
-    bgMusic.addEventListener(
-        "error",
-        function () {
-
-            console.error(
-                "Không tải được:",
-                playlist[currentSong].name
-            );
-
-
-            setTimeout(
-                function () {
-
-                    nextSong(true);
-
-                },
-                300
-            );
-
-        }
-    );
-
-});
-```
-
-
-    /* =========================================================
-       CONTRIBUTION GRID
-    ========================================================= */
-
-    const grid =
-        document.getElementById("contribution-grid");
-
-    if (grid) {
-
-        const dots = [];
-
-        const rows = 7;
-        const cols = 52;
-
-        for (
-            let i = 0;
-            i < rows * cols;
-            i++
-        ) {
-
-            const dot =
-                document.createElement("div");
-
-            dot.className = "dot";
-
-            grid.appendChild(dot);
-
-            dots.push(dot);
-        }
-
-
-        function jdVisualizer() {
-
-            for (
-                let i = 0;
-                i < dots.length;
-                i++
-            ) {
-
-                dots[i]
-                    .classList
-                    .remove("jd-active");
-            }
-
-
-            for (
-                let c = 0;
-                c < cols;
-                c++
-            ) {
-
-                const height =
-                    Math.floor(
-                        Math.random() * rows
-                    );
-
-
-                for (
-                    let r = 0;
-                    r <= height;
-                    r++
-                ) {
-
-                    const index =
-                        (rows - 1 - r) *
-                        cols +
-                        c;
-
-
-                    if (dots[index]) {
-
-                        dots[index]
-                            .classList
-                            .add("jd-active");
-                    }
-                }
-            }
-        }
-
-
-        jdVisualizer();
-
-        setInterval(
-            jdVisualizer,
-            180
-        );
-    }
-
-
-    /* =========================================================
-       TYPING EFFECT
-    ========================================================= */
-
-    const typingText =
-        document.getElementById(
-            "typing-text"
-        );
-
-
-    if (typingText) {
-
-        const typingMessages = [
-
-            {
-                text:
-                    "Hello everyone. I'm Phạm Bảo Long",
-
-                className:
-                    "typing-style-1"
-            },
-
-            {
-                text:
-                    "I'm a Developer",
-
-                className:
-                    "typing-style-2"
-            },
-
-            {
-                text:
-                    "Welcome to my website",
-
-                className:
-                    "typing-style-3"
-            },
-
-            {
-                text:
-                    "Cần lên Locket Gold vĩnh viễn ib nha",
-
-                className:
-                    "typing-style-4"
-            },
-
-            {
-                text:
-                    "Have a nice day ✨",
-
-                className:
-                    "typing-style-5"
-            },
-
-            {
-                text:
-                    "Thank you for visiting!",
-
-                className:
-                    "typing-style-6"
-            }
-
-        ];
-
-
-        let messageIndex = 0;
-
-        let charIndex = 0;
-
-        let deleting = false;
-
-
-        const typingSpeed = 75;
-
-        const deletingSpeed = 40;
-
-        const pauseAfterTyping = 1800;
-
-        const pauseAfterDeleting = 500;
-
-
-        function typingEffect() {
-
-            const current =
-                typingMessages[
-                    messageIndex
-                ];
-
-
-            typingText.className =
-                current.className;
-
-
-            if (!deleting) {
-
-                typingText.textContent =
-                    current.text.substring(
-                        0,
-                        charIndex + 1
-                    );
-
-
-                charIndex++;
-
-
-                if (
-                    charIndex >=
-                    current.text.length
-                ) {
-
-                    setTimeout(
-                        function () {
-
-                            deleting = true;
-
-                            typingEffect();
-
-                        },
-                        pauseAfterTyping
-                    );
-
-                    return;
+                if (overlay) {
+                    overlay.remove();
                 }
 
-
-                setTimeout(
-                    typingEffect,
-                    typingSpeed
-                );
-
-            } else {
-
-                charIndex--;
-
-
-                typingText.textContent =
-                    current.text.substring(
-                        0,
-                        charIndex
-                    );
-
-
-                if (charIndex <= 0) {
-
-                    charIndex = 0;
-
-                    deleting = false;
-
-                    messageIndex++;
-
-
-                    if (
-                        messageIndex >=
-                        typingMessages.length
-                    ) {
-
-                        messageIndex = 0;
-                    }
-
-
-                    setTimeout(
-                        typingEffect,
-                        pauseAfterDeleting
-                    );
-
-                    return;
-                }
-
-
-                setTimeout(
-                    typingEffect,
-                    deletingSpeed
-                );
-            }
-        }
-
-
-        typingEffect();
-    }
-
-
-   /* =========================================================
-   MUSIC PLAYER
-   - Lần đầu bấm: random bài
-   - Đang phát: pause
-   - Bấm lại sau pause: next bài
-   - Hết bài cuối: quay lại bài đầu
-   - File lỗi: tự chuyển bài tiếp theo
-========================================================= */
-
-const playlist = [
-
-    {
-        name: "Về bên anh",
-        url: "//thanhdieu.com/files/Về-Bên-Anh.mp3"
-    },
-
-    {
-        name: "Anh đã quen với cô đơn",
-        url: "//thanhdieu.com/files/Anh-Đã-Quen-Với-Cô-Đơn.mp3"
-    },
-
-    {
-        name: "Em nào có tội",
-        url: "//thanhdieu.com/files/Em-Nào-Có-Tội.mp3"
-    },
-
-    {
-        name: "Anh Nhớ Em",
-        url: "https://files.catbox.moe/ihobra.mp3"
-    },
-
-    {
-        name: "Rồi mùa yêu thương dần đang đến",
-        url: "https://files.catbox.moe/bgwso3.mp3"
-    },
-
-    {
-        name: "Chỉ bằng cái gật đầu",
-        url: "https://files.catbox.moe/s1hyzo.mp3"
-    },
-
-    {
-        name: "Đừng quên tên anh",
-        url: "https://files.catbox.moe/h43f1s.mp3"
-    },
-
-    {
-        name: "Hối hận trong anh",
-        url: "https://files.catbox.moe/aebu0g.mp3"
-    },
-
-    {
-        name: "Anh từng cố gắng",
-        url: "https://files.catbox.moe/mm085n.mp3"
-    },
-
-    {
-        name: "Hình bóng em",
-        url: "https://files.catbox.moe/21c1fl.mp3"
-    },
-
-    {
-        name: "Lời chúc không thật",
-        url: "https://files.catbox.moe/v6sqz2.mp3"
-    },
-    {
-        name: "Người yêu ai rồi",
-        url: "https://files.catbox.moe/y8ch48.mp3"
-    },
-
-    {
-        name: "Quên anh trong từng cơn đau",
-        url: "https://files.catbox.moe/crphp2.mp3"
-    }
-
-];
-
-
-const musicBtn = document.getElementById("music-btn");
-const bgMusic = document.getElementById("bg-music");
-
-
-if (
-    musicBtn &&
-    bgMusic &&
-    playlist.length > 0
-) {
-
-    let currentSong = 0;
-
-    let hasStarted = false;
-
-    let isLoading = false;
-
-
-    /* =====================================================
-       LOAD SONG
-    ===================================================== */
-
-    function loadSong(index) {
-
-        if (index < 0) {
-            index = playlist.length - 1;
-        }
-
-        if (index >= playlist.length) {
-            index = 0;
-        }
-
-        currentSong = index;
-
-        bgMusic.pause();
-
-        bgMusic.currentTime = 0;
-
-        bgMusic.src = playlist[currentSong].url;
-
-        bgMusic.load();
-
-        console.log(
-            "Đang tải:",
-            playlist[currentSong].name
+            },
+            500
         );
     }
 
 
     /* =====================================================
-       PLAYING STATE
+       SAKURA / FALLING IMAGE
     ===================================================== */
 
-    function setPlayingState() {
-
-        musicBtn.classList.add("playing");
-
-        musicBtn.innerHTML =
-            '<i class="fa-solid fa-pause"></i>';
-    }
+    const sakuraContainer =
+        document.getElementById(
+            "sakura-container"
+        );
 
 
-    /* =====================================================
-       PAUSED STATE
-    ===================================================== */
+    function createSakura() {
 
-    function setPausedState() {
-
-        musicBtn.classList.remove("playing");
-
-        musicBtn.innerHTML =
-            '<i class="fa-solid fa-music"></i>';
-    }
-
-
-    /* =====================================================
-       PLAY MUSIC
-    ===================================================== */
-
-    function playMusic() {
-
-        if (isLoading) {
+        if (!sakuraContainer) {
             return;
         }
 
-        isLoading = true;
 
-        const promise = bgMusic.play();
-
-        if (promise !== undefined) {
-
-            promise
-                .then(function () {
-
-                    isLoading = false;
-
-                    setPlayingState();
-
-                    console.log(
-                        "Đang phát:",
-                        playlist[currentSong].name
-                    );
-
-                })
-                .catch(function (error) {
-
-                    isLoading = false;
-
-                    console.log(
-                        "Không thể phát:",
-                        playlist[currentSong].name,
-                        error
-                    );
-
-                    setPausedState();
-
-                });
-
-        } else {
-
-            isLoading = false;
-
-            setPlayingState();
-
-        }
-    }
-
-
-    /* =====================================================
-       NEXT SONG
-    ===================================================== */
-
-    function nextSong() {
-
-        currentSong++;
-
-        /*
-         * Hết playlist
-         * → quay lại bài đầu
-         */
-
-        if (currentSong >= playlist.length) {
-
-            currentSong = 0;
-
-            console.log(
-                "Đã hết playlist → phát lại từ đầu"
-            );
-        }
-
-
-        loadSong(currentSong);
-
-        /*
-         * Chờ audio load xong rồi phát
-         */
-
-        bgMusic.addEventListener(
-            "canplay",
-            function playWhenReady() {
-
-                bgMusic.removeEventListener(
-                    "canplay",
-                    playWhenReady
-                );
-
-                playMusic();
-
-            }
-        );
-
-    }
-
-
-    /* =====================================================
-       MUSIC BUTTON
-    ===================================================== */
-
-    musicBtn.addEventListener(
-        "click",
-        function () {
-
-            /*
-             * Đang phát
-             * → PAUSE
-             */
-
-            if (!bgMusic.paused) {
-
-                bgMusic.pause();
-
-                setPausedState();
-
-                console.log(
-                    "Đã pause:",
-                    playlist[currentSong].name
-                );
-
-                return;
-            }
-
-
-            /*
-             * Lần đầu bấm
-             * → RANDOM
-             */
-
-            if (!hasStarted) {
-
-                hasStarted = true;
-
-                currentSong =
-                    Math.floor(
-                        Math.random() *
-                        playlist.length
-                    );
-
-                loadSong(currentSong);
-
-                /*
-                 * Phát khi audio sẵn sàng
-                 */
-
-                bgMusic.addEventListener(
-                    "canplay",
-                    function playFirstSong() {
-
-                        bgMusic.removeEventListener(
-                            "canplay",
-                            playFirstSong
-                        );
-
-                        playMusic();
-
-                    }
-                );
-
-                return;
-            }
-
-
-            /*
-             * Đã từng phát
-             * → NEXT
-             */
-
-            nextSong();
-
-        }
-    );
-
-
-    /* =====================================================
-       HẾT BÀI
-       → NEXT
-    ===================================================== */
-
-    bgMusic.addEventListener(
-        "ended",
-        function () {
-
-            console.log(
-                "Hết bài:",
-                playlist[currentSong].name
-            );
-
-            /*
-             * Nếu đây là bài cuối
-             * → quay lại bài đầu
-             */
-
-            if (
-                currentSong >=
-                playlist.length - 1
-            ) {
-
-                currentSong = 0;
-
-                loadSong(currentSong);
-
-            } else {
-
-                currentSong++;
-
-                loadSong(currentSong);
-
-            }
-
-
-            /*
-             * Chờ bài mới load
-             */
-
-            bgMusic.addEventListener(
-                "canplay",
-                function playNextSong() {
-
-                    bgMusic.removeEventListener(
-                        "canplay",
-                        playNextSong
-                    );
-
-                    playMusic();
-
-                }
-            );
-
-        }
-    );
-
-
-    /* =====================================================
-       AUDIO ERROR
-       → TỰ BỎ QUA BÀI LỖI
-    ===================================================== */
-
-    bgMusic.addEventListener(
-        "error",
-        function () {
-
-            console.log(
-                "Không tải được:",
-                playlist[currentSong].name
-            );
-
-            /*
-             * Chuyển bài sau 500ms
-             */
-
-            setTimeout(function () {
-
-                currentSong++;
-
-                /*
-                 * Nếu hết danh sách
-                 * → quay lại đầu
-                 */
-
-                if (
-                    currentSong >=
-                    playlist.length
-                ) {
-
-                    currentSong = 0;
-
-                }
-
-                loadSong(currentSong);
-
-                bgMusic.addEventListener(
-                    "canplay",
-                    function retrySong() {
-
-                        bgMusic.removeEventListener(
-                            "canplay",
-                            retrySong
-                        );
-
-                        playMusic();
-                    }
-                );
-            }, 500);
-        }
-    );
-}
-
-    /* =========================================================
-       FLYING FISH BACKGROUND
-    ========================================================= */
-
-    if (
-        typeof jQuery !== "undefined" &&
-        document.getElementById(
-            "jsi-flying-fish-container"
-        )
-    ) {
-
-        var RENDERER = {
-
-            POINT_INTERVAL: 5,
-
-            FISH_COUNT: 3,
-
-            MAX_INTERVAL_COUNT: 50,
-
-            INIT_HEIGHT_RATE: 0.5,
-
-            THRESHOLD: 50,
-
-
-            init: function () {
-
-                this.setParameters();
-
-                this.reconstructMethods();
-
-                this.setup();
-
-                this.bindEvent();
-
-                this.render();
-            },
-
-
-            setParameters: function () {
-
-                this.$window =
-                    $(window);
-
-                this.$container =
-                    $(
-                        "#jsi-flying-fish-container"
-                    );
-
-                this.$canvas =
-                    $("<canvas />");
-
-
-                this.context =
-                    this.$canvas
-                        .appendTo(
-                            this.$container
-                        )
-                        .get(0)
-                        .getContext("2d");
-
-
-                this.points = [];
-
-                this.fishes = [];
-
-                this.watchIds = [];
-            },
-
-
-            createSurfacePoints:
-                function () {
-
-                    var count =
-                        Math.round(
-                            this.width /
-                            this.POINT_INTERVAL
-                        );
-
-
-                    this.pointInterval =
-                        this.width /
-                        (count - 1);
-
-
-                    this.points.push(
-                        new SURFACE_POINT(
-                            this,
-                            0
-                        )
-                    );
-
-
-                    for (
-                        var i = 1;
-                        i < count;
-                        i++
-                    ) {
-
-                        var point =
-                            new SURFACE_POINT(
-                                this,
-                                i *
-                                this.pointInterval
-                            );
-
-
-                        var previous =
-                            this.points[
-                                i - 1
-                            ];
-
-
-                        point.setPreviousPoint(
-                            previous
-                        );
-
-
-                        previous.setNextPoint(
-                            point
-                        );
-
-
-                        this.points.push(
-                            point
-                        );
-                    }
-                },
-
-
-            reconstructMethods:
-                function () {
-
-                    this.watchWindowSize =
-                        this.watchWindowSize
-                            .bind(this);
-
-                    this.jdugeToStopResize =
-                        this.jdugeToStopResize
-                            .bind(this);
-
-                    this.startEpicenter =
-                        this.startEpicenter
-                            .bind(this);
-
-                    this.moveEpicenter =
-                        this.moveEpicenter
-                            .bind(this);
-
-                    this.reverseVertical =
-                        this.reverseVertical
-                            .bind(this);
-
-                    this.render =
-                        this.render
-                            .bind(this);
-                },
-
-
-            setup: function () {
-
-                this.points.length = 0;
-
-                this.fishes.length = 0;
-
-                this.watchIds.length = 0;
-
-
-                this.intervalCount =
-                    this.MAX_INTERVAL_COUNT;
-
-
-                this.width =
-                    this.$container.width();
-
-
-                this.height =
-                    this.$container.height();
-
-
-                this.fishCount =
-                    Math.max(
-                        1,
-                        Math.floor(
-                            this.FISH_COUNT *
-                            this.width / 500 *
-                            this.height / 500
-                        )
-                    );
-
-
-                this.$canvas.attr({
-
-                    width:
-                        this.width,
-
-                    height:
-                        this.height
-
-                });
-
-
-                this.reverse = false;
-
-
-                this.fishes.push(
-                    new FISH(this)
-                );
-
-
-                this.createSurfacePoints();
-            },
-
-
-            watchWindowSize:
-                function () {
-
-                    this.clearTimer();
-
-
-                    this.tmpWidth =
-                        this.$window.width();
-
-
-                    this.tmpHeight =
-                        this.$window.height();
-
-
-                    this.watchIds.push(
-                        setTimeout(
-                            this.jdugeToStopResize,
-                            300
-                        )
-                    );
-                },
-
-
-            clearTimer:
-                function () {
-
-                    while (
-                        this.watchIds.length > 0
-                    ) {
-
-                        clearTimeout(
-                            this.watchIds.pop()
-                        );
-                    }
-                },
-
-
-            jdugeToStopResize:
-                function () {
-
-                    var width =
-                        this.$window.width();
-
-
-                    var height =
-                        this.$window.height();
-
-
-                    var stopped =
-                        (
-                            width ===
-                                this.tmpWidth &&
-                            height ===
-                                this.tmpHeight
-                        );
-
-
-                    this.tmpWidth =
-                        width;
-
-                    this.tmpHeight =
-                        height;
-
-
-                    if (stopped) {
-
-                        this.setup();
-                    }
-                },
-
-
-            bindEvent:
-                function () {
-
-                    this.$window.on(
-                        "resize",
-                        this.watchWindowSize
-                    );
-
-
-                    this.$container.on(
-                        "mouseenter",
-                        this.startEpicenter
-                    );
-
-
-                    this.$container.on(
-                        "mousemove",
-                        this.moveEpicenter
-                    );
-
-
-                    this.$container.on(
-                        "click",
-                        this.reverseVertical
-                    );
-                },
-
-
-            getAxis:
-                function (event) {
-
-                    var offset =
-                        this.$container.offset();
-
-
-                    return {
-
-                        x:
-                            event.clientX -
-                            offset.left +
-                            this.$window
-                                .scrollLeft(),
-
-                        y:
-                            event.clientY -
-                            offset.top +
-                            this.$window
-                                .scrollTop()
-
-                    };
-                },
-
-
-            startEpicenter:
-                function (event) {
-
-                    this.axis =
-                        this.getAxis(event);
-                },
-
-
-            moveEpicenter:
-                function (event) {
-
-                    var axis =
-                        this.getAxis(event);
-
-
-                    if (!this.axis) {
-
-                        this.axis = axis;
-                    }
-
-
-                    this.generateEpicenter(
-                        axis.x,
-                        axis.y,
-                        axis.y -
-                            this.axis.y
-                    );
-
-
-                    this.axis = axis;
-                },
-
-
-            generateEpicenter:
-                function (
-                    x,
-                    y,
-                    velocity
-                ) {
-
-                    if (
-                        y <
-                            this.height / 2 -
-                            this.THRESHOLD ||
-
-                        y >
-                            this.height / 2 +
-                            this.THRESHOLD
-                    ) {
-
-                        return;
-                    }
-
-
-                    var index =
-                        Math.round(
-                            x /
-                            this.pointInterval
-                        );
-
-
-                    if (
-                        index < 0 ||
-                        index >=
-                            this.points.length
-                    ) {
-
-                        return;
-                    }
-
-
-                    this.points[index]
-                        .interfere(
-                            y,
-                            velocity
-                        );
-                },
-
-
-            reverseVertical:
-                function () {
-
-                    this.reverse =
-                        !this.reverse;
-
-
-                    for (
-                        var i = 0,
-                        count =
-                            this.fishes.length;
-
-                        i < count;
-
-                        i++
-                    ) {
-
-                        this.fishes[i]
-                            .reverseVertical();
-                    }
-                },
-
-
-            controlStatus:
-                function () {
-
-                    for (
-                        var i = 0,
-                        count =
-                            this.points.length;
-
-                        i < count;
-
-                        i++
-                    ) {
-
-                        this.points[i]
-                            .updateSelf();
-                    }
-
-
-                    for (
-                        var j = 0,
-                        count2 =
-                            this.points.length;
-
-                        j < count2;
-
-                        j++
-                    ) {
-
-                        this.points[j]
-                            .updateNeighbors();
-                    }
-
-
-                    if (
-                        this.fishes.length <
-                        this.fishCount
-                    ) {
-
-                        if (
-                            --this.intervalCount ===
-                            0
-                        ) {
-
-                            this.intervalCount =
-                                this.MAX_INTERVAL_COUNT;
-
-
-                            this.fishes.push(
-                                new FISH(this)
-                            );
-                        }
-                    }
-                },
-
-
-            render: function () {
-
-                requestAnimationFrame(
-                    this.render
-                );
-
-
-                this.controlStatus();
-
-
-                this.context.clearRect(
-                    0,
-                    0,
-                    this.width,
-                    this.height
-                );
-
-
-                this.context.fillStyle =
-                    "rgba(255,255,255,0.22)";
-
-
-                for (
-                    var i = 0,
-                    count =
-                        this.fishes.length;
-
-                    i < count;
-
-                    i++
-                ) {
-
-                    this.fishes[i]
-                        .render(
-                            this.context
-                        );
-                }
-
-
-                this.context.save();
-
-
-                this.context
-                    .globalCompositeOperation =
-                    "xor";
-
-
-                this.context.beginPath();
-
-
-                this.context.moveTo(
-                    0,
-                    this.reverse
-                        ? 0
-                        : this.height
-                );
-
-
-                for (
-                    var j = 0,
-                    count2 =
-                        this.points.length;
-
-                    j < count2;
-
-                    j++
-                ) {
-
-                    this.points[j]
-                        .render(
-                            this.context
-                        );
-                }
-
-
-                this.context.lineTo(
-                    this.width,
-                    this.reverse
-                        ? 0
-                        : this.height
-                );
-
-
-                this.context.closePath();
-
-                this.context.fill();
-
-                this.context.restore();
-            }
-        };
-
-
-        /* =====================================================
-           SURFACE POINT
-        ===================================================== */
-
-        var SURFACE_POINT =
-            function (
-                renderer,
-                x
-            ) {
-
-                this.renderer =
-                    renderer;
-
-                this.x = x;
-
-                this.init();
-            };
-
-
-        SURFACE_POINT.prototype = {
-
-            SPRING_CONSTANT: 0.03,
-
-            SPRING_FRICTION: 0.9,
-
-            WAVE_SPREAD: 0.3,
-
-            ACCELARATION_RATE: 0.01,
-
-
-            init: function () {
-
-                this.initHeight =
-                    this.renderer.height *
-                    this.renderer
-                        .INIT_HEIGHT_RATE;
-
-
-                this.height =
-                    this.initHeight;
-
-
-                this.fy = 0;
-
-
-                this.force = {
-
-                    previous: 0,
-
-                    next: 0
-
-                };
-            },
-
-
-            setPreviousPoint:
-                function (previous) {
-
-                    this.previous =
-                        previous;
-                },
-
-
-            setNextPoint:
-                function (next) {
-
-                    this.next =
-                        next;
-                },
-
-
-            interfere:
-                function (
-                    y,
-                    velocity
-                ) {
-
-                    this.fy =
-                        this.renderer.height *
-                        this.ACCELARATION_RATE *
-                        (
-                            (
-                                this.renderer.height -
-                                this.height -
-                                y
-                            ) >= 0
-                                ? -1
-                                : 1
-                        ) *
-                        Math.abs(
-                            velocity
-                        );
-                },
-
-
-            updateSelf:
-                function () {
-
-                    this.fy +=
-                        this.SPRING_CONSTANT *
-                        (
-                            this.initHeight -
-                            this.height
-                        );
-
-
-                    this.fy *=
-                        this.SPRING_FRICTION;
-
-
-                    this.height +=
-                        this.fy;
-                },
-
-
-            updateNeighbors:
-                function () {
-
-                    if (this.previous) {
-
-                        this.force.previous =
-                            this.WAVE_SPREAD *
-                            (
-                                this.height -
-                                this.previous.height
-                            );
-                    }
-
-
-                    if (this.next) {
-
-                        this.force.next =
-                            this.WAVE_SPREAD *
-                            (
-                                this.height -
-                                this.next.height
-                            );
-                    }
-                },
-
-
-            render:
-                function (context) {
-
-                    if (this.previous) {
-
-                        this.previous.height +=
-                            this.force.previous;
-
-
-                        this.previous.fy +=
-                            this.force.previous;
-                    }
-
-
-                    if (this.next) {
-
-                        this.next.height +=
-                            this.force.next;
-
-
-                        this.next.fy +=
-                            this.force.next;
-                    }
-
-
-                    context.lineTo(
-                        this.x,
-                        this.renderer.height -
-                            this.height
-                    );
-                }
-        };
-
-
-        /* =====================================================
-           FISH
-        ===================================================== */
-
-        var FISH =
-            function (renderer) {
-
-                this.renderer =
-                    renderer;
-
-                this.init();
-            };
-
-
-        FISH.prototype = {
-
-            GRAVITY: 0.4,
-
-
-            init: function () {
-
-                this.direction =
-                    Math.random() < 0.5;
-
-
-                this.x =
-                    this.direction
-                        ? (
-                            this.renderer.width +
-                            this.renderer.THRESHOLD
-                        )
-                        : -this.renderer.THRESHOLD;
-
-
-                this.vx =
-                    (
-                        Math.random() * 5 + 3
-                    ) *
-                    (
-                        this.direction
-                            ? -1
-                            : 1
-                    );
-
-
-                this.y =
-                    (
-                        Math.random() *
-                        this.renderer.height *
-                        0.3
-                    ) +
-                    (
-                        this.renderer.height *
-                        0.6
-                    );
-
-
-                this.vy =
-                    Math.random() * -3 - 2;
-
-
-                this.ay =
-                    Math.random() * -0.15 - 0.05;
-
-
-                this.isOut = false;
-            },
-
-
-            reverseVertical:
-                function () {
-
-                    this.isOut =
-                        !this.isOut;
-
-                    this.ay *= -1;
-                },
-
-
-            controlStatus:
-                function () {
-
-                    this.previousY =
-                        this.y;
-
-
-                    this.x +=
-                        this.vx;
-
-
-                    this.y +=
-                        this.vy;
-
-
-                    this.vy +=
-                        this.ay;
-
-
-                    if (
-                        this.y <
-                        this.renderer.height *
-                        this.renderer
-                            .INIT_HEIGHT_RATE
-                    ) {
-
-                        this.vy +=
-                            this.GRAVITY;
-
-                        this.isOut = true;
-
-                    } else {
-
-                        this.isOut = false;
-                    }
-
-
-                    this.renderer
-                        .generateEpicenter(
-                            this.x,
-                            this.y,
-                            this.y -
-                                this.previousY
-                        );
-
-
-                    if (
-                        (
-                            this.vx > 0 &&
-                            this.x >
-                            this.renderer.width +
-                            this.renderer.THRESHOLD
-                        )
-                        ||
-                        (
-                            this.vx < 0 &&
-                            this.x <
-                            -this.renderer.THRESHOLD
-                        )
-                    ) {
-
-                        this.init();
-                    }
-                },
-
-
-            render:
-                function (context) {
-
-                    context.save();
-
-
-                    context.translate(
-                        this.x,
-                        this.y
-                    );
-
-
-                    context.rotate(
-                        Math.PI +
-                        Math.atan2(
-                            this.vy,
-                            this.vx
-                        )
-                    );
-
-
-                    context.scale(
-                        1,
-                        this.direction
-                            ? 1
-                            : -1
-                    );
-
-
-                    context.beginPath();
-
-
-                    context.moveTo(
-                        -25,
-                        0
-                    );
-
-
-                    context.bezierCurveTo(
-                        -15,
-                        12,
-                        10,
-                        8,
-                        30,
-                        0
-                    );
-
-
-                    context.bezierCurveTo(
-                        10,
-                        -8,
-                        -15,
-                        -12,
-                        -25,
-                        0
-                    );
-
-
-                    context.fill();
-
-
-                    context.restore();
-
-
-                    this.controlStatus();
-                }
-        };
-
-
-        /* =====================================================
-           START FISH
-        ===================================================== */
-
-        $(function () {
-
-            RENDERER.init();
-
-        });
-    }
-
-
-    /* =========================================================
-       SAKURA / FALLING IMAGE EFFECT
-       
-       Ảnh:
-       https://files.catbox.moe/k5h1qm.png
-       
-       Tần suất:
-       80ms / 1 ảnh
-       
-       Ban đầu:
-       35 ảnh
-    ========================================================= */
-
-    (function () {
-
-        const sakuraContainer =
+        const sakura =
             document.createElement("div");
 
+        sakura.className =
+            "sakura";
 
-        sakuraContainer.id =
-            "sakura-container";
+
+        /*
+            Random size
+        */
+
+        const size =
+            Math.floor(
+                Math.random() * 18
+            ) + 15;
 
 
-        document.body.appendChild(
-            sakuraContainer
+        sakura.style.width =
+            size + "px";
+
+        sakura.style.height =
+            size + "px";
+
+
+        /*
+            Random position
+        */
+
+        sakura.style.left =
+            Math.random() * 100 +
+            "vw";
+
+
+        /*
+            Random wind
+        */
+
+        const wind =
+            Math.floor(
+                Math.random() * 300
+            ) - 150;
+
+
+        const rotate =
+            Math.floor(
+                Math.random() * 720
+            ) - 360;
+
+
+        sakura.style.setProperty(
+            "--wind",
+            wind + "px"
         );
 
 
-        function createSakura() {
-
-            const sakura =
-                document.createElement("div");
-
-
-            sakura.className =
-                "sakura";
+        sakura.style.setProperty(
+            "--rotate",
+            rotate + "deg"
+        );
 
 
-            /* Kích thước */
+        /*
+            Random duration
+        */
 
-            const size =
-                Math.random() * 12 + 10;
-
-
-            /* Vị trí */
-
-            const startX =
-                Math.random() *
-                window.innerWidth;
+        const duration =
+            Math.floor(
+                Math.random() * 5
+            ) + 7;
 
 
-            /* Tốc độ */
-
-            const duration =
-                Math.random() * 5 + 6;
+        sakura.style.animationDuration =
+            duration + "s";
 
 
-            /* Delay */
-
-            const delay =
-                Math.random() * 1.5;
-
-
-            /* Gió */
-
-            const wind =
-                (
-                    Math.random() - 0.5
-                ) * 250;
+        sakuraContainer.appendChild(
+            sakura
+        );
 
 
-            /* Xoay */
+        /*
+            Xóa sau khi rơi
+        */
 
-            const rotate =
-                Math.random() * 720 - 360;
+        setTimeout(
+            function () {
 
+                sakura.remove();
 
-            sakura.style.width =
-                size + "px";
-
-
-            sakura.style.height =
-                size + "px";
-
-
-            sakura.style.left =
-                startX + "px";
+            },
+            (duration + 1) * 1000
+        );
+    }
 
 
-            sakura.style.animationDuration =
-                duration + "s";
+    /*
+        Tạo hoa liên tục
+    */
 
-
-            sakura.style.animationDelay =
-                delay + "s";
-
-
-            sakura.style.setProperty(
-                "--wind",
-                wind + "px"
-            );
-
-
-            sakura.style.setProperty(
-                "--rotate",
-                rotate + "deg"
-            );
-
-
-            sakuraContainer.appendChild(
-                sakura
-            );
-
-
-            /* Xóa sau khi rơi */
-
-            setTimeout(
-                function () {
-
-                    sakura.remove();
-
-                },
-                (
-                    duration +
-                    delay
-                ) * 1000 + 500
-            );
-        }
-
-
-        /* =====================================================
-           TẠO HOA LIÊN TỤC
-           
-           80ms = nhiều hơn bản cũ 120ms
-        ===================================================== */
+    if (sakuraContainer) {
 
         setInterval(
             createSakura,
-            80
+            550
         );
 
 
-        /* =====================================================
-           TẠO SẴN KHI LOAD
-        ===================================================== */
+        /*
+            Tạo sẵn vài bông
+        */
 
         for (
             let i = 0;
-            i < 35;
+            i < 8;
             i++
         ) {
 
             setTimeout(
                 createSakura,
-                i * 70
+                i * 250
             );
+
         }
 
+    }
 
-        /* =====================================================
-           RESIZE
-        ===================================================== */
 
-        window.addEventListener(
-            "resize",
-            function () {
+    /* =====================================================
+       DISABLE IMAGE DRAG
+    ===================================================== */
 
-                /*
-                 * Không cần reset hoa.
-                 * Các hoa đang rơi vẫn tiếp tục.
-                 */
+    document
+        .querySelectorAll("img")
+        .forEach(function (img) {
 
-            }
-        );
+            img.addEventListener(
+                "dragstart",
+                function (event) {
 
-    })();
+                    event.preventDefault();
+
+                }
+            );
+
+        });
+
+
+    /* =====================================================
+       CONSOLE
+    ===================================================== */
+
+    console.log(
+        "%c PBL | HOME ",
+        "color:#fff;" +
+        "background:#111;" +
+        "padding:8px 15px;" +
+        "border-radius:8px;" +
+        "font-weight:bold;"
+    );
+
+    console.log(
+        "Welcome to PBL | HOME ❤️"
+    );
 
 });
