@@ -6,13 +6,27 @@
 =========================================================
 */
 
+```javascript
 /* =========================================================
    PBL LOADING + MUSIC TOAST
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    /* Tạo Toast */
+    /* =====================================================
+       TẠO LỚP PHỦ
+    ===================================================== */
+
+    const overlay = document.createElement("div");
+
+    overlay.id = "pbl-loading-overlay";
+
+    document.body.appendChild(overlay);
+
+
+    /* =====================================================
+       TẠO TOAST
+    ===================================================== */
 
     const toast = document.createElement("div");
 
@@ -24,12 +38,18 @@ document.addEventListener("DOMContentLoaded", function () {
             PBL | HOME
         </div>
 
-        <div class="pbl-toast-message" id="pbl-toast-message">
+        <div
+            class="pbl-toast-message"
+            id="pbl-toast-message">
+
             Đang tải website...
+
         </div>
 
         <div class="pbl-loading-bar">
+
             <div id="pbl-loading-progress"></div>
+
         </div>
 
         <span id="pbl-loading-percent">
@@ -45,10 +65,12 @@ document.addEventListener("DOMContentLoaded", function () {
             "pbl-loading-progress"
         );
 
+
     const percent =
         document.getElementById(
             "pbl-loading-percent"
         );
+
 
     const message =
         document.getElementById(
@@ -56,14 +78,25 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
 
-    /* Hiện Toast */
+    /* =====================================================
+       HIỆN TOAST + LỚP PHỦ NGAY LẬP TỨC
+    ===================================================== */
 
-    toast.classList.add("show");
+    requestAnimationFrame(function () {
+
+        overlay.classList.add("show");
+
+        toast.classList.add("show");
+
+    });
 
 
-    /* Loading */
+    /* =====================================================
+       LOADING
+    ===================================================== */
 
     let loadingPercent = 0;
+
 
     const loadingInterval =
         setInterval(function () {
@@ -73,28 +106,31 @@ document.addEventListener("DOMContentLoaded", function () {
                     Math.random() * 8
                 ) + 2;
 
+
             if (loadingPercent >= 100) {
 
                 loadingPercent = 100;
+
 
                 clearInterval(
                     loadingInterval
                 );
 
+
                 progress.style.width =
                     "100%";
+
 
                 percent.textContent =
                     "100%";
 
-
-                /* Đợi thanh chạy xong */
 
                 setTimeout(function () {
 
                     showMusicQuestion();
 
                 }, 400);
+
 
                 return;
             }
@@ -103,8 +139,10 @@ document.addEventListener("DOMContentLoaded", function () {
             progress.style.width =
                 loadingPercent + "%";
 
+
             percent.textContent =
                 loadingPercent + "%";
+
 
         }, 80);
 
@@ -119,6 +157,7 @@ document.addEventListener("DOMContentLoaded", function () {
             document.querySelector(
                 "#pbl-loading-toast .pbl-toast-title i"
             );
+
 
         if (musicIcon) {
 
@@ -138,6 +177,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 ".pbl-loading-bar"
             );
 
+
         const loadingPercentText =
             document.getElementById(
                 "pbl-loading-percent"
@@ -151,6 +191,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         }
 
+
         if (loadingPercentText) {
 
             loadingPercentText.style.display =
@@ -159,13 +200,32 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
-        /* Tạo nút */
+        /* Xóa nút cũ nếu có */
+
+        const oldButtons =
+            toast.querySelector(
+                ".pbl-music-buttons"
+            );
+
+
+        if (oldButtons) {
+
+            oldButtons.remove();
+
+        }
+
+
+        /* =================================================
+           TẠO NÚT
+        ================================================= */
 
         const buttons =
             document.createElement("div");
 
+
         buttons.className =
             "pbl-music-buttons";
+
 
         buttons.innerHTML = `
 
@@ -174,18 +234,24 @@ document.addEventListener("DOMContentLoaded", function () {
                 id="pbl-music-yes">
 
                 <i class="fa-solid fa-volume-high"></i>
+
                 Có
+
             </button>
+
 
             <button
                 class="pbl-music-btn no"
                 id="pbl-music-no">
 
                 <i class="fa-solid fa-volume-xmark"></i>
+
                 Không
+
             </button>
 
         `;
+
 
         toast.appendChild(buttons);
 
@@ -200,16 +266,25 @@ document.addEventListener("DOMContentLoaded", function () {
                 "click",
                 function () {
 
-                    const musicBtn =
-                        document.getElementById(
-                            "music-btn"
-                        );
+                    /*
+                     * Gọi trực tiếp hàm phát nhạc.
+                     *
+                     * Không dùng:
+                     * musicBtn.click()
+                     *
+                     * vì một số trình duyệt sẽ coi
+                     * đó không phải user gesture.
+                     */
 
-                    if (musicBtn) {
+                    if (
+                        typeof window.pblStartMusic ===
+                        "function"
+                    ) {
 
-                        musicBtn.click();
+                        window.pblStartMusic();
 
                     }
+
 
                     closeToast();
 
@@ -242,16 +317,549 @@ document.addEventListener("DOMContentLoaded", function () {
 
         toast.classList.remove("show");
 
+        overlay.classList.remove("show");
+
+
         setTimeout(function () {
 
             toast.remove();
+
+            overlay.remove();
 
         }, 400);
 
     }
 
 });
+
+
+/* =========================================================
+   CONTRIBUTION GRID / LED VISUALIZER
+========================================================= */
+
 document.addEventListener("DOMContentLoaded", function () {
+
+    const grid =
+        document.getElementById(
+            "contribution-grid"
+        );
+
+
+    if (!grid) {
+        return;
+    }
+
+
+    const dots = [];
+
+    const rows = 7;
+
+    const cols = 52;
+
+
+    for (
+        let i = 0;
+        i < rows * cols;
+        i++
+    ) {
+
+        const dot =
+            document.createElement("div");
+
+
+        dot.className = "dot";
+
+
+        grid.appendChild(dot);
+
+
+        dots.push(dot);
+
+    }
+
+
+    function jdVisualizer() {
+
+        for (
+            let i = 0;
+            i < dots.length;
+            i++
+        ) {
+
+            dots[i]
+                .classList
+                .remove("jd-active");
+
+        }
+
+
+        for (
+            let c = 0;
+            c < cols;
+            c++
+        ) {
+
+            const height =
+                Math.floor(
+                    Math.random() * rows
+                );
+
+
+            for (
+                let r = 0;
+                r <= height;
+                r++
+            ) {
+
+                const index =
+                    (rows - 1 - r) *
+                    cols +
+                    c;
+
+
+                if (dots[index]) {
+
+                    dots[index]
+                        .classList
+                        .add("jd-active");
+
+                }
+
+            }
+
+        }
+
+    }
+
+
+    jdVisualizer();
+
+
+    setInterval(
+        jdVisualizer,
+        180
+    );
+
+});
+
+
+/* =========================================================
+   MUSIC PLAYER
+========================================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const playlist = [
+
+        {
+            name: "Về bên anh",
+            url: "https://thanhdieu.com/files/Về-Bên-Anh.mp3"
+        },
+
+        {
+            name: "Anh đã quen với cô đơn",
+            url: "https://thanhdieu.com/files/Anh-Đã-Quen-Với-Cô-Đơn.mp3"
+        },
+
+        {
+            name: "Em nào có tội",
+            url: "https://thanhdieu.com/files/Em-Nào-Có-Tội.mp3"
+        },
+
+        {
+            name: "Anh Nhớ Em",
+            url: "https://files.catbox.moe/ihobra.mp3"
+        },
+
+        {
+            name: "Rồi mùa yêu thương dần đang đến",
+            url: "https://files.catbox.moe/bgwso3.mp3"
+        },
+
+        {
+            name: "Chỉ bằng cái gật đầu",
+            url: "https://files.catbox.moe/s1hyzo.mp3"
+        },
+
+        {
+            name: "Đừng quên tên anh",
+            url: "https://files.catbox.moe/h43f1s.mp3"
+        },
+
+        {
+            name: "Hối hận trong anh",
+            url: "https://files.catbox.moe/aebu0g.mp3"
+        },
+       {
+            name: "Người đã yêu ai",
+            url: "https://files.catbox.moe/y8ch48.mp3"
+        },
+        {
+            name: "Anh từng cố gắng",
+            url: "https://files.catbox.moe/mm085n.mp3"
+        },
+
+        {
+            name: "Hình bóng em",
+            url: "https://files.catbox.moe/21c1fl.mp3"
+        },
+
+        {
+            name: "Lời chúc không thật",
+            url: "https://files.catbox.moe/v6sqz2.mp3"
+        },
+
+        {
+            name: "Quên anh trong từng cơn đau",
+            url: "https://files.catbox.moe/crphp2.mp3"
+        }
+
+    ];
+
+
+    const musicBtn =
+        document.getElementById(
+            "music-btn"
+        );
+
+
+    const bgMusic =
+        document.getElementById(
+            "bg-music"
+        );
+
+
+    if (
+        !musicBtn ||
+        !bgMusic ||
+        playlist.length === 0
+    ) {
+        return;
+    }
+
+
+    let currentSong = 0;
+
+    let hasStarted = false;
+
+    let isPlaying = false;
+
+
+    /* =====================================================
+       LOAD SONG
+    ===================================================== */
+
+    function loadSong(index) {
+
+        if (index < 0) {
+
+            index =
+                playlist.length - 1;
+
+        }
+
+
+        if (
+            index >=
+            playlist.length
+        ) {
+
+            index = 0;
+
+        }
+
+
+        currentSong = index;
+
+
+        bgMusic.pause();
+
+        bgMusic.currentTime = 0;
+
+
+        bgMusic.src =
+            playlist[currentSong].url;
+
+
+        bgMusic.load();
+
+
+        console.log(
+            "Đang tải:",
+            playlist[currentSong].name
+        );
+
+    }
+
+
+    /* =====================================================
+       PLAYING STATE
+    ===================================================== */
+
+    function setPlayingState() {
+
+        isPlaying = true;
+
+
+        musicBtn.classList.add(
+            "playing"
+        );
+
+
+        musicBtn.innerHTML =
+            '<i class="fa-solid fa-pause"></i>';
+
+    }
+
+
+    /* =====================================================
+       PAUSED STATE
+    ===================================================== */
+
+    function setPausedState() {
+
+        isPlaying = false;
+
+
+        musicBtn.classList.remove(
+            "playing"
+        );
+
+
+        musicBtn.innerHTML =
+            '<i class="fa-solid fa-music"></i>';
+
+    }
+
+
+    /* =====================================================
+       PHÁT NHẠC
+    ===================================================== */
+
+    async function playMusic() {
+
+        try {
+
+            /*
+             * Nếu chưa có source
+             * thì chọn random bài.
+             */
+
+            if (!bgMusic.src) {
+
+                currentSong =
+                    Math.floor(
+                        Math.random() *
+                        playlist.length
+                    );
+
+
+                loadSong(currentSong);
+
+            }
+
+
+            await bgMusic.play();
+
+
+            setPlayingState();
+
+
+            console.log(
+                "Đang phát:",
+                playlist[currentSong].name
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "Không thể phát nhạc:",
+                error
+            );
+
+
+            setPausedState();
+
+
+            /*
+             * Nếu bài hiện tại lỗi,
+             * thử bài tiếp theo.
+             */
+
+            nextSong(false);
+
+        }
+
+    }
+
+
+    /* =====================================================
+       HÀM PHÁT NHẠC CHO TOAST
+       → user gesture trực tiếp từ nút "Có"
+    ===================================================== */
+
+    window.pblStartMusic =
+        function () {
+
+            if (!hasStarted) {
+
+                hasStarted = true;
+
+
+                currentSong =
+                    Math.floor(
+                        Math.random() *
+                        playlist.length
+                    );
+
+
+                loadSong(currentSong);
+
+            }
+
+
+            /*
+             * Gọi play ngay trong
+             * chuỗi click của người dùng.
+             */
+
+            playMusic();
+
+        };
+
+
+    /* =====================================================
+       NEXT SONG
+    ===================================================== */
+
+    function nextSong(autoPlay = true) {
+
+        currentSong++;
+
+
+        if (
+            currentSong >=
+            playlist.length
+        ) {
+
+            currentSong = 0;
+
+        }
+
+
+        loadSong(currentSong);
+
+
+        if (autoPlay) {
+
+            playMusic();
+
+        }
+
+    }
+
+
+    /* =====================================================
+       MUSIC BUTTON
+    ===================================================== */
+
+    musicBtn.addEventListener(
+        "click",
+        function () {
+
+            /*
+             * Đang phát
+             * → PAUSE
+             */
+
+            if (!bgMusic.paused) {
+
+                bgMusic.pause();
+
+                setPausedState();
+
+                return;
+
+            }
+
+
+            /*
+             * Chưa từng phát
+             * → RANDOM
+             */
+
+            if (!hasStarted) {
+
+                hasStarted = true;
+
+
+                currentSong =
+                    Math.floor(
+                        Math.random() *
+                        playlist.length
+                    );
+
+
+                loadSong(currentSong);
+
+            }
+
+
+            /*
+             * Nếu đã pause
+             * → phát tiếp bài hiện tại
+             */
+
+            playMusic();
+
+        }
+    );
+
+
+    /* =====================================================
+       HẾT BÀI
+    ===================================================== */
+
+    bgMusic.addEventListener(
+        "ended",
+        function () {
+
+            nextSong(true);
+
+        }
+    );
+
+
+    /* =====================================================
+       AUDIO ERROR
+    ===================================================== */
+
+    bgMusic.addEventListener(
+        "error",
+        function () {
+
+            console.error(
+                "Không tải được:",
+                playlist[currentSong].name
+            );
+
+
+            setTimeout(
+                function () {
+
+                    nextSong(true);
+
+                },
+                300
+            );
+
+        }
+    );
+
+});
+```
+
 
     /* =========================================================
        CONTRIBUTION GRID
