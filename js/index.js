@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
     toast.innerHTML = `
         <div class="pbl-toast-title">
             <i class="fa-solid fa-spinner"></i>
-            PBL | HOME
+            AN | HOME
         </div>
 
         <div class="pbl-toast-message" id="pbl-toast-message">
@@ -358,7 +358,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             {
                 text:
-                    "Hello everyone. I'm Phạm Bảo Long",
+                    "Hello everyone. I'm Huỳnh Quốc An",
 
                 className:
                     "typing-style-1"
@@ -366,7 +366,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             {
                 text:
-                    "I'm a Developer",
+                    "Hỗ trợ lên Locket Gold nè",
 
                 className:
                     "typing-style-2"
@@ -382,7 +382,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             {
                 text:
-                    "Cần lên Locket Gold vĩnh viễn ib nha",
+                    "Cần Mod Shadow Fight 2 cho IOS Liên Hệ Tui nha",
 
                 className:
                     "typing-style-4"
